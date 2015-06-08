@@ -1,0 +1,28 @@
+.cards{
+	width:1000px;
+}
+
+.cardModify{
+	border: 1px solid black;
+	width:400px;
+}
+
+.cardView{
+	border:1px solid black;
+	float:left;
+}
+
+.cardProperties{
+	float:left;
+}
+
+.cardImage{
+	width:300px;
+	height:500px;
+}
+
+/* deck */
+
+.allCardsContainer{
+	
+}
