@@ -24,6 +24,7 @@
                     <span class="hidden-xs hidden-sm hidden-lg">Medium</span>    
                     <span class="hidden-xs hidden-sm hidden-md">Large</span>
                 </li>
+                <li> <a href="http://press-stars.com/v3/wp-content/uploads/2015/04/gwent1.jpg">Comparison</a></li>
             </ul>
         </nav>
         <div class="container">
@@ -233,20 +234,78 @@
 
         </script>
         <div id="deckBuilderContainer" class="row">
-           
-            <div id="allCardsContainer" class="col-sm-6">
-                <div class="row">
-                    All Cards
+            <div id="deckBuilderHeader" class="col-lg-6 col-lg-offset-3">
+                <div id="chosenFactionHeader">Chosen Faction</div>
+                <div id="chosenFaction"><h1>Northern Realms</h1></div>
+                <div id="chosenFactionPerk">Passive Perk: Draw a card from your deck when you win a round.</div>
+            </div>
+            <div style="clear:left;"></div>
+            <div id="currentDeckStats" class="row">
+                <div class="col-lg-2 col-lg-offset-1">
+                    Total cards in Deck</br>
+                    27
                 </div>
-                <div class="row">
-                    
+                <div class="col-lg-2">
+                    Number of Unit Cards</br>
+                    21/22
                 </div>
-                <div class="row">
-                    Cards
+                <div class="col-lg-2">
+                    Special Cards</br>
+                    6/10
+                </div>
+                <div class="col-lg-2">
+                    Total Unit Card Strength</br>
+                    78
+                </div>
+                <div class="col-lg-2">
+                    Hero Cards</br>
+                    0
                 </div>
             </div>
-            <div id="currentDeckContainer" class="col-sm-4">
-                test
+            <div style="clear:left;"></div>
+            <div id="allCardsContainer" class="col-sm-6">
+                <div class="row" id="cardCollection"><h1>Card Collection</h1></div>
+                <div class="row" id="cardCollectionCurrentFilter">
+                    <h2>All Cards</h2>
+                </div>
+                <div class="row">
+                    <div class="col-sm-1"><span class="glyphicon glyphicon-sword"</span></div>
+                    <div class="col-sm-1"><span class="glyphicon glyphicon-stop"</span></div>
+                    <div class="col-sm-1"><span class="glyphicon glyphicon-stop"</span></div>
+                    <div class="col-sm-1"><span class="glyphicon glyphicon-stop"</span></div>
+                    <div class="col-sm-1"><span class="glyphicon glyphicon-stop"</span></div>
+                    <div class="col-sm-1"><span class="glyphicon glyphicon-stop"</span></div>
+                    <div class="col-sm-1"><span class="glyphicon glyphicon-stop"</span></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 cardContainer">
+                        <img ng-src="/images/geralt.png" class="cardImage col-sm-6 col-lg-4" style="float:left"></img>
+                        <img ng-src="/images/geralt.png" class="cardImage col-sm-6 col-lg-4" style="float:left"></img>
+                        <img ng-src="/images/geralt.png" class="cardImage col-sm-6 col-lg-4" style="float:left"></img>
+                    </div>
+                </div>
+            </div>
+            <div id="currentDeckContainer" class="col-sm-6">
+                <div class="row" id="cardCollection"><h1>Cards in Deck</h1></div>
+                <div class="row" id="cardCollectionCurrentFilter">
+                    <h2>All Cards</h2>
+                </div>
+                <div class="row">
+                    <div class="col-sm-1"><span class="glyphicon glyphicon glyphicon-stop"</span></div>
+                    <div class="col-sm-1"><span class="glyphicon glyphicon glyphicon-stop"</span></div>
+                    <div class="col-sm-1"><span class="glyphicon glyphicon glyphicon-stop"</span></div>
+                    <div class="col-sm-1"><span class="glyphicon glyphicon glyphicon-stop"</span></div>
+                    <div class="col-sm-1"><span class="glyphicon glyphicon glyphicon-stop"</span></div>
+                    <div class="col-sm-1"><span class="glyphicon glyphicon glyphicon-stop"</span></div>
+                    <div class="col-sm-1"><span class="glyphicon glyphicon glyphicon-stop"</span></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 cardContainer">
+                       <!--  <img ng-src="/images/geralt.png" class="cardImage col-sm-6 col-lg-4" style="float:left"></img>
+                        <img ng-src="/images/geralt.png" class="cardImage col-sm-6 col-lg-4" style="float:left"></img>
+                        <img ng-src="/images/geralt.png" class="cardImage col-sm-6 col-lg-4" style="float:left"></img> -->
+                    </div>
+                </div>
             </div>
         </div>
         </div>
