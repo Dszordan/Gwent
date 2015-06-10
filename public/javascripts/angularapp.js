@@ -297,7 +297,7 @@ app.config([
             })
             .state('modifyCard',{
                   url:'/cards/{id}',
-                  templateUrl: '/cardModify.html',
+                  templateUrl: '/templates/modifyCard.html',
                   controller: 'cardModifyCtrl',
                   resolve: {
                       card: ['$stateParams', 'cards', function($stateParams, cards){
@@ -307,7 +307,7 @@ app.config([
               })
             .state('posts', {
               url: '/posts/{id}',
-              templateUrl: '/posts.html',
+              templateUrl: '/templates/comments.html',
               controller: 'PostsCtrl',
               resolve:{
                   post: ['$stateParams', 'posts', function($stateParams, posts) {
@@ -317,7 +317,7 @@ app.config([
             })
             .state('login', {
                 url: '/login',
-                templateUrl: '/login.html',
+                templateUrl: '/templates/login.html',
                 controller: 'AuthCtrl',
                 onEnter: [ '$state', 'auth', function($state, auth){
                     if (auth.isLoggedIn()) {
@@ -327,7 +327,7 @@ app.config([
             })
             .state('register', {
                 url: '/register',
-                templateUrl: '/register.html',
+                templateUrl: '/templates/register.html',
                 controller: 'AuthCtrl',
                 onEnter: [ '$state', 'auth', function($state, auth){
                     if (auth.isLoggedIn()) {
