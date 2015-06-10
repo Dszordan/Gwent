@@ -7,7 +7,9 @@ var CardSchema = new mongoose.Schema({
   range: Array,
   type: String,
   strength: Number,
-  shiny: Boolean
+  shiny: Boolean,
+  special: Boolean,
+  weather: Boolean
 });
 
 mongoose.model('Card', CardSchema);

@@ -29,6 +29,10 @@ h2{
     float:left;
 }
 
+.cardProperties > div{
+    word-wrap: break-word;
+}
+
 .cardProperties{
     float:left;
 }

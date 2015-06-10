@@ -83,6 +83,7 @@ app.controller('cardsCtrl',
     ['$scope',
     'cards',
     function($scope,cards){
+        cards.getAvailableCards();
         $scope.availableCards = cards.availableCards;
     }]);
 
@@ -100,7 +101,6 @@ app.controller('cardModifyCtrl',
 app.controller('creditsCtrl',
     ['$scope',
     function($scope){
-
     }]);
 
 app.controller('deckBuilderCtrl',
@@ -111,6 +111,7 @@ app.controller('deckBuilderCtrl',
         $scope.availableCards = cards.availableCards;
         $scope.availableCardsFilter = $scope.availableCards;
         $scope.currentDeck = [];
+        $scope.currentDeckFilter = [];
         $scope.totalCards = 0;
         $scope.totalUnitCards = 0;
         $scope.totalSpecialCards = 0;
@@ -152,10 +153,59 @@ app.controller('deckBuilderCtrl',
                 } else if (newFilter == "melee" || newFilter == "ranged" || newFilter=="siege"){
                     $scope.availableCardsFilter = [];
                     for (var i = 0; i < $scope.availableCards.length; i++) {
-                        if($scope.availableCards[i].range == newFilter)
+                        if($scope.availableCards[i].range.indexOf(newFilter) != -1)
                             $scope.availableCardsFilter.push($scope.availableCards[i]);
                     };
-                };
+                } else if (newFilter == "hero"){
+                    $scope.availableCardsFilter = [];
+                    for (var i = 0; i < $scope.availableCards.length; i++) {
+                        if($scope.availableCards[i].shiny)
+                            $scope.availableCardsFilter.push($scope.availableCards[i]);
+                    };
+                } else if (newFilter == "weather"){
+                    $scope.availableCardsFilter = [];
+                    for (var i = 0; i < $scope.availableCards.length; i++) {
+                        if($scope.availableCards[i].weather)
+                            $scope.availableCardsFilter.push($scope.availableCards[i]);
+                    };
+                } else if (newFilter == "special"){
+                    $scope.availableCardsFilter = [];
+                    for (var i = 0; i < $scope.availableCards.length; i++) {
+                        if($scope.availableCards[i].special)
+                            $scope.availableCardsFilter.push($scope.availableCards[i]);
+                    };
+                }
+            };
+        };
+        $scope.switchCurrentCardsFilter = function(newType, newFilter){
+            if (newType == "predefined") {
+                if (newFilter=="all") {
+                    $scope.currentDeckFilter = $scope.currentDeck;
+                } else if (newFilter == "melee" || newFilter == "ranged" || newFilter=="siege"){
+                    $scope.currentDeckFilter = [];
+                    for (var i = 0; i < $scope.currentDeck.length; i++) {
+                        if($scope.currentDeck[i].card.range.indexOf(newFilter) != -1)
+                            $scope.currentDeckFilter.push($scope.currentDeck[i]);
+                    };
+                } else if (newFilter == "hero"){
+                    $scope.currentDeckFilter = [];
+                    for (var i = 0; i < $scope.currentDeck.length; i++) {
+                        if($scope.currentDeck[i].card.shiny)
+                            $scope.currentDeckFilter.push($scope.currentDeck[i]);
+                    };
+                } else if (newFilter == "weather"){
+                    $scope.currentDeckFilter = [];
+                    for (var i = 0; i < $scope.currentDeck.length; i++) {
+                        if($scope.currentDeck[i].card.weather)
+                            $scope.currentDeckFilter.push($scope.currentDeck[i]);
+                    };
+                } else if (newFilter == "special"){
+                    $scope.currentDeckFilter = [];
+                    for (var i = 0; i < $scope.currentDeck.length; i++) {
+                        if($scope.currentDeck[i].card.special)
+                            $scope.currentDeckFilter.push($scope.currentDeck[i]);
+                    };
+                }
             };
         };
         $scope.calculateTotals = function(){
@@ -166,17 +216,23 @@ app.controller('deckBuilderCtrl',
             var totalUnitCards = 0;
             for (var i = 0; i < $scope.currentDeck.length; i++) {
                 var card = $scope.currentDeck[i].card;
+                var unitCount = 0;
+                var cardCount = card.count;
+                if (card.type.indexOf("unit") != -1){
+                    unitCount = card.count;
+                }
                 var count = $scope.currentDeck[i].count;
-                if (card.shiny) {
-                    totalHeroCards++;
-                };
+                if (card.shiny)
+                    totalHeroCards+= count;
+                if (card.special)
+                    totalSpecialCards += count;
                 totalUnitStrength+=card.strength * count;
                 totalCards+= count;
             };
 
             $scope.totalCards = totalCards;
             $scope.totalUnitCards = totalCards;
-            $scope.totalSpecialCards = 0;
+            $scope.totalSpecialCards = totalSpecialCards;
             $scope.totalUnitStrength = totalUnitStrength;
             $scope.totalHeroCards = totalHeroCards;
         };
@@ -324,6 +380,11 @@ app.config([
                           return cards.getCard($stateParams.id);
                       }]
                   }
+              })
+            .state('viewCards',{
+                  url:'/cards',
+                  templateUrl: '/templates/allCards.html',
+                  controller: 'cardsCtrl'
               })
             .state('posts', {
               url: '/posts/{id}',
