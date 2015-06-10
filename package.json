@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon --debug ./bin/www"
+    "start": "nodemon --debug ./bin/www",
+    "stop":"pkill --signal SIGINT gwentjs"
   },
   "dependencies": {
     "body-parser": "~1.12.4",

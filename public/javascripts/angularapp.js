@@ -97,6 +97,12 @@ app.controller('cardModifyCtrl',
         };
     }]);
 
+app.controller('creditsCtrl',
+    ['$scope',
+    function($scope){
+        
+    }]);
+
 app.controller('deckBuilderCtrl',
     ['$scope',
     'cards',
@@ -334,6 +340,10 @@ app.config([
                         $state.go('home');
                     };
                 }]
+            }).state('credits',{
+                url:'/credits',
+                templateUrl:'/templates/credits.html',
+                controller:'creditsCtrl'
             });
 
         $urlRouterProvider.otherwise('home');
