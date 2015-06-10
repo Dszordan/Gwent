@@ -13,12 +13,14 @@
         </div>
         <div class="col-lg-2">
             <div class="jordanGlyphicon glyphicon-cardHand" style="float:left;"></div>
-            <div style="float:left;">Number of Unit Cards</br>
+            <div style="float:left;" ng-class="{highlightCardError: totalUnitCards < 22}">
+            Number of Unit Cards</br>
             {{totalUnitCards}}/22</div>
         </div>
         <div class="col-lg-2">
-             <div class="jordanGlyphicon glyphicon-cardHand" style="float:left;"></div>
-            <div style="float:left;">Special Cards</br>
+            <div class="jordanGlyphicon glyphicon-cardHand" style="float:left;"></div>
+            <div style="float:left;" ng-class="{highlightCardError: totalSpecialCards > 10}">
+            Special Cards</br>
             {{totalSpecialCards}}/10</div>
         </div>
         <div class="col-lg-2">

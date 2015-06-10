@@ -5,7 +5,7 @@ var CardSchema = new mongoose.Schema({
   cardDescription: String,
   cardArtImageName: String,
   range: Array,
-  type: String,
+  type: Array,
   strength: Number,
   shiny: Boolean,
   special: Boolean,

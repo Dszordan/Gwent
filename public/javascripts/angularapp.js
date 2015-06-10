@@ -228,24 +228,24 @@ app.controller('deckBuilderCtrl',
             var totalUnitStrength = 0;
             var totalSpecialCards = 0;
             var totalUnitCards = 0;
+            var unitCount = 0;
             for (var i = 0; i < $scope.currentDeck.length; i++) {
                 var card = $scope.currentDeck[i].card;
-                var unitCount = 0;
-                var cardCount = card.count;
-                if (card.type.indexOf("unit") != -1){
-                    unitCount = card.count;
-                }
                 var count = $scope.currentDeck[i].count;
+                if (card.type.indexOf("unit") != -1){
+                    unitCount += count;
+                }
                 if (card.shiny)
                     totalHeroCards+= count;
                 if (card.special)
                     totalSpecialCards += count;
                 totalUnitStrength+=card.strength * count;
+                totalUnitCards = unitCount;
                 totalCards+= count;
             };
 
             $scope.totalCards = totalCards;
-            $scope.totalUnitCards = totalCards;
+            $scope.totalUnitCards = totalUnitCards;
             $scope.totalSpecialCards = totalSpecialCards;
             $scope.totalUnitStrength = totalUnitStrength;
             $scope.totalHeroCards = totalHeroCards;

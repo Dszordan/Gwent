@@ -76,6 +76,10 @@ h2{
     margin-left:10px;
 }
 
+.highlightCardError{
+    color:red;
+}
+
 /* Custom Glyphs*/
 .jordanGlyphicon{
     width:24px;
