@@ -112,6 +112,9 @@ app.controller('deckBuilderCtrl',
         $scope.availableCardsFilter = $scope.availableCards;
         $scope.currentDeck = [];
         $scope.currentDeckFilter = [];
+        $scope.currentDeckFilterName = "all";
+        $scope.availableCardsFilterDisplayName = "All Cards";
+        $scope.currentDeckFilterDisplayName = "All Cards";
         $scope.totalCards = 0;
         $scope.totalUnitCards = 0;
         $scope.totalSpecialCards = 0;
@@ -131,6 +134,7 @@ app.controller('deckBuilderCtrl',
                 $scope.currentDeck.push({'card':card, 'count': 1});
             };
             this.calculateTotals();
+            $scope.refreshCurrentDeckFilter();
         };
         $scope.removeCardFromDeck = function(card){
             var cardFoundInDeck = false;
@@ -140,6 +144,9 @@ app.controller('deckBuilderCtrl',
                     cardInDeck.count--;
                     if (cardInDeck.count == 0) {
                         $scope.currentDeck.splice(i, 1);
+                        for (var j = 0; j < $scope.currentDeckFilter.length; j++) {
+                            if ($scope.currentDeckFilter[j].card === card) {$scope.currentDeckFilter.splice(j, 1);};
+                        };
                     };
                     break;
                 };
@@ -148,6 +155,7 @@ app.controller('deckBuilderCtrl',
         };
         $scope.switchAvailableCardsFilter = function(newType, newFilter){
             if (newType == "predefined") {
+                $scope.availableCardsFilterDisplayName = newFilter[0].toUpperCase() + newFilter.substring(1, newFilter.length) + " Cards";
                 if (newFilter=="all") {
                     $scope.availableCardsFilter = $scope.availableCards;
                 } else if (newFilter == "melee" || newFilter == "ranged" || newFilter=="siege"){
@@ -178,7 +186,14 @@ app.controller('deckBuilderCtrl',
             };
         };
         $scope.switchCurrentCardsFilter = function(newType, newFilter){
+            $scope.currentDeckFilterName = newFilter;
             if (newType == "predefined") {
+                $scope.refreshCurrentDeckFilter();
+            };
+        };
+        $scope.refreshCurrentDeckFilter = function(){
+            var newFilter = $scope.currentDeckFilterName;
+            $scope.currentDeckFilterDisplayName = newFilter[0].toUpperCase() + newFilter.substring(1, newFilter.length) + " Cards";
                 if (newFilter=="all") {
                     $scope.currentDeckFilter = $scope.currentDeck;
                 } else if (newFilter == "melee" || newFilter == "ranged" || newFilter=="siege"){
@@ -206,8 +221,7 @@ app.controller('deckBuilderCtrl',
                             $scope.currentDeckFilter.push($scope.currentDeck[i]);
                     };
                 }
-            };
-        };
+        }
         $scope.calculateTotals = function(){
             var totalHeroCards = 0;
             var totalCards = 0;

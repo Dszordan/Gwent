@@ -36,7 +36,7 @@
     <div id="allCardsContainer" class="col-sm-6">
         <div class="row" id="cardCollection"><h1>Card Collection</h1></div>
         <div class="row" id="cardCollectionCurrentFilter">
-            <h2>All Cards</h2>
+            <h2>{{availableCardsFilterDisplayName}}</h2>
         </div>
         <div class="row">
             <div class="col-sm-1 col-lg-offset-2"><div class="jordanGlyphicon btn btn-primary glyphicon-cardHand"  ng-click="switchAvailableCardsFilter('predefined','all')"></div></div>
@@ -58,7 +58,7 @@
     <div id="currentDeckContainer" class="col-sm-6">
         <div class="row" id="cardCollection"><h1>Cards in Deck</h1></div>
         <div class="row" id="cardCollectionCurrentFilter">
-            <h2>All Cards</h2>
+            <h2>{{currentDeckFilterDisplayName}}</h2>
         </div>
         <div class="row">
             <div class="col-sm-1 col-lg-offset-2"><div class="jordanGlyphicon btn btn-primary  glyphicon-cardHand" ng-click="switchCurrentCardsFilter('predefined','all')"></div></div>
