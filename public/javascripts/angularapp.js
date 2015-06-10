@@ -1,4 +1,4 @@
-var app = angular.module('flapperNews',['ui.router']);
+var app = angular.module('gwentjs',['ui.router']);
 
 app.controller("MainCtrl",[
     '$scope',
@@ -100,7 +100,7 @@ app.controller('cardModifyCtrl',
 app.controller('creditsCtrl',
     ['$scope',
     function($scope){
-        
+
     }]);
 
 app.controller('deckBuilderCtrl',
@@ -109,6 +109,7 @@ app.controller('deckBuilderCtrl',
     function($scope,cards){
         cards.getAvailableCards();
         $scope.availableCards = cards.availableCards;
+        $scope.availableCardsFilter = $scope.availableCards;
         $scope.currentDeck = [];
         $scope.totalCards = 0;
         $scope.totalUnitCards = 0;
@@ -143,6 +144,19 @@ app.controller('deckBuilderCtrl',
                 };
             };
             this.calculateTotals();
+        };
+        $scope.switchAvailableCardsFilter = function(newType, newFilter){
+            if (newType == "predefined") {
+                if (newFilter=="all") {
+                    $scope.availableCardsFilter = $scope.availableCards;
+                } else if (newFilter == "melee" || newFilter == "ranged" || newFilter=="siege"){
+                    $scope.availableCardsFilter = [];
+                    for (var i = 0; i < $scope.availableCards.length; i++) {
+                        if($scope.availableCards[i].range == newFilter)
+                            $scope.availableCardsFilter.push($scope.availableCards[i]);
+                    };
+                };
+            };
         };
         $scope.calculateTotals = function(){
             var totalHeroCards = 0;

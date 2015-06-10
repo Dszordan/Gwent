@@ -40,16 +40,16 @@
         </div>
         <div class="row">
             <div class="col-sm-1 col-lg-offset-2"><div class="jordanGlyphicon btn btn-primary glyphicon-cardHand"></div></div>
-            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-sword"></div></div>
-            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-bowAndArrow"></div></div>
-            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-catapult"></div></div>
+            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-sword" ng-click="switchAvailableCardsFilter('predefined','melee')"></div></div>
+            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-bowAndArrow" ng-click="switchAvailableCardsFilter('predefined','ranged')"></div></div>
+            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-catapult" ng-click="switchAvailableCardsFilter('predefined','siege')"></div></div>
             <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-helmet"></div></div>
             <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-sun"></div></div>
             <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-spike"></div></div>
         </div>
         <div class="row">
             <div class="col-sm-12 cardContainer">
-                <div ng-repeat="card in availableCards" class="col-lg-4">
+                <div ng-repeat="card in availableCardsFilter" class="col-lg-4">
                     <img ng-src="/images/{{card.cardArtImageName}}" class="cardImage col-lg-12" style="float:left" ng-click="putCardInDeck(card)"></img>
                 </div>
             </div>

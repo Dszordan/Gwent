@@ -1,5 +1,5 @@
 {
-  "name": "Gwent",
+  "name": "gwentjs",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -15,10 +15,10 @@
     "morgan": "~1.5.3",
     "nodemon": "^1.3.7",
     "serve-favicon": "~2.2.1",
-	"mongoose":"4.0.5",
-	"passport":"0.2.2",
-	"passport-local":"1.0.0",
-	"jsonwebtoken":"5.0.1",
-	"express-jwt":"3.0.1"
+  	"mongoose":"4.0.5",
+  	"passport":"0.2.2",
+  	"passport-local":"1.0.0",
+  	"jsonwebtoken":"5.0.1",
+  	"express-jwt":"3.0.1"
   }
 }

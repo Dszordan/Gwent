@@ -4,6 +4,13 @@
 
 curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Geralt\",\"cardDescription\": \"Geralt of Rivia\",  \"cardArtImageName\": \"geralt.jpg\",  \"range\": [\"melee\", \"archer\"],  \"type\": \"unit\",  \"strength\": \"15\",  \"shiny\": \"true\"}" --url http://localhost:3000/cards
 
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Geralt\",\"cardDescription\": \"Geralt of Rivia\",  \"cardArtImageName\": \"Vesemir1.png\",  \"range\": [\"melee\", \"archer\"],  \"type\": \"unit\",  \"strength\": \"6\",  \"shiny\": \"false\"}" --url http://localhost:3000/cards
+
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Zoltan\",\"cardDescription\": \"Geralt of Rivia\",  \"cardArtImageName\": \"zoltan1.png\",  \"range\": [\"melee\", \"archer\"],  \"type\": \"unit\",  \"strength\": \"5\",  \"shiny\": \"false\"}" --url http://localhost:3000/cards
+
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Dethmold\",\"cardDescription\": \"I once made a prisoner vomit his own entrails... Ah, good times...\",  \"cardArtImageName\": \"dethmold.png\",  \"range\": [\"ranged\"],  \"type\": \"unit\",  \"strength\": \"6\",  \"shiny\": \"false\"}" --url http://localhost:3000/cards
+
+
 ///////////SERVER
 
 curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Geralt\",\"cardDescription\": \"Geralt of Rivia\",  \"cardArtImageName\": \"geralt.png\",  \"range\": [\"melee\", \"archer\"],  \"type\": \"unit\",  \"strength\": \"15\",  \"shiny\": \"true\"}" --url http://104.131.84.230/cards
@@ -11,3 +18,4 @@ curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Geralt\",\
 curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Geralt\",\"cardDescription\": \"Geralt of Rivia\",  \"cardArtImageName\": \"Vesemir1.png\",  \"range\": [\"melee\", \"archer\"],  \"type\": \"unit\",  \"strength\": \"6\",  \"shiny\": \"false\"}" --url http://104.131.84.230/cards
 
 curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Zoltan\",\"cardDescription\": \"Geralt of Rivia\",  \"cardArtImageName\": \"zoltan1.png\",  \"range\": [\"melee\", \"archer\"],  \"type\": \"unit\",  \"strength\": \"5\",  \"shiny\": \"false\"}" --url http://104.131.84.230/cards
+
