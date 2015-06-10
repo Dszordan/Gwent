@@ -1,0 +1,83 @@
+<div id="deckBuilderContainer" class="row">
+    <div id="deckBuilderHeader" class="col-lg-6 col-lg-offset-3">
+        <div id="chosenFactionHeader">Chosen Faction</div>
+        <div id="chosenFaction"><h1>Northern Realms</h1></div>
+        <div id="chosenFactionPerk">Passive Perk: Draw a card from your deck when you win a round.</div>
+    </div>
+    <div style="clear:left;"></div>
+    <div id="currentDeckStats" class="row">
+        <div class="col-lg-2 col-lg-offset-1">
+            <div class="jordanGlyphicon glyphicon-cardDeck" style="float:left;"></div>
+            <div style="float:left;">Total cards in Deck</br>
+            {{totalCards}}</div>
+        </div>
+        <div class="col-lg-2">
+            <div class="jordanGlyphicon glyphicon-cardHand" style="float:left;"></div>
+            <div style="float:left;">Number of Unit Cards</br>
+            {{totalUnitCards}}/22</div>
+        </div>
+        <div class="col-lg-2">
+             <div class="jordanGlyphicon glyphicon-cardHand" style="float:left;"></div>
+            <div style="float:left;">Special Cards</br>
+            {{totalSpecialCards}}/10</div>
+        </div>
+        <div class="col-lg-2">
+            <div class="jordanGlyphicon glyphicon-fist" style="float:left;"></div>
+            <div style="float:left;">Total Unit Strength</br>
+            {{totalUnitStrength}}</div>
+        </div>
+        <div class="col-lg-2">
+        <div class="jordanGlyphicon glyphicon-helmet" style="float:left;"></div>
+            <div style="float:left;">Hero Cards</br>
+            {{totalHeroCards}}</div>
+        </div>
+    </div>
+    <div style="clear:left;"></div>
+    <div id="allCardsContainer" class="col-sm-6">
+        <div class="row" id="cardCollection"><h1>Card Collection</h1></div>
+        <div class="row" id="cardCollectionCurrentFilter">
+            <h2>All Cards</h2>
+        </div>
+        <div class="row">
+            <div class="col-sm-1 col-lg-offset-2"><div class="jordanGlyphicon btn btn-primary glyphicon-cardHand"></div></div>
+            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-sword"></div></div>
+            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-bowAndArrow"></div></div>
+            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-catapult"></div></div>
+            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-helmet"></div></div>
+            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-sun"></div></div>
+            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-spike"></div></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 cardContainer">
+                <div ng-repeat="card in availableCards" class="col-lg-4">
+                    <img ng-src="/images/{{card.cardArtImageName}}" class="cardImage col-lg-12" style="float:left" ng-click="putCardInDeck(card)"></img>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="currentDeckContainer" class="col-sm-6">
+        <div class="row" id="cardCollection"><h1>Cards in Deck</h1></div>
+        <div class="row" id="cardCollectionCurrentFilter">
+            <h2>All Cards</h2>
+        </div>
+        <div class="row">
+            <div class="col-sm-1 col-lg-offset-2"><div class="jordanGlyphicon btn btn-primary  glyphicon-cardHand"></div></div>
+            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-sword"></div></div>
+            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-bowAndArrow"></div></div>
+            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-catapult"></div></div>
+            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-helmet"></div></div>
+            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-sun"></div></div>
+            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-spike"></div></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 cardContainer">
+                <div ng-repeat="card in currentDeck" class="col-lg-4">
+                    <img ng-src="/images/{{card.card.cardArtImageName}}" class="cardImage col-lg-12" style="float:left" ng-click="removeCardFromDeck(card.card)"></img>
+                    <div class="cardCount">
+                        <div class="jordanGlyphicon glyphicon-cardHand" style="float:left;"></div> x {{card.count}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

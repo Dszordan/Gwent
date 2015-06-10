@@ -97,6 +97,71 @@ app.controller('cardModifyCtrl',
         };
     }]);
 
+app.controller('deckBuilderCtrl',
+    ['$scope',
+    'cards',
+    function($scope,cards){
+        cards.getAvailableCards();
+        $scope.availableCards = cards.availableCards;
+        $scope.currentDeck = [];
+        $scope.totalCards = 0;
+        $scope.totalUnitCards = 0;
+        $scope.totalSpecialCards = 0;
+        $scope.totalUnitStrength = 0;
+        $scope.totalHeroCards = 0;
+        $scope.putCardInDeck = function(card){
+            var cardFoundInDeck = false;
+            for (var i = 0; i < $scope.currentDeck.length; i++) {
+                var cardInDeck = $scope.currentDeck[i];
+                if (cardInDeck.card === card) {
+                    cardInDeck.count++;
+                    cardFoundInDeck = true;
+                    break;
+                };
+            };
+            if ($scope.currentDeck.length == 0 || !cardFoundInDeck) {
+                $scope.currentDeck.push({'card':card, 'count': 1});
+            };
+            this.calculateTotals();
+        };
+        $scope.removeCardFromDeck = function(card){
+            var cardFoundInDeck = false;
+            for (var i = 0; i < $scope.currentDeck.length; i++) {
+                var cardInDeck = $scope.currentDeck[i];
+                if (cardInDeck.card === card) {
+                    cardInDeck.count--;
+                    if (cardInDeck.count == 0) {
+                        $scope.currentDeck.splice(i, 1);
+                    };
+                    break;
+                };
+            };
+            this.calculateTotals();
+        };
+        $scope.calculateTotals = function(){
+            var totalHeroCards = 0;
+            var totalCards = 0;
+            var totalUnitStrength = 0;
+            var totalSpecialCards = 0;
+            var totalUnitCards = 0;
+            for (var i = 0; i < $scope.currentDeck.length; i++) {
+                var card = $scope.currentDeck[i].card;
+                var count = $scope.currentDeck[i].count;
+                if (card.shiny) {
+                    totalHeroCards++;
+                };
+                totalUnitStrength+=card.strength * count;
+                totalCards+= count;
+            };
+
+            $scope.totalCards = totalCards;
+            $scope.totalUnitCards = totalCards;
+            $scope.totalSpecialCards = 0;
+            $scope.totalUnitStrength = totalUnitStrength;
+            $scope.totalHeroCards = totalHeroCards;
+        };
+    }]);
+
 app.factory('cards',['$http', function($http){
     var o = {
         availableCards : []
@@ -227,13 +292,8 @@ app.config([
           $stateProvider
             .state('home', {
               url: '/home',
-              templateUrl: '/dev.html',
-              controller: 'cardsCtrl',
-              resolve: {
-                postPromise: ['cards', function(cards){
-                    return cards.getAvailableCards();
-                }]
-              }
+              templateUrl: '/templates/deckBuilder.html',
+              controller: 'deckBuilderCtrl'
             })
             .state('modifyCard',{
                   url:'/cards/{id}',

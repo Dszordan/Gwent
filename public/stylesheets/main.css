@@ -1,4 +1,4 @@
-/* Overrides */
+    /* Overrides */
 h1{
     font-size:26px;
     padding:0px;
@@ -9,6 +9,10 @@ h2{
     font-size:20px;
     padding:0px;
     margin:0px;
+}
+
+.card11{
+    float:left;
 }
 
 .cards{
@@ -30,7 +34,6 @@ h2{
 }
 
 .cardImage{
-
 }
 
 
@@ -65,7 +68,60 @@ h2{
     text-align: center;
 }
 
+.cardCount{
+    margin-left:10px;
+}
+
 /* Custom Glyphs*/
+.jordanGlyphicon{
+    width:24px;
+    height:24px;
+    padding:12px;
+    background-repeat:no-repeat;
+}
+
+.jordanGlyphicon.btn{
+    background-color:#ccc;
+    border-color:#ccc;
+}
+
+.jordanGlyphicon.btn:hover{
+    background-color:#aaa;
+    border-color:#aaa;
+}
+
 .glyphicon-sword{
-    background-image:url('/images/glyphs/sword.png');
+    background-image:url('/images/glyphs/swordsmall.png');
+}
+
+.glyphicon-cardHand{
+    background-image:url('/images/glyphs/cardHand.png');
+}
+
+.glyphicon-bowAndArrow{
+    background-image:url('/images/glyphs/bowAndArrow.png');
+}
+
+.glyphicon-catapult{
+    background-image:url('/images/glyphs/catapult.png');
+}
+
+.glyphicon-helmet{
+    background-image:url('/images/glyphs/helmet.png');
+}
+
+.glyphicon-sun{
+    background-image:url('/images/glyphs/sun.png');
+}
+
+.glyphicon-spike{
+    background-image:url('/images/glyphs/spike.png');
+}
+
+.glyphicon-cardDeck{
+    background-image:url('/images/glyphs/cardDeck.png');
+}
+
+.glyphicon-fist{
+    background-image:url('/images/glyphs/fist.png');
 }
