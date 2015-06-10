@@ -25,4 +25,6 @@ curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Geralt\",\
 curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Zoltan\",\"cardDescription\": \"Geralt of Rivia\",  \"cardArtImageName\": \"zoltan1.png\",  \"range\": [\"melee\", \"archer\"],  \"type\": [\"unit\"],  \"strength\": \"5\",  \"shiny\": \"false\",\"weather\": \"false\", \"special\": \"false\"}" --url http://104.131.84.230/cards
 
 ////////DECKS
-curl -X POST -H "Content-Type: application/json" -d "\"deckName\": \"jordanTest\", \"dateCreated\": \"2011-10-06T14: 01: 31.106Z\", \"cards\": [{\"individualCard\": \"55737de4b26a6a9015d7c920\", \"cardCount\": \"4\" }]" --url http://localhost:3000/decks
+curl -X POST -H "Content-Type: application/json" -d "{\"deckName\": \"jordanTest\", \"cards\": [{\"card\": \"55737de4b26a6a9015d7c920\", \"count\": \"4\" }]}" --url http://localhost:3000/decks
+
+curl -X POST -H "Content-Type: application/json" -d "{\"deckName\": \"jordanTest\",\"cards\":[]}" --url http://localhost:3000/decks

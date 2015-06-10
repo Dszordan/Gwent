@@ -106,12 +106,29 @@ app.controller('creditsCtrl',
 app.controller('deckBuilderCtrl',
     ['$scope',
     'cards',
-    function($scope,cards){
-        cards.getAvailableCards();
+    'decks',
+    'deck',
+    function($scope,cards,decks,deck){
+        cards.getAvailableCards()
+        .success(function(data){
+            if (deck) {
+                $scope.deckName = deck.deckName;
+                for (var i = 0; i < deck.cards.length; i++) {
+                    var deck_id = deck.cards[i].card._id;
+                    for (var j = 0; j < $scope.availableCards.length; j++) {
+                        if ($scope.availableCards[j]._id == deck_id) {
+                            var count = deck.cards[i].count;
+                            $scope.putCardInDeck($scope.availableCards[j], count);
+                        };
+                    };
+                };
+            };
+        });
         $scope.availableCards = cards.availableCards;
         $scope.availableCardsFilter = $scope.availableCards;
         $scope.currentDeck = [];
         $scope.currentDeckFilter = [];
+        $scope.deckName = "";
         $scope.currentDeckFilterName = "all";
         $scope.availableCardsFilterDisplayName = "All Cards";
         $scope.currentDeckFilterDisplayName = "All Cards";
@@ -120,18 +137,18 @@ app.controller('deckBuilderCtrl',
         $scope.totalSpecialCards = 0;
         $scope.totalUnitStrength = 0;
         $scope.totalHeroCards = 0;
-        $scope.putCardInDeck = function(card){
+        $scope.putCardInDeck = function(card,count){
             var cardFoundInDeck = false;
             for (var i = 0; i < $scope.currentDeck.length; i++) {
                 var cardInDeck = $scope.currentDeck[i];
                 if (cardInDeck.card === card) {
-                    cardInDeck.count++;
+                    cardInDeck.count+=count;
                     cardFoundInDeck = true;
                     break;
                 };
             };
             if ($scope.currentDeck.length == 0 || !cardFoundInDeck) {
-                $scope.currentDeck.push({'card':card, 'count': 1});
+                $scope.currentDeck.push({'card':card, 'count': count});
             };
             this.calculateTotals();
             $scope.refreshCurrentDeckFilter();
@@ -250,6 +267,18 @@ app.controller('deckBuilderCtrl',
             $scope.totalUnitStrength = totalUnitStrength;
             $scope.totalHeroCards = totalHeroCards;
         };
+        $scope.saveDeck = function(){
+            var deckToSave ={
+                deckName:$scope.deckName,
+                cards: $scope.currentDeck
+            };
+            decks.saveDeck(deckToSave).success(function(data){
+                $scope.savedURL = "http://localhost:3000/#/decks/" + data._id;
+                $scope.saveResultMessage = "saved " + $scope.savedURL ;
+            });
+        };
+        $scope.refreshCurrentDeckFilter();
+        $scope.calculateTotals();
     }]);
 
 app.factory('cards',['$http', function($http){
@@ -277,6 +306,23 @@ app.factory('cards',['$http', function($http){
                 console.log('screwed up' + errormessage);
             });
     };
+    return o;
+}]);
+
+app.factory('decks',['$http', function($http){
+    var o = {
+        deck : []
+    };
+    o.getDeck = function(id){
+        return $http.get('/decks/' + id).then(function(res){
+            return res.data;
+        });
+    }
+    o.saveDeck = function(deck){
+        return $http.post('/decks', deck).success(function(data){
+
+        });
+    }
     return o;
 }]);
 
@@ -383,8 +429,23 @@ app.config([
             .state('home', {
               url: '/home',
               templateUrl: '/templates/deckBuilder.html',
-              controller: 'deckBuilderCtrl'
+              controller: 'deckBuilderCtrl',
+              resolve:{
+                deck: ['$stateParams', 'decks', function($stateParams, decks){
+                          return '';
+                      }]
+              }
             })
+            .state('loadDeck',{
+                  url:'/decks/{id}',
+                  templateUrl: '/templates/deckBuilder.html',
+                  controller: 'deckBuilderCtrl',
+                  resolve: {
+                      deck: ['$stateParams', 'decks', function($stateParams, decks){
+                          return decks.getDeck($stateParams.id);
+                      }]
+                  }
+              })
             .state('modifyCard',{
                   url:'/cards/{id}',
                   templateUrl: '/templates/modifyCard.html',

@@ -10,6 +10,7 @@ require('./models/Posts');
 require('./models/Comments');
 require('./models/Users');
 require('./models/Cards');
+require('./models/Decks');
 
 require('./config/passport');
 

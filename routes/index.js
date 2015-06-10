@@ -8,6 +8,7 @@ var Post = mongoose.model('Post');
 var Comment = mongoose.model('Comment');
 var User = mongoose.model('User');
 var Card = mongoose.model('Card');
+var Deck = mongoose.model('Deck');
 
 var auth = jwt({secret:'SECRET', userProperty: 'payLoad'});
  
@@ -16,7 +17,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-/* GET All posts GWENT*/
+/* GET All cards */
 router.get('/cards', function(req, res, next){
     Card.find(function(err, cards){
         if (err) {next(err);};
@@ -25,8 +26,27 @@ router.get('/cards', function(req, res, next){
     });
 });
 
+/* Get Specific Card by ID */
 router.get('/cards/:card', function(req, res, next){
     res.json(req.card);
+});
+
+/* GET All decks */
+router.get('/decks', function(req, res, next){
+    Deck.find(function(err, decks){
+        if (err) {next(err);};
+
+        res.json(decks);
+    });
+});
+
+/* Get Specific deck by ID */
+router.get('/decks/:deck', function(req, res, next){
+    req.deck.populate('cards.card', function(err, deck){
+        if (err) {return next(err);};
+
+        res.json(deck);
+    })
 });
 
 /* GET All posts*/
@@ -89,6 +109,17 @@ router.post('/cards', function(req, res, next){
         if (err) {next(err);};
 
         res.json(card);
+    });
+});
+
+/* POST - create new deck */
+router.post('/decks', function(req, res, next){
+    var deck = new Deck(req.body);
+    console.log(deck);
+    deck.save(function(err, deck){
+        if (err) {next(err);};
+
+        res.json(deck);
     });
 });
 
@@ -195,6 +226,18 @@ router.param('comment', function(req,res,next,id){
         if (!comment) {return next(new Error('can\'t find comment'))};
 
         req.comment = comment;
+        return next();
+    });
+});
+
+router.param('deck', function(req,res,next,id){
+    var query = Deck.findById(id);
+
+    query.exec(function(err, deck){
+        if (err) {return next(err);};
+        if (!deck) {return next(new Error('can\'t find deck'))};
+
+        req.deck = deck;
         return next();
     });
 });

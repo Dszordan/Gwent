@@ -1,8 +1,10 @@
 <div id="deckBuilderContainer" class="row">
     <div id="deckBuilderHeader" class="col-lg-6 col-lg-offset-3">
         <div id="chosenFactionHeader">Chosen Faction</div>
-        <div id="chosenFaction"><h1>Northern Realms</h1></div>
+        <div id="chosenFaction"><h1>Northern Realms</h1> </div>
         <div id="chosenFactionPerk">Passive Perk: Draw a card from your deck when you win a round.</div>
+        <input type="text" class="form-control" placeholder="Deck Name" ng-model="deckName"></input><div class="btn btn-primary" ng-click="saveDeck()">Save Deck</div>
+        <div>{{saveResultMessage}}</div>
     </div>
     <div style="clear:left;"></div>
     <div id="currentDeckStats" class="row">
@@ -52,7 +54,7 @@
         <div class="row">
             <div class="col-sm-12 cardContainer">
                 <div ng-repeat="card in availableCardsFilter" class="col-lg-4">
-                    <img ng-src="/images/{{card.cardArtImageName}}" class="cardImage col-lg-12" style="float:left" ng-click="putCardInDeck(card)"></img>
+                    <img ng-src="/images/{{card.cardArtImageName}}" class="cardImage col-lg-12" style="float:left" ng-click="putCardInDeck(card,1)"></img>
                 </div>
             </div>
         </div>
