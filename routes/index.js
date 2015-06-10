@@ -4,8 +4,6 @@ var passport = require('passport');
 var jwt = require('express-jwt');
 
 var mongoose = require('mongoose');
-var Post = mongoose.model('Post');
-var Comment = mongoose.model('Comment');
 var User = mongoose.model('User');
 var Card = mongoose.model('Card');
 var Deck = mongoose.model('Deck');
@@ -46,24 +44,6 @@ router.get('/decks/:deck', function(req, res, next){
         if (err) {return next(err);};
 
         res.json(deck);
-    })
-});
-
-/* GET All posts*/
-router.get('/posts', function(req, res, next){
-    Post.find(function(err, posts){
-        if (err) {next(err);};
-
-        res.json(posts);
-    });
-});
-
-/* GET specific post */
-router.get('/posts/:post', function(req,res,next){
-    req.post.populate('comments', function(err, post){
-        if (err) {return next(err);};
-
-        res.json(post);
     })
 });
 
@@ -123,36 +103,6 @@ router.post('/decks', function(req, res, next){
     });
 });
 
-/* POST - create new post */
-router.post('/posts', auth, function(req,res,next){
-    var post = new Post(req.body);
-    post.author = req.payLoad.username;
-
-    post.save(function(err, post){
-        if (err) {next(err);};
-
-        res.json(post);
-    })
-});
-
-/* POST - Create a comment to a post */
-router.post('/posts/:post/comments', auth , function(req,res,next){
-    var comment = new Comment(req.body);
-    comment.post = req.post;
-    comment.author = req.payLoad.username;
-
-    comment.save(function(err, comment){
-        if (err) {return next(err);};
-
-        req.post.comments.push(comment);
-        req.post.save(function(err,post){
-            if (err) {return next(err);};
-
-            res.json(comment);
-        });
-    });
-});
-
 router.put('/cards/:existingCard/modify', function(req, res, next){
     console.log('beginning update');
     var cardValues = new Card(req.body);
@@ -170,30 +120,6 @@ router.put('/cards/:existingCard/modify', function(req, res, next){
         });
 });
 
-/*PUT - Upvote a post*/
-router.put('/posts/:post/upvote', auth, function(req,res, next){
-    req.post.upvote(function(err, post){
-        if (err) {return next(err);};
-        res.json(post);
-    });
-});
-
-/*PUT - Downvote a post */
-router.put('/posts/:post/downvote', auth, function(req, res, next){
-    req.post.downvote(function(err, post){
-        if (err) {return next(err);};
-        res.json(post);
-    });
-});
-
-/*PUT - Upvote a comment on a post */
-router.put('/posts/:post/comments/:comment/upvote', auth, function(req,res,next){
-    req.comment.upvote(function(err, comment){
-        if (err) {return next(err);};
-        res.json(comment);
-    });
-});
-
 router.param('card', function(req,res,next,id){
     var query = Card.findById(id);
 
@@ -202,30 +128,6 @@ router.param('card', function(req,res,next,id){
         if(!card){return next(new Error('card doesn\' exist'))};
 
         req.card = card;
-        return next();
-    });
-});
-
-router.param('post', function(req,res,next,id){
-    var query = Post.findById(id);
-
-    query.exec(function(err, post){
-        if (err) {return next(err);};
-        if (!post) {return next(new Error('can\'t find post'))};
-
-        req.post = post;
-        return next();
-    });
-});
-
-router.param('comment', function(req,res,next,id){
-    var query = Comment.findById(id);
-
-    query.exec(function(err, comment){
-        if (err) {return next(err);};
-        if (!comment) {return next(new Error('can\'t find comment'))};
-
-        req.comment = comment;
         return next();
     });
 });

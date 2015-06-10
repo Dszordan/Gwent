@@ -27,29 +27,6 @@ app.controller("MainCtrl",[
     };
 }]);
 
-app.controller('PostsCtrl',[
-    '$scope',
-    'posts',
-    'post',
-    'auth',
-    function($scope, posts, post, auth){
-        $scope.post = post;
-        $scope.isLoggedIn = auth.isLoggedIn;
-        $scope.addComment = function(){
-            if (!$scope.body || $scope.body === '') {return;};
-            posts.addComment(post._id, {
-                body: $scope.body,
-                author: 'user'
-            }).success(function(comment){
-                $scope.post.comments.push(comment);
-            });
-            $scope.body = '';
-        };
-        $scope.incrementUpvotes = function(comment){
-            posts.upvoteComment(post, comment);
-        };
-    }]);
-
 app.controller('AuthCtrl', ['$scope', '$state', 'auth', function($scope, $state, auth){
     $scope.user = {};
 
@@ -326,58 +303,6 @@ app.factory('decks',['$http', function($http){
     return o;
 }]);
 
-app.factory('posts',['$http','auth', function($http, auth){
-    //service body
-    var o = {
-        posts:[]
-    };
-    o.getAll = function(){
-        return $http.get('/posts').success(function(data){
-            angular.copy(data, o.posts);
-        });
-    };
-    o.create = function(post) {
-        return $http.post('/posts', post, {
-            headers: {Authorization: 'Bearer ' + auth.getToken()}
-        }).success(function(data){
-            o.posts.push(data);
-        });
-    };
-    o.upvote = function(post){
-        return $http.put('/posts/'+post._id+'/upvote', null, {
-            headers: {Authorization: 'Bearer ' + auth.getToken()}
-        }).success(function(data){
-            post.upvotes++;
-        });
-    };
-    o.downvote = function(post){
-        return $http.put('/posts/' + post._id + '/downvote', null, {
-            headers: {Authorization: 'Bearer ' + auth.getToken()}
-        }).success(function(data){
-            post.upvotes--;
-        });
-    };
-    o.get = function(id) {
-      return $http.get('/posts/' + id).then(function(res){
-        return res.data;
-      });
-    };
-    o.addComment = function(id, comment){
-        return $http.post('/posts/' + id + '/comments', comment, {
-            headers: {Authorization: 'Bearer ' + auth.getToken()}
-        });
-    };
-    o.upvoteComment = function(post, comment){
-        return $http.put('/posts/' + post._id + '/comments/' + comment._id + '/upvote', null, {
-            headers: {Authorization: 'Bearer ' + auth.getToken()}
-        })
-        .success(function(data){
-            comment.upvotes++;
-        });
-    };
-    return o;
-}]);
-
 app.factory('auth', ['$http', '$window', function($http, $window){
     var auth = {};
     auth.getToken = function(){
@@ -461,16 +386,6 @@ app.config([
                   templateUrl: '/templates/allCards.html',
                   controller: 'cardsCtrl'
               })
-            .state('posts', {
-              url: '/posts/{id}',
-              templateUrl: '/templates/comments.html',
-              controller: 'PostsCtrl',
-              resolve:{
-                  post: ['$stateParams', 'posts', function($stateParams, posts) {
-                        return posts.get($stateParams.id);
-                    }]
-              }
-            })
             .state('login', {
                 url: '/login',
                 templateUrl: '/templates/login.html',

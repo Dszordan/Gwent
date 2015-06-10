@@ -11,14 +11,9 @@
 
 
     <body ng-app="gwentjs">
-
         <nav class="navbar navbar-default pull-right" ng-controller="NavCtrl">
             <ul class="nav navbar-nav">
                 <li><a href="/#/home">Home</a></li>
-                <li ng-show="isLoggedIn()"><a>{{currentUser()}}</a></li>
-                <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
-                <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
-                <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
                 <li class="hidden-lg hidden-sm hidden-md"><a>XS</a></li>
                 <li class="hidden-xs hidden-lg hidden-md"><a>Small</a></li>
                 <li class="hidden-xs hidden-sm hidden-lg"><a>Medium</a></li>    
