@@ -88,21 +88,14 @@ app.controller('deckBuilderCtrl',
     function($scope,cards,decks,deck){
         cards.getAvailableCards()
         .success(function(data){
+            $scope.availableCardsSuperset = data;
             if (deck) {
-                $scope.deckName = deck.deckName;
-                for (var i = 0; i < deck.cards.length; i++) {
-                    var deck_id = deck.cards[i].card._id;
-                    for (var j = 0; j < $scope.availableCards.length; j++) {
-                        if ($scope.availableCards[j]._id == deck_id) {
-                            var count = deck.cards[i].count;
-                            $scope.putCardInDeck($scope.availableCards[j], count);
-                        };
-                    };
-                };
-            };
+                $scope.loadExistingDeck(deck);
+            } else {
+                $scope.filterAvailableCards("northernrealms");
+            }
         });
-        $scope.availableCards = cards.availableCards;
-        $scope.availableCardsFilter = $scope.availableCards;
+        $scope.selectedFaction = "";
         $scope.currentDeck = [];
         $scope.currentDeckFilter = [];
         $scope.deckName = "";
@@ -114,6 +107,34 @@ app.controller('deckBuilderCtrl',
         $scope.totalSpecialCards = 0;
         $scope.totalUnitStrength = 0;
         $scope.totalHeroCards = 0;
+        $scope.filterAvailableCards = function(faction){
+            if (faction === $scope.selectedFaction) {return;};
+            $scope.selectedFaction = faction;
+            var cardSubset = [];
+            $scope.currentDeck = [];
+            $scope.currentDeckFilter = [];
+            for (var i = 0; i < $scope.availableCardsSuperset.length; i++) {
+                if ($scope.availableCardsSuperset[i].faction === faction || $scope.availableCardsSuperset[i].faction === 'neutral') {
+                    cardSubset.push($scope.availableCardsSuperset[i]);
+                };
+            };
+            $scope.availableCards = cardSubset;
+            $scope.availableCardsFilter = cardSubset;
+            $scope.calculateTotals();
+        }
+        $scope.loadExistingDeck = function(deck){
+            $scope.deckName = deck.deckName;
+            $scope.filterAvailableCards(deck.faction);
+            for (var i = 0; i < deck.cards.length; i++) {
+                var deck_id = deck.cards[i].card._id;
+                for (var j = 0; j < $scope.availableCards.length; j++) {
+                    if ($scope.availableCards[j]._id == deck_id) {
+                        var count = deck.cards[i].count;
+                        $scope.putCardInDeck($scope.availableCards[j], count);
+                    };
+                };
+            };
+        }
         $scope.putCardInDeck = function(card,count){
             var cardFoundInDeck = false;
             for (var i = 0; i < $scope.currentDeck.length; i++) {
@@ -247,7 +268,8 @@ app.controller('deckBuilderCtrl',
         $scope.saveDeck = function(){
             var deckToSave ={
                 deckName:$scope.deckName,
-                cards: $scope.currentDeck
+                cards: $scope.currentDeck,
+                faction: $scope.selectedFaction
             };
             decks.saveDeck(deckToSave).success(function(data){
                 $scope.savedURL = "http://localhost:3000/#/decks/" + data._id;

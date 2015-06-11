@@ -106,7 +106,7 @@ router.post('/decks', function(req, res, next){
 router.put('/cards/:existingCard/modify', function(req, res, next){
     console.log('beginning update');
     var cardValues = new Card(req.body);
-    console.log('card = ' + cardValues + 'id + ' + req.existingCard);
+    console.log('card = ' + cardValues + 'id + ');
     Card.findOneAndUpdate(
         {_id:req.params.existingCard},
         cardValues,
