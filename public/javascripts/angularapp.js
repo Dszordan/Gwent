@@ -107,9 +107,12 @@ app.controller('deckBuilderCtrl',
         $scope.totalSpecialCards = 0;
         $scope.totalUnitStrength = 0;
         $scope.totalHeroCards = 0;
+        $scope.savedURL = '';
+        $scope.saveResultMessage = '';
         $scope.filterAvailableCards = function(faction){
             if (faction === $scope.selectedFaction) {return;};
             $scope.selectedFaction = faction;
+            $scope.setFaction(faction);
             var cardSubset = [];
             $scope.currentDeck = [];
             $scope.currentDeckFilter = [];
@@ -121,6 +124,28 @@ app.controller('deckBuilderCtrl',
             $scope.availableCards = cardSubset;
             $scope.availableCardsFilter = cardSubset;
             $scope.calculateTotals();
+        };
+        $scope.setFaction = function(faction){
+            if (faction === 'northernrealms') {
+                $scope.factionDisplayName = 'Northern Realms';
+                $scope.factionPassive = 'Draw a card from your deck when you win a round.'
+            } 
+            else if (faction === 'monster'){
+                $scope.factionDisplayName = 'Monster';
+                $scope.factionPassive = 'A random unit card remains on the field after a round.'  
+            }
+            else if (faction === 'scoiatael'){
+                $scope.factionDisplayName = 'Scoia\'tael';
+                $scope.factionPassive = 'Pick who goes first.'  
+            }
+            else if (faction === 'nilfgardian'){
+                $scope.factionDisplayName = 'Nilfgard';
+                $scope.factionPassive = 'Wins any round ending in a tie.'  
+            }
+            else {
+                $scope.factionDisplayName = 'This should be populated...';
+                $scope.factionPassive = 'This should be populated...';
+            }
         }
         $scope.loadExistingDeck = function(deck){
             $scope.deckName = deck.deckName;
@@ -272,8 +297,8 @@ app.controller('deckBuilderCtrl',
                 faction: $scope.selectedFaction
             };
             decks.saveDeck(deckToSave).success(function(data){
-                $scope.savedURL = "http://localhost:3000/#/decks/" + data._id;
-                $scope.saveResultMessage = "saved " + $scope.savedURL ;
+                $scope.savedURL = "http://localhost/#/decks/" + data._id;
+                $scope.saveResultMessage = "Deck Saved";
             });
         };
         $scope.refreshCurrentDeckFilter();

@@ -1,14 +1,17 @@
 <div id="deckBuilderContainer" class="row">
     <div id="deckBuilderHeader" class="col-lg-6 col-lg-offset-3">
         <div id="chosenFactionHeader">Chosen Faction</div>
-        <div id="chosenFaction"><h1>Northern Realms</h1> </div>
+        <div id="chosenFaction"><h1>{{factionDisplayName}}</h1> </div>
         <div class="btn btn-primary" ng-click="filterAvailableCards('northernrealms')">Northern Realms</div>
         <div class="btn btn-primary" ng-click="filterAvailableCards('nilfgardian')">Nilfgardian</div>
         <div class="btn btn-primary" ng-click="filterAvailableCards('monster')">Monster</div>
-        <div class="btn btn-primary" ng-click="filterAvailableCards('scoiatel')">Scoia'tel</div>
-        <div id="chosenFactionPerk">Passive Perk: Draw a card from your deck when you win a round.</div>
+        <div class="btn btn-primary" ng-click="filterAvailableCards('scoiatael')">Scoia'tael</div>
+        <div id="chosenFactionPerk">Passive Perk: {{factionPassive}}.</div>
         <input type="text" class="form-control" placeholder="Deck Name" ng-model="deckName"></input><div class="btn btn-primary" ng-click="saveDeck()">Save Deck</div>
-        <div>{{saveResultMessage}}</div>
+        <div  ng-show="savedURL !== ''">
+            {{saveResultMessage}}<br/>
+            <a href="{{savedURL}}">Deck URL : {{savedURL}}</a>
+        </div>
     </div>
     <div style="clear:left;"></div>
     <div id="currentDeckStats" class="row">
