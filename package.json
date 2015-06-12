@@ -1,9 +1,9 @@
 {
   "name": "gwentjs",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "nodemon --debug ./bin/www",
+    "start": "nodemon ./bin/www",
     "stop":"pkill --signal SIGINT gwentjs"
   },
   "dependencies": {
