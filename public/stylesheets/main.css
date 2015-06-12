@@ -40,7 +40,10 @@ h2{
 .cardImage{
 }
 
-
+/* Leader Cards */
+.highlightSelectedLeaderCard{
+    background-color: #ccc;
+}
 
 /* deck */
 
@@ -62,6 +65,10 @@ h2{
 
 #chosenFaction{
     font-size:22px;
+}
+
+#chosenFaction h1{
+    padding-top:5px;
 }
 
 #cardCollection{

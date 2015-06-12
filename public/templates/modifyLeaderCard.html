@@ -1,0 +1,40 @@
+<div class="page-header">
+    <h1>Leader Card Modify</h1>
+</div>
+<form ng-submit="modifyCard()">
+    <div class="cardModify">
+        <div>{{card._id}}</div>
+        <img ng-src="/images/{{card.cardArtImageName}}" class="cardImage col-lg-4"></img>
+        <div class="form-group">
+            <input type="text"
+            class="form-control" 
+            placeholder="cardName" 
+            ng-model="card.cardName"></input>
+        </div>
+        <div class="form-group">
+            <input type="text"
+            class="form-control" 
+            placeholder="cardTitle" 
+            ng-model="card.cardTitle"></input>
+        </div>
+        <div class="form-group">
+            <input type="text"
+            class="form-control" 
+            placeholder="faction" 
+            ng-model="card.faction"></input>
+        </div>
+        <div class="form-group">
+            <input type="text"
+            class="form-control" 
+            placeholder="ability" 
+            ng-model="card.ability"></input>
+        </div>
+        <div class="form-group">
+            <input type="text"
+            class="form-control" 
+            placeholder="cardArtImageName" 
+            ng-model="card.cardArtImageName"></input>
+        </div>
+        <button type="submit" class="btn btn-primary">Change</button>
+    </div>
+</form>

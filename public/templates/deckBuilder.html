@@ -1,12 +1,24 @@
 <div id="deckBuilderContainer" class="row">
-    <div id="deckBuilderHeader" class="col-lg-6 col-lg-offset-3">
+    <div id="deckBuilderHeader" class="col-lg-8 col-lg-offset-2">
         <div id="chosenFactionHeader">Chosen Faction</div>
-        <div id="chosenFaction"><h1>{{factionDisplayName}}</h1> </div>
+        <div id="chosenFaction" class="col-lg-12">
+            <div style="float:left;" class="col-lg-1  col-lg-offset-3"><img ng-src="{{factionImage}}"></img></div>
+            <div style="float:left;" class="col-lg-4">
+                <h1>{{factionDisplayName}}</h1> 
+            </div>
+            
+        </div>
         <div class="btn btn-primary" ng-click="filterAvailableCards('northernrealms')">Northern Realms</div>
-        <div class="btn btn-primary" ng-click="filterAvailableCards('nilfgardian')">Nilfgardian</div>
+        <div class="btn btn-primary" ng-click="filterAvailableCards('nilfgaardian')">Nilfgaardian Empire</div>
         <div class="btn btn-primary" ng-click="filterAvailableCards('monster')">Monster</div>
         <div class="btn btn-primary" ng-click="filterAvailableCards('scoiatael')">Scoia'tael</div>
         <div id="chosenFactionPerk">Passive Perk: {{factionPassive}}.</div>
+        <div id="leaderCards">
+            <div ng-repeat="leaderCard in leaderCardsFilter" class="col-lg-3"  ng-click="changeLeaderCard(leaderCard)">
+                <img ng-src="/images/{{leaderCard.cardArtImageName}}" class="cardImage col-lg-12" style="float:left" ng-class="{highlightSelectedLeaderCard: currentLeaderCard === leaderCard}"></img>
+                <div id=""><b>Ability</b>: {{leaderCard.ability}}</div>
+            </div>
+        </div>
         <input type="text" class="form-control" placeholder="Deck Name" ng-model="deckName"></input><div class="btn btn-primary" ng-click="saveDeck()">Save Deck</div>
         <div  ng-show="savedURL !== ''">
             {{saveResultMessage}}<br/>

@@ -36,3 +36,41 @@ curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Ballista\"
 curl -X POST -H "Content-Type: application/json" -d "{\"deckName\": \"jordanTest\", \"cards\": [{\"card\": \"55737de4b26a6a9015d7c920\", \"count\": \"4\" }]}" --url http://104.131.84.230:3000/decks
 
 curl -X POST -H "Content-Type: application/json" -d "{\"deckName\": \"jordanTest\",\"cards\":[]}" --url http://localhost:3000/decks
+
+////LEADER CARDS
+
+//MONSTER
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Eredin\", \"cardTitle\": \"Commander of the Red Riders\", \"faction\": \"monster\", \"ability\": \"Pick any weather card from your deck and play it instantly.\", \"cardArtImageName\": \"eredin1.png\" }" --url http://localhost/leaderCards
+
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Eredin\", \"cardTitle\": \"Bringer of Death\", \"faction\": \"monster\", \"ability\": \"Double the strength of all your Close Combat units (unless a Commander's Horn is also present on that row).\", \"cardArtImageName\": \"eredin2.png\" }" --url http://localhost/leaderCards
+
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Eredin\", \"cardTitle\": \"Destroyer of Worlds\", \"faction\": \"monster\", \"ability\": \"Discard 2 cards and draw 1 card of your choice from your deck.\", \"cardArtImageName\": \"eredin3.png\" }" --url http://localhost/leaderCards
+
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Eredin\", \"cardTitle\": \"Have some dignity.  You know how this will end.\", \"faction\": \"monster\", \"ability\": \"Restore a card from your discard pile to your hand.\", \"cardArtImageName\": \"eredin4.png\" }" --url http://localhost/leaderCards
+
+//SCOIA'TAEL
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Francesca Findabair\", \"cardTitle\": \"Queen of Dol Blathanna\", \"faction\": \"scoiatael\", \"ability\": \"Pick a Biting Frost card from your deck and play it instantly.\", \"cardArtImageName\": \"leadercard/francesca1.png\" }" --url http://localhost/leaderCards
+
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Francesca Findabair\", \"cardTitle\": \"the Beautiful\", \"faction\": \"scoiatael\", \"ability\": \"Draw an extra card at the beginning of the battle.\", \"cardArtImageName\": \"leadercard/francesca2.png\" }" --url http://localhost/leaderCards
+
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Francesca Findabair\", \"cardTitle\": \"Pureblood Elf\", \"faction\": \"scoiatael\", \"ability\": \"Doubles the strength of all your Ranged Combat units (unless a Commander's Horn is also present on that row).\", \"cardArtImageName\": \"leadercard/francesca3.png\" }" --url http://localhost/leaderCards
+
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Francesca Findabair\", \"cardTitle\": \"Daisy of the Valley\", \"faction\": \"scoiatael\", \"ability\": \"Destroy your enemy's strongest Close Combat unit(s) if the combined strength of all his or her Close Combat units is 10 or more.\", \"cardArtImageName\": \"leadercard/francesca4.png\" }" --url http://localhost/leaderCards
+
+//NORTHERNREALMS
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Foltest\", \"cardTitle\": \"the Siegemaster\", \"faction\": \"northernrealms\", \"ability\": \"Pick an Impenetrable Fog card from your deck and play it instantly.\", \"cardArtImageName\": \"leadercard/foltest1.png\" }" --url http://localhost/leaderCards
+
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Foltest\", \"cardTitle\": \"the Steel-Forged\", \"faction\": \"northernrealms\", \"ability\": \"Clear any weather effects (resultiny from Biting Frost, Torrential Rain or Impenetrable Fog cards) in play.\", \"cardArtImageName\": \"leadercard/foltest2.png\" }" --url http://localhost/leaderCards
+
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Foltest\", \"cardTitle\": \"Lord Commander of the North\", \"faction\": \"northernrealms\", \"ability\": \"Doubles the strength of all your Siege units (unless a Commander's Horn is also present in that row).\", \"cardArtImageName\": \"leadercard/foltest3.png\" }" --url http://localhost/leaderCards
+
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Foltest\", \"cardTitle\": \"King of Temeria\", \"faction\": \"northernrealms\", \"ability\": \"Destroy your enemy's strongest Siege Unit(s) if the combined strength of all his or her Siege units is 10 or more.\", \"cardArtImageName\": \"leadercard/foltest4.png\" }" --url http://localhost/leaderCards
+
+//nilfgaard
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Emhyr var Emreis\", \"cardTitle\": \"the Relentless\", \"faction\": \"nilfgaardian\", \"ability\": \"Pick a Torrential Rain card from your deck and play it instantly.\", \"cardArtImageName\": \"leadercard/emhyr1.png\" }" --url http://localhost/leaderCards
+
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Emhyr var Emreis\", \"cardTitle\": \"Emperor of Nilfgaard\", \"faction\": \"nilfgaardian\", \"ability\": \"Look at 3 random cards from your opponent's hand.\", \"cardArtImageName\": \"leadercard/emhyr2.png\" }" --url http://localhost/leaderCards
+
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Emhyr var Emreis\", \"cardTitle\": \"His Imperial Majesty\", \"faction\": \"nilfgaardian\", \"ability\": \"Cancel your oppoent's Leader Ability.\", \"cardArtImageName\": \"leadercard/emhyr3.png\" }" --url http://localhost/leaderCards
+
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Emhyr var Emreis\", \"cardTitle\": \"the White Flame\", \"faction\": \"nilfgaardian\", \"ability\": \"Draw a card from your opponent's discard pile.\", \"cardArtImageName\": \"leadercard/emhyr4.png\" }" --url http://localhost/leaderCards

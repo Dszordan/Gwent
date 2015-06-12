@@ -7,6 +7,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Card = mongoose.model('Card');
 var Deck = mongoose.model('Deck');
+var LeaderCard = mongoose.model('LeaderCard');
 
 var auth = jwt({secret:'SECRET', userProperty: 'payLoad'});
  
@@ -24,10 +25,25 @@ router.get('/cards', function(req, res, next){
     });
 });
 
+/* GET All cards */
+router.get('/leaderCards', function(req, res, next){
+    LeaderCard.find(function(err, cards){
+        if (err) {next(err);};
+
+        res.json(cards);
+    });
+});
+
 /* Get Specific Card by ID */
 router.get('/cards/:card', function(req, res, next){
     res.json(req.card);
 });
+
+/* Get Specific Card by ID */
+router.get('/leaderCards/:leaderCard', function(req, res, next){
+    res.json(req.leaderCard);
+});
+
 
 /* GET All decks */
 router.get('/decks', function(req, res, next){
@@ -43,7 +59,11 @@ router.get('/decks/:deck', function(req, res, next){
     req.deck.populate('cards.card', function(err, deck){
         if (err) {return next(err);};
 
-        res.json(deck);
+        deck.populate('leaderCard', function(err, deck){
+            if (err) {return next(err);};
+            
+            res.json(deck);
+        })
     })
 });
 
@@ -92,6 +112,16 @@ router.post('/cards', function(req, res, next){
     });
 });
 
+/* POST - Create new leader card */
+router.post('/leaderCards', function(req, res, next){
+    var leaderCard = new LeaderCard(req.body);
+    leaderCard.save(function(err, leaderCard){
+        if (err) {next(err);};
+
+        res.json(leaderCard);
+    });
+});
+
 /* POST - create new deck */
 router.post('/decks', function(req, res, next){
     var deck = new Deck(req.body);
@@ -120,6 +150,25 @@ router.put('/cards/:existingCard/modify', function(req, res, next){
         });
 });
 
+router.put('/leaderCards/:existingLeaderCard/modify', function(req, res, next){
+    console.log('beginning update');
+    var cardValues = new LeaderCard(req.body);
+    console.log(cardValues);
+    console.log(req.body);
+    console.log(req.params.existingLeaderCard);
+    LeaderCard.findOneAndUpdate(
+        {_id:req.params.existingLeaderCard},
+        cardValues,
+        function(err, updatedCard){
+            if (err) {return next(err);};
+            // console.log('no error ' + updatedCard + ' ' + ' ' + err);
+            if (!updatedCard) {return next(new Error('Somehow we couldn\'t update the card.'))};
+            // console.log('updated card exists');
+
+            res.json(updatedCard);
+        });
+});
+
 router.param('card', function(req,res,next,id){
     var query = Card.findById(id);
 
@@ -131,6 +180,18 @@ router.param('card', function(req,res,next,id){
         return next();
     });
 });
+
+router.param('leaderCard', function(req,res,next,id){
+    var query = LeaderCard.findById(id);
+    query.exec(function(err, leaderCard){
+        if(err){return next(err);};
+        if(!leaderCard){return next(new Error('leaderCard doesn\' exist'))};
+
+        req.leaderCard = leaderCard;
+        return next();
+    });
+});
+
 
 router.param('deck', function(req,res,next,id){
     var query = Deck.findById(id);

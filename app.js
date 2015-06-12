@@ -1,4 +1,4 @@
-var environment = 'production' //development || production
+var environment = 'development' //development || production
 
 var express = require('express');
 var path = require('path');
@@ -11,6 +11,7 @@ var passport = require('passport');
 require('./models/Users');
 require('./models/Cards');
 require('./models/Decks');
+require('./models/LeaderCards');
 
 require('./config/passport');
 

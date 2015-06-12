@@ -64,6 +64,14 @@ app.controller('cardsCtrl',
         $scope.availableCards = cards.availableCards;
     }]);
 
+app.controller('leaderCardsCtrl',
+    ['$scope',
+    'cards',
+    function($scope,cards){
+        cards.getAvailableLeaderCards();
+        $scope.availableCards = cards.availableLeaderCards;
+    }]);
+
 app.controller('cardModifyCtrl',
     ['$scope',
     'cards',
@@ -72,6 +80,17 @@ app.controller('cardModifyCtrl',
         $scope.card = card;
         $scope.modifyCard = function(){
             cards.updateCard(card);
+        };
+    }]);
+
+app.controller('leaderCardModifyCtrl',
+    ['$scope',
+    'cards',
+    'card',
+    function($scope, cards, card){
+        $scope.card = card;
+        $scope.modifyCard = function(){
+            cards.updateLeaderCard(card);
         };
     }]);
 
@@ -87,7 +106,7 @@ app.controller('deckBuilderCtrl',
     'deck',
     function($scope,cards,decks,deck){
         cards.getAvailableCards()
-        .success(function(data){
+            .success(function(data){
             $scope.availableCardsSuperset = data;
             if (deck) {
                 $scope.loadExistingDeck(deck);
@@ -95,6 +114,19 @@ app.controller('deckBuilderCtrl',
                 $scope.filterAvailableCards("northernrealms");
             }
         });
+        cards.getAvailableLeaderCards()
+            .success(function(data){
+                $scope.availableLeaderCardsSuperset = data;
+                if (deck) {
+                    $scope.filterAvailableLeaderCards(deck.faction);
+                    $scope.changeLeaderCard(deck.leaderCard);
+                } else {
+                    $scope.filterAvailableLeaderCards("northernrealms");
+                }
+        });
+        $scope.availableLeaderCardsSuperset = {};
+        $scope.currentLeaderCard = {};
+        $scope.leaderCardsFilter = [];
         $scope.selectedFaction = "";
         $scope.currentDeck = [];
         $scope.currentDeckFilter = [];
@@ -125,27 +157,48 @@ app.controller('deckBuilderCtrl',
             $scope.availableCardsFilter = cardSubset;
             $scope.calculateTotals();
         };
+        $scope.filterAvailableLeaderCards = function (faction) {
+            $scope.leaderCardsFilter = [];
+            for (var i = 0; i < $scope.availableLeaderCardsSuperset.length; i++) {
+                if($scope.availableLeaderCardsSuperset[i].faction === faction)
+                    $scope.leaderCardsFilter.push($scope.availableLeaderCardsSuperset[i]);
+            };
+            $scope.currentLeaderCard = $scope.leaderCardsFilter[0];
+        }
         $scope.setFaction = function(faction){
             if (faction === 'northernrealms') {
                 $scope.factionDisplayName = 'Northern Realms';
                 $scope.factionPassive = 'Draw a card from your deck when you win a round.'
+                $scope.factionImage = "/images/northernrealms.png"
             } 
             else if (faction === 'monster'){
                 $scope.factionDisplayName = 'Monster';
-                $scope.factionPassive = 'A random unit card remains on the field after a round.'  
+                $scope.factionPassive = 'One randomly-chosen Monsters Unit Card stays on the battlefield after each round.'  
+                $scope.factionImage = "/images/monster.png"
             }
             else if (faction === 'scoiatael'){
                 $scope.factionDisplayName = 'Scoia\'tael';
-                $scope.factionPassive = 'Pick who goes first.'  
+                $scope.factionPassive = 'You decide who goes first at the start of a battle.'  
+                $scope.factionImage = "/images/scoiatael.png"
             }
-            else if (faction === 'nilfgardian'){
-                $scope.factionDisplayName = 'Nilfgard';
-                $scope.factionPassive = 'Wins any round ending in a tie.'  
+            else if (faction === 'nilfgaardian'){
+                $scope.factionDisplayName = 'Nilfgaardian Empire';
+                $scope.factionPassive = 'Win whenever there is a draw.'  
+                $scope.factionImage = "/images/nilfgaard.png"
             }
             else {
                 $scope.factionDisplayName = 'This should be populated...';
                 $scope.factionPassive = 'This should be populated...';
             }
+            $scope.filterAvailableLeaderCards(faction);
+        }
+        $scope.changeLeaderCard = function(leaderCard){
+            for (var i = 0; i < $scope.availableLeaderCardsSuperset.length; i++) {
+                if ($scope.availableLeaderCardsSuperset[i]._id === leaderCard._id) {
+                    $scope.currentLeaderCard = $scope.availableLeaderCardsSuperset[i];
+                    break;
+                };
+            };
         }
         $scope.loadExistingDeck = function(deck){
             $scope.deckName = deck.deckName;
@@ -294,7 +347,8 @@ app.controller('deckBuilderCtrl',
             var deckToSave ={
                 deckName:$scope.deckName,
                 cards: $scope.currentDeck,
-                faction: $scope.selectedFaction
+                faction: $scope.selectedFaction,
+                leaderCard : $scope.currentLeaderCard
             };
             decks.saveDeck(deckToSave).success(function(data){
                 $scope.savedURL = "http://localhost/#/decks/" + data._id;
@@ -307,11 +361,17 @@ app.controller('deckBuilderCtrl',
 
 app.factory('cards',['$http', function($http){
     var o = {
-        availableCards : []
+        availableCards : [],
+        availableLeaderCards: []
     };
 
     o.getCard = function(id){
       return $http.get('/cards/' + id).then(function(res){
+          return res.data;
+      })
+    };
+    o.getLeaderCard = function (id) {
+        return $http.get('/leaderCards/' + id).then(function(res){
           return res.data;
       })
     };
@@ -321,7 +381,6 @@ app.factory('cards',['$http', function($http){
         });
     };
     o.updateCard = function(card){
-        console.log('card : ' + card)
         return $http.put('/cards/' + card._id + '/modify', card)
             .success(function(data){
                console.log('updated card ' + data); 
@@ -330,6 +389,20 @@ app.factory('cards',['$http', function($http){
                 console.log('screwed up' + errormessage);
             });
     };
+    o.updateLeaderCard = function(card){
+        return $http.put('/leaderCards/' + card._id + '/modify', card)
+            .success(function(data){
+               console.log('updated card ' + data); 
+            })
+            .error(function(errormessage){
+                console.log('screwed up' + errormessage);
+            });
+    };
+    o.getAvailableLeaderCards = function () {
+        return $http.get('/leaderCards').success(function(data){
+            angular.copy(data, o.availableLeaderCards);
+        });
+    }
     return o;
 }]);
 
@@ -427,6 +500,21 @@ app.config([
                           return cards.getCard($stateParams.id);
                       }]
                   }
+              })
+            .state('modifyLeaderCard',{
+                  url:'/leaderCards/{id}',
+                  templateUrl: '/templates/modifyLeaderCard.html',
+                  controller: 'leaderCardModifyCtrl',
+                  resolve: {
+                      card: ['$stateParams', 'cards', function($stateParams, cards){
+                          return cards.getLeaderCard($stateParams.id);
+                      }]
+                  }
+              })
+            .state('viewLeaderCards',{
+                  url:'/leaderCards',
+                  templateUrl: '/templates/allLeaderCards.html',
+                  controller: 'leaderCardsCtrl'
               })
             .state('viewCards',{
                   url:'/cards',
