@@ -1,4 +1,8 @@
-    /* Overrides */
+/* Overrides */
+h1,h2,h3,h4,h5,h6{
+    color: #AFA795;
+}
+
 h1{
     font-size:26px;
     padding:0px;
@@ -6,9 +10,27 @@ h1{
 }
 
 h2{
-    font-size:20px;
+    font-size:16px;
     padding:0px;
     margin:0px;
+}
+
+body{
+    background-color: #101617;
+    color:#AFA795;
+}
+
+/* BOOTSTRAP OVERRIDE*/
+.btn-primary{
+    color:#0C1A1D;
+    background-color:#ccc; 
+    border-color:#424C4F;
+}
+
+.btn-primary:hover{
+    color:#0C1A1D;
+    background-color:#aaa; 
+    border-color:#424C4F;
 }
 
 .card11{
@@ -40,11 +62,6 @@ h2{
 .cardImage{
 }
 
-/* Leader Cards */
-.highlightSelectedLeaderCard{
-    background-color: #ccc;
-}
-
 /* deck */
 
 .allCardsContainer{
@@ -61,22 +78,33 @@ h2{
 
 #deckBuilderHeader{
     text-align:center;
+    padding-top:14px;
 }
 
 #chosenFaction{
     font-size:22px;
+    padding-bottom:10px;
 }
 
 #chosenFaction h1{
     padding-top:5px;
 }
 
+#currentDeckStats{
+    margin-top:10px;
+    color:#0C1A1D;
+}
+
 #cardCollection{
-    text-align:center;
+    padding:10px;
+}
+
+#cardCollection h1{
+    color:#7F7969;
 }
 
 #cardCollectionCurrentFilter{
-    text-align: center;
+    padding-bottom:10px;  
 }
 
 .cardCount{
@@ -87,12 +115,54 @@ h2{
     color:red;
 }
 
+#deckURL{
+    font-size:20px;
+}
+
+/* Leader Cards */
+#leaderCards{
+    padding:14px;
+}
+
+.highlightSelectedLeaderCard{
+    background-color: #ccc;
+    border-top-left-radius:4px;
+    border-top-right-radius:4px;
+    border-bottom-left-radius:4px;
+    border-bottom-right-radius:4px;
+}
+
+.highlightSelectedFactionButton{
+    background-color:#aaa;
+}
+
+.highlightedFilterButton{
+    background-color:#aaa !important; 
+    border-color:#aaa !important; 
+}
+
+.leaderCard img{
+    padding-top:14px;
+    padding-bottom:14px;
+}
+
+
 /* Custom Glyphs*/
 .jordanGlyphicon{
     width:24px;
     height:24px;
     padding:12px;
     background-repeat:no-repeat;
+}
+
+.jordanGlyphiconBackground{
+    background-color:#ccc;
+    border-color:#ccc;
+    border-top-left-radius:4px;
+    border-top-right-radius:4px;
+    border-bottom-left-radius:4px;
+    border-bottom-right-radius:4px;
+    padding:12px;
 }
 
 .jordanGlyphicon.btn{

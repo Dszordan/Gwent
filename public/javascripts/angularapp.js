@@ -247,6 +247,7 @@ app.controller('deckBuilderCtrl',
             this.calculateTotals();
         };
         $scope.switchAvailableCardsFilter = function(newType, newFilter){
+            $scope.availableCardsFilterName = newFilter;
             if (newType == "predefined") {
                 $scope.availableCardsFilterDisplayName = newFilter[0].toUpperCase() + newFilter.substring(1, newFilter.length) + " Cards";
                 if (newFilter=="all") {
