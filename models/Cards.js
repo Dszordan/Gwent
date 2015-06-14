@@ -10,7 +10,8 @@ var CardSchema = new mongoose.Schema({
   shiny: Boolean,
   special: Boolean,
   weather: Boolean,
-  faction: String
+  faction: String,
+  abilities: Array
 });
 
 mongoose.model('Card', CardSchema);
