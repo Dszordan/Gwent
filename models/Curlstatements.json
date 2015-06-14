@@ -1,20 +1,13 @@
-"{\"cardName\": \"Geralt\",\"cardDescription\": \"Geralt of Rivia\",  \"cardArtImageName\": \"geralt.jpg\",  \"range\": \"[melee]\",  \"type\": \"unit\",  \"strength\": \"15\",  \"shiny\": \"true\"}"
+"{\"cardName\": \"Geralt\",\"cardDescription\": \"Geralt of Rivia\",  \"cardArtImageName\": \"geralt.png\",  \"range\": \"[melee]\",  \"type\": \"unit\",  \"strength\": \"15\",  \"shiny\": \"true\"}"
 
 ///////////LOCAL
 
-curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Geralt\",\"cardDescription\": \"Geralt of Rivia\",  \"cardArtImageName\": \"geralt.jpg\",  \"range\": [\"melee\", \"archer\"],  \"type\": [\"unit\"],  \"strength\": \"15\",  \"shiny\": \"true\", \"weather\": \"false\", \"special\": \"false\"}" --url http://localhost:3000/cards
-
-curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Geralt\",\"cardDescription\": \"Geralt of Rivia\",  \"cardArtImageName\": \"Vesemir1.png\",  \"range\": [\"melee\", \"archer\"],  \"type\": [\"unit\"],  \"strength\": \"6\",  \"shiny\": \"false\",\"weather\": \"false\", \"special\": \"false\"}" --url http://localhost:3000/cards
-
-curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Zoltan\",\"cardDescription\": \"Geralt of Rivia\",  \"cardArtImageName\": \"zoltan1.png\",  \"range\": [\"melee\", \"archer\"],  \"type\": [\"unit\"],  \"strength\": \"5\",  \"shiny\": \"false\",\"weather\": \"false\", \"special\": \"false\"}" --url http://localhost:3000/cards
-
-curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Dethmold\",\"cardDescription\": \"I once made a prisoner vomit his own entrails... Ah, good times...\",  \"cardArtImageName\": \"dethmold.png\",  \"range\": [\"ranged\"],  \"type\": [\"unit\"],  \"strength\": \"6\",  \"shiny\": \"false\",\"weather\": \"false\", \"special\": \"false\"}" --url http://localhost:3000/cards
-
-curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Ballista\",\"cardDescription\": \"\",  \"cardArtImageName\": \"ballista.png\",  \"range\": [\"siege\"],  \"type\": [\"unit\"],  \"strength\": \"6\",  \"shiny\": \"false\",\"weather\": \"false\", \"special\": \"false\"}" --url http://localhost:3000/cards
-
-curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Impenetrable Fog\",\"cardDescription\": \"\",  \"cardArtImageName\": \"fog.png\",  \"range\": [],  \"type\": \"weather\",  \"strength\": \"0\",  \"shiny\": \"false\",\"weather\": \"true\", \"special\": \"false\"}" --url http://localhost:3000/cards
-
-curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Ballista\",\"cardDescription\": \"\",  \"cardArtImageName\": \"ballista.png\",  \"range\": [],  \"type\": \"special\",  \"strength\": \"0\",  \"shiny\": \"false\",\"weather\": \"false\", \"special\": \"true\"}" --url http://localhost:3000/cards
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Geralt\",\"cardDescription\": \"Geralt of Rivia\",  \"cardArtImageName\": \"images/geralt.png\",  \"range\": [\"melee\", \"archer\"],  \"type\": [\"unit\"],  \"strength\": \"15\",  \"shiny\": \"true\", \"weather\": \"false\", \"special\": \"false\", \"faction\":\"neutral\"}" --url http://localhost/cards
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Vesemir\",\"cardDescription\": \"Geralt of Rivia\",  \"cardArtImageName\": \"images/Vesemir1.png\",  \"range\": [\"melee\", \"archer\"],  \"type\": [\"unit\"],  \"strength\": \"6\",  \"shiny\": \"false\",\"weather\": \"false\", \"special\": \"false\", \"faction\":\"neutral\"}" --url http://localhost/cards
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Zoltan\",\"cardDescription\": \"Geralt of Rivia\",  \"cardArtImageName\": \"images/zoltan1.png\",  \"range\": [\"melee\", \"archer\"],  \"type\": [\"unit\"],  \"strength\": \"5\",  \"shiny\": \"false\",\"weather\": \"false\", \"special\": \"false\", \"faction\":\"neutral\"}" --url http://localhost/cards
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Dethmold\",\"cardDescription\": \"I once made a prisoner vomit his own entrails... Ah, good times...\",  \"cardArtImageName\": \"images/dethmold.png\",  \"range\": [\"ranged\"],  \"type\": [\"unit\"],  \"strength\": \"6\",  \"shiny\": \"false\",\"weather\": \"false\", \"special\": \"false\", \"faction\":\"northernrealms\"}" --url http://localhost/cards
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Ballista\",\"cardDescription\": \"\",  \"cardArtImageName\": \"images/ballista.png\",  \"range\": [\"siege\"],  \"type\": [\"unit\"],  \"strength\": \"6\",  \"shiny\": \"false\",\"weather\": \"false\", \"special\": \"false\", \"faction\":\"northernrealms\"}" --url http://localhost/cards
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Impenetrable Fog\",\"cardDescription\": \"\",  \"cardArtImageName\": \"images/fog.png\",  \"range\": [],  \"type\": \"weather\",  \"strength\": \"0\",  \"shiny\": \"false\",\"weather\": \"true\", \"special\": \"false\", \"faction\":\"neutral\"}" --url http://localhost/cards
 
 ///////////SERVER
 
@@ -24,29 +17,29 @@ curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Geralt\",\
 
 curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Zoltan\",\"cardDescription\": \"Geralt of Rivia\",  \"cardArtImageName\": \"zoltan1.png\",  \"range\": [\"melee\", \"archer\"],  \"type\": [\"unit\"],  \"strength\": \"5\",  \"shiny\": \"false\",\"weather\": \"false\", \"special\": \"false\"}" --url http://104.131.84.230/cards
 
-curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Dethmold\",\"cardDescription\": \"I once made a prisoner vomit his own entrails... Ah, good times...\",  \"cardArtImageName\": \"dethmold.png\",  \"range\": [\"ranged\"],  \"type\": [\"unit\"],  \"strength\": \"6\",  \"shiny\": \"false\",\"weather\": \"false\", \"special\": \"false\"}" --url http://104.131.84.230:3000/cards
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Dethmold\",\"cardDescription\": \"I once made a prisoner vomit his own entrails... Ah, good times...\",  \"cardArtImageName\": \"dethmold.png\",  \"range\": [\"ranged\"],  \"type\": [\"unit\"],  \"strength\": \"6\",  \"shiny\": \"false\",\"weather\": \"false\", \"special\": \"false\"}" --url http://104.131.84.230/cards
 
-curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Ballista\",\"cardDescription\": \"\",  \"cardArtImageName\": \"ballista.png\",  \"range\": [\"siege\"],  \"type\": [\"unit\"],  \"strength\": \"6\",  \"shiny\": \"false\",\"weather\": \"false\", \"special\": \"false\"}" --url http://104.131.84.230:3000/cards
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Ballista\",\"cardDescription\": \"\",  \"cardArtImageName\": \"ballista.png\",  \"range\": [\"siege\"],  \"type\": [\"unit\"],  \"strength\": \"6\",  \"shiny\": \"false\",\"weather\": \"false\", \"special\": \"false\"}" --url http://104.131.84.230/cards
 
-curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Impenetrable Fog\",\"cardDescription\": \"\",  \"cardArtImageName\": \"fog.png\",  \"range\": [],  \"type\": \"weather\",  \"strength\": \"0\",  \"shiny\": \"false\",\"weather\": \"true\", \"special\": \"false\"}" --url http://104.131.84.230:3000/cards
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Impenetrable Fog\",\"cardDescription\": \"\",  \"cardArtImageName\": \"fog.png\",  \"range\": [],  \"type\": \"weather\",  \"strength\": \"0\",  \"shiny\": \"false\",\"weather\": \"true\", \"special\": \"false\"}" --url http://104.131.84.230/cards
 
-curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Ballista\",\"cardDescription\": \"\",  \"cardArtImageName\": \"ballista.png\",  \"range\": [],  \"type\": \"special\",  \"strength\": \"0\",  \"shiny\": \"false\",\"weather\": \"false\", \"special\": \"true\"}" --url http://104.131.84.230:3000/cards
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Ballista\",\"cardDescription\": \"\",  \"cardArtImageName\": \"ballista.png\",  \"range\": [],  \"type\": \"special\",  \"strength\": \"0\",  \"shiny\": \"false\",\"weather\": \"false\", \"special\": \"true\"}" --url http://104.131.84.230/cards
 
 ////////DECKS
-curl -X POST -H "Content-Type: application/json" -d "{\"deckName\": \"jordanTest\", \"cards\": [{\"card\": \"55737de4b26a6a9015d7c920\", \"count\": \"4\" }]}" --url http://104.131.84.230:3000/decks
+curl -X POST -H "Content-Type: application/json" -d "{\"deckName\": \"jordanTest\", \"cards\": [{\"card\": \"55737de4b26a6a9015d7c920\", \"count\": \"4\" }]}" --url http://104.131.84.230/decks
 
-curl -X POST -H "Content-Type: application/json" -d "{\"deckName\": \"jordanTest\",\"cards\":[]}" --url http://localhost:3000/decks
+curl -X POST -H "Content-Type: application/json" -d "{\"deckName\": \"jordanTest\",\"cards\":[]}" --url http://localhost/decks
 
 ////LEADER CARDS
 
 //MONSTER
-curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Eredin\", \"cardTitle\": \"Commander of the Red Riders\", \"faction\": \"monster\", \"ability\": \"Pick any weather card from your deck and play it instantly.\", \"cardArtImageName\": \"eredin1.png\" }" --url http://localhost/leaderCards
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Eredin\", \"cardTitle\": \"Commander of the Red Riders\", \"faction\": \"monster\", \"ability\": \"Pick any weather card from your deck and play it instantly.\", \"cardArtImageName\": \"leadercard/eredin1.png\" }" --url http://localhost/leaderCards
 
-curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Eredin\", \"cardTitle\": \"Bringer of Death\", \"faction\": \"monster\", \"ability\": \"Double the strength of all your Close Combat units (unless a Commander's Horn is also present on that row).\", \"cardArtImageName\": \"eredin2.png\" }" --url http://localhost/leaderCards
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Eredin\", \"cardTitle\": \"Bringer of Death\", \"faction\": \"monster\", \"ability\": \"Double the strength of all your Close Combat units (unless a Commander's Horn is also present on that row).\", \"cardArtImageName\": \"leadercard/eredin2.png\" }" --url http://localhost/leaderCards
 
-curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Eredin\", \"cardTitle\": \"Destroyer of Worlds\", \"faction\": \"monster\", \"ability\": \"Discard 2 cards and draw 1 card of your choice from your deck.\", \"cardArtImageName\": \"eredin3.png\" }" --url http://localhost/leaderCards
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Eredin\", \"cardTitle\": \"Destroyer of Worlds\", \"faction\": \"monster\", \"ability\": \"Discard 2 cards and draw 1 card of your choice from your deck.\", \"cardArtImageName\": \"leadercard/eredin3.png\" }" --url http://localhost/leaderCards
 
-curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Eredin\", \"cardTitle\": \"Have some dignity.  You know how this will end.\", \"faction\": \"monster\", \"ability\": \"Restore a card from your discard pile to your hand.\", \"cardArtImageName\": \"eredin4.png\" }" --url http://localhost/leaderCards
+curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Eredin\", \"cardTitle\": \"Have some dignity.  You know how this will end.\", \"faction\": \"monster\", \"ability\": \"Restore a card from your discard pile to your hand.\", \"cardArtImageName\": \"leadercard/eredin4.png\" }" --url http://localhost/leaderCards
 
 //SCOIA'TAEL
 curl -X POST -H "Content-Type: application/json" -d "{\"cardName\": \"Francesca Findabair\", \"cardTitle\": \"Queen of Dol Blathanna\", \"faction\": \"scoiatael\", \"ability\": \"Pick a Biting Frost card from your deck and play it instantly.\", \"cardArtImageName\": \"leadercard/francesca1.png\" }" --url http://localhost/leaderCards

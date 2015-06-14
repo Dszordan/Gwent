@@ -1,4 +1,4 @@
-var app = angular.module('gwentjs',['ui.router']);
+var app = angular.module('gwentjs',['ui.router','infinite-scroll']);
 
 app.controller("MainCtrl",[
     '$scope',
@@ -130,6 +130,8 @@ app.controller('deckBuilderCtrl',
         $scope.selectedFaction = "";
         $scope.currentDeck = [];
         $scope.currentDeckFilter = [];
+        $scope.availableCardsInfiniteScrolling = [];
+        $scope.availableCardsFilter = [];
         $scope.deckName = "";
         $scope.currentDeckFilterName = "all";
         $scope.availableCardsFilterDisplayName = "All Cards";
@@ -153,8 +155,10 @@ app.controller('deckBuilderCtrl',
                     cardSubset.push($scope.availableCardsSuperset[i]);
                 };
             };
+            cardSubset.sort(sort_by('faction', false, function(a){return a.toUpperCase()}));
             $scope.availableCards = cardSubset;
             $scope.availableCardsFilter = cardSubset;
+            $scope.availableCardsInfiniteScrolling = cardSubset.slice(0,3);
             $scope.calculateTotals();
         };
         $scope.filterAvailableLeaderCards = function (faction) {
@@ -356,6 +360,18 @@ app.controller('deckBuilderCtrl',
                 $scope.saveResultMessage = "Deck Saved";
             });
         };
+        $scope.loadMoreAvailableCards = function () {
+            if ($scope.availableCardsFilter.length == 0) {return;};
+            if ($scope.availableCardsInfiniteScrolling.length == $scope.availableCardsFilter.length) {return;};
+            var numberOfVisibleCards = $scope.availableCardsInfiniteScrolling.length-1;
+            var newNumberOfVisibleCards = numberOfVisibleCards + 3;
+            if (numberOfVisibleCards + newNumberOfVisibleCards >  $scope.availableCardsFilter.length) {
+                newNumberOfVisibleCards =  $scope.availableCardsFilter.length;
+            };
+            for (var i = numberOfVisibleCards; i < newNumberOfVisibleCards; i++) {
+                $scope.availableCardsInfiniteScrolling.push($scope.availableCardsFilter[i+1]);
+            };
+        };
         $scope.refreshCurrentDeckFilter();
         $scope.calculateTotals();
     }]);
@@ -549,3 +565,16 @@ app.config([
 
         $urlRouterProvider.otherwise('home');
     }]);
+
+var sort_by = function(field, reverse, primer){
+
+   var key = primer ? 
+       function(x) {return primer(x[field])} : 
+       function(x) {return x[field]};
+
+   reverse = !reverse ? 1 : -1;
+
+   return function (a, b) {
+       return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+     } 
+}
