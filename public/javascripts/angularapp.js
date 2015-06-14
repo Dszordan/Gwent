@@ -158,7 +158,9 @@ app.controller('deckBuilderCtrl',
             cardSubset.sort(sort_by('faction', false, function(a){return a.toUpperCase()}));
             $scope.availableCards = cardSubset;
             $scope.availableCardsFilter = cardSubset;
-            $scope.availableCardsInfiniteScrolling = cardSubset.slice(0,3);
+            $scope.availableCardsInfiniteScrolling = [];
+            $scope.availableCardsInfiniteScrolling = $scope.availableCardsFilter.slice(0,3);
+            $scope.loadMoreAvailableCards();
             $scope.calculateTotals();
         };
         $scope.filterAvailableLeaderCards = function (faction) {
@@ -282,6 +284,9 @@ app.controller('deckBuilderCtrl',
                     };
                 }
             };
+
+            $scope.availableCardsInfiniteScrolling = [];
+            $scope.loadMoreAvailableCards();
         };
         $scope.switchCurrentCardsFilter = function(newType, newFilter){
             $scope.currentDeckFilterName = newFilter;
