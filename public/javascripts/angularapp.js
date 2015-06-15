@@ -337,7 +337,7 @@ app.controller('deckBuilderCtrl',
                 leaderCard : $scope.currentLeaderCard
             };
             decks.saveDeck(deckToSave).success(function(data){
-                $scope.savedURL = "http://localhost/#/decks/" + data._id;
+                $scope.savedURL = "http://www.GwentBuilder.com/#/decks/" + data._id;
                 $scope.saveResultMessage = "Deck Saved";
             });
         };
