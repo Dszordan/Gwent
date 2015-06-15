@@ -110,8 +110,8 @@
         </div>
         <div class="row">
             <div class="col-xs-12 cardContainer"  id="currentDeck">
-                <div ng-repeat="card in currentDeckFilter" class="col-xs-4">
-                    <img ng-src="{{card.card.cardArtImageName}}" class="cardImage col-xs-12" style="float:left" ng-click="removeCardFromDeck(card.card)"></img>
+                <div ng-repeat="card in currentDeckFilter" class="col-xs-4 cardImage">
+                    <img ng-src="{{card.card.cardArtImageName}}" class=" col-xs-12" style="float:left" ng-click="removeCardFromDeck(card.card)"></img>
                     <div class="cardCount">
                         <div class="jordanGlyphicon glyphicon-cardHand" style="float:left;"></div> x {{card.count}}
                     </div>

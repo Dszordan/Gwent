@@ -1,4 +1,4 @@
-var environment = 'development' //development || production
+var environment = 'production' //development || production
 
 var express = require('express');
 var path = require('path');
@@ -23,12 +23,12 @@ app.set('env', environment);
 if (app.env === 'development') {
   process.env.PORT = 3000;
 } else {
-  process.env.PORT = 80;
+  process.env.PORT = 20933;
 }
  
 
 
-mongoose.connect('mongodb://localhost/news');
+mongoose.connect('mongodb://localhost/gwentjs');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
