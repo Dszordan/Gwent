@@ -1,32 +1,5 @@
 var app = angular.module('gwentjs',['ui.router','infinite-scroll']);
 
-app.controller("MainCtrl",[
-    '$scope',
-    'posts',
-    'auth',
-     function($scope, posts, auth){
-    $scope.test = 'hello world';
-    $scope.posts = posts.posts;
-    $scope.isLoggedIn = auth.isLoggedIn;
-
-    $scope.addPost = function(){
-        if (!$scope.title || $scope.title === '' ) {return;};
-        posts.create({
-            title:$scope.title,
-            link:$scope.link
-        });
-        $scope.title = '';
-        $scope.link = '';
-    };
-
-    $scope.incrementUpvotes = function(post){
-        posts.upvote(post);
-    };
-    $scope.decrementUpvotes = function(post){
-        posts.downvote(post);
-    };
-}]);
-
 app.controller('AuthCtrl', ['$scope', '$state', 'auth', function($scope, $state, auth){
     $scope.user = {};
 
@@ -155,11 +128,12 @@ app.controller('deckBuilderCtrl',
                     cardSubset.push($scope.availableCardsSuperset[i]);
                 };
             };
+            cardSubset.sort(sort_by('range', false, function(a){return a}));
             cardSubset.sort(sort_by('faction', false, function(a){return a.toUpperCase()}));
             $scope.availableCards = cardSubset;
             $scope.availableCardsFilter = cardSubset;
             $scope.availableCardsInfiniteScrolling = [];
-            $scope.availableCardsInfiniteScrolling = $scope.availableCardsFilter.slice(0,3);
+            $scope.availableCardsInfiniteScrolling = $scope.availableCardsFilter.slice(0,12);
             $scope.loadMoreAvailableCards();
             $scope.calculateTotals();
         };
@@ -285,7 +259,9 @@ app.controller('deckBuilderCtrl',
                 }
             };
 
-            $scope.availableCardsInfiniteScrolling = [];
+            $scope.availableCardsFilter.sort(sort_by('faction', false, function(a){return a.toUpperCase()}));
+            $scope.availableCardsInfiniteScrolling = [];            
+            $scope.availableCardsInfiniteScrolling = $scope.availableCardsFilter.slice(0,12);
             $scope.loadMoreAvailableCards();
         };
         $scope.switchCurrentCardsFilter = function(newType, newFilter){

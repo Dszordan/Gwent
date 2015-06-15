@@ -1,26 +1,26 @@
 <div id="deckBuilderContainer" class="row">
-    <div id="deckBuilderHeader" class="col-lg-8 col-lg-offset-2">
+    <div id="deckBuilderHeader" class="col-xs-8 col-xs-offset-2">
         <div id="chosenFactionHeader"><h2>Chosen Faction</h2></div>
-        <div id="chosenFaction" class="col-lg-12">
-            <div style="float:left;" class="col-lg-1  col-lg-offset-3"><img ng-src="{{factionImage}}"></img></div>
-            <div style="float:left;" class="col-lg-4">
+        <div id="chosenFaction" class="col-xs-12">
+            <div style="float:left;" class="col-xs-1  col-xs-offset-3"><img ng-src="{{factionImage}}"></img></div>
+            <div style="float:left;" class="col-xs-4">
                 <h1>{{factionDisplayName}}</h1> 
             </div>
         </div>
-        <div id="factionButtons" class="col-lg-12">
+        <div id="factionButtons" class="col-xs-12">
             <div class="btn btn-primary" ng-click="filterAvailableCards('northernrealms')" ng-class="{highlightSelectedFactionButton: selectedFaction === 'northernrealms'}">Northern Realms</div>
             <div class="btn btn-primary" ng-click="filterAvailableCards('nilfgaardian')" ng-class="{highlightSelectedFactionButton: selectedFaction === 'nilfgaardian'}">Nilfgaardian Empire</div>
             <div class="btn btn-primary" ng-click="filterAvailableCards('monster')" ng-class="{highlightSelectedFactionButton: selectedFaction === 'monster'}">Monster</div>
             <div class="btn btn-primary" ng-click="filterAvailableCards('scoiatael')"  ng-class="{highlightSelectedFactionButton: selectedFaction === 'scoiatael'}">Scoia'tael</div>
             <div id="chosenFactionPerk">PASSIVE PERK: {{factionPassive}}</div>
         </div>
-        <div id="leaderCards" class="col-lg-12">
-            <div ng-repeat="leaderCard in leaderCardsFilter" class="col-lg-3 leaderCard"  ng-click="changeLeaderCard(leaderCard)">
-                <img ng-src="{{leaderCard.cardArtImageName}}" class="cardImage col-lg-12" style="float:left" ng-class="{highlightSelectedLeaderCard: currentLeaderCard === leaderCard}"></img>
+        <div id="leaderCards" class="col-xs-12">
+            <div ng-repeat="leaderCard in leaderCardsFilter" class="col-xs-3 leaderCard"  ng-click="changeLeaderCard(leaderCard)">
+                <img ng-src="{{leaderCard.cardArtImageName}}" class="cardImage col-xs-12" style="float:left" ng-class="{highlightSelectedLeaderCard: currentLeaderCard === leaderCard}"></img>
                 <div id=""><b>Ability</b>: {{leaderCard.ability}}</div>
             </div>
         </div>
-        <input type="text" class="form-control" placeholder="Deck Name" ng-model="deckName"></input><div class="btn btn-primary" ng-click="saveDeck()">Save Deck</div>
+        <input type="text" class="form-control" placeholder="Choose a Deck Name" ng-model="deckName"></input><div class="btn btn-primary" ng-click="saveDeck()">Save Deck</div>
         <div  ng-show="savedURL !== ''">
             {{saveResultMessage}}<br/>
             <a id="deckURL" href="{{savedURL}}">Deck URL : {{savedURL}}</a>
@@ -28,30 +28,30 @@
     </div>
     <div style="clear:left;"></div>
     <div id="currentDeckStats" class="row">
-        <div class="col-lg-12 jordanGlyphiconBackground">
-            <div class="col-lg-2 col-lg-offset-1">
+        <div class="col-xs-12 jordanGlyphiconBackground">
+            <div class="col-xs-2 col-xs-offset-1">
                 <div class="jordanGlyphicon glyphicon-cardDeck" style="float:left;"></div>
                 <div style="float:left;">Total cards in Deck</br>
                 {{totalCards}}</div>
             </div>
-            <div class="col-lg-2 ">
+            <div class="col-xs-2 ">
                 <div class="jordanGlyphicon glyphicon-cardHand " style="float:left;"></div>
                 <div style="float:left;" ng-class="{highlightCardError: totalUnitCards < 22}">
                 # of Unit Cards</br>
                 {{totalUnitCards}}/22</div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-xs-2">
                 <div class="jordanGlyphicon glyphicon-cardHand" style="float:left;"></div>
                 <div style="float:left;" ng-class="{highlightCardError: totalSpecialCards > 10}">
                 Special Cards</br>
                 {{totalSpecialCards}}/10</div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-xs-2">
                 <div class="jordanGlyphicon glyphicon-fist" style="float:left;"></div>
                 <div style="float:left;">Total Unit Strength</br>
                 {{totalUnitStrength}}</div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-xs-2">
             <div class="jordanGlyphicon glyphicon-helmet" style="float:left;"></div>
                 <div style="float:left;">Hero Cards</br>
                 {{totalHeroCards}}</div>
@@ -59,59 +59,59 @@
         </div>
     </div>
     <div style="clear:left;"></div>
-    <div id="allCardsContainer" class="col-sm-6">
+    <div id="allCardsContainer" class="col-xs-6">
         <div class="row" id="cardCollection">
-            <div class="col-lg-5 col-lg-offset-4">
+            <div class="col-xs-5 col-xs-offset-4">
                 <h1>Card Collection</h1>
             </div>
         </div>
         <div class="row" id="cardCollectionCurrentFilter">
-            <div class="col-lg-5 col-lg-offset-5">
+            <div class="col-xs-5 col-xs-offset-5">
                 <h2>{{availableCardsFilterDisplayName}}</h2>
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-1 col-lg-offset-2"><div class="jordanGlyphicon btn btn-primary glyphicon-cardHand"  ng-click="switchAvailableCardsFilter('predefined','all')" ng-class="{highlightedFilterButton: availableCardsFilterName === 'all'}"></div></div>
-            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-sword" ng-click="switchAvailableCardsFilter('predefined','melee')" ng-class="{highlightedFilterButton: availableCardsFilterName === 'melee'}"></div></div>
-            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-bowAndArrow" ng-click="switchAvailableCardsFilter('predefined','ranged')" ng-class="{highlightedFilterButton: availableCardsFilterName === 'ranged'}"></div></div>
-            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-catapult" ng-click="switchAvailableCardsFilter('predefined','siege')" ng-class="{highlightedFilterButton: availableCardsFilterName === 'siege'}"></div></div>
-            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-helmet" ng-click="switchAvailableCardsFilter('predefined','hero')" ng-class="{highlightedFilterButton: availableCardsFilterName === 'hero'}"></div></div>
-            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-sun" ng-click="switchAvailableCardsFilter('predefined','weather')" ng-class="{highlightedFilterButton: availableCardsFilterName === 'weather'}"></div></div>
-            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-spike" ng-click="switchAvailableCardsFilter('predefined','special')" ng-class="{highlightedFilterButton: availableCardsFilterName === 'special'}"></div></div>
+            <div class="col-xs-1 col-xs-offset-2"><div class="jordanGlyphicon btn btn-primary glyphicon-cardHand"  ng-click="switchAvailableCardsFilter('predefined','all')" ng-class="{highlightedFilterButton: availableCardsFilterName === 'all'}"></div></div>
+            <div class="col-xs-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-sword" ng-click="switchAvailableCardsFilter('predefined','melee')" ng-class="{highlightedFilterButton: availableCardsFilterName === 'melee'}"></div></div>
+            <div class="col-xs-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-bowAndArrow" ng-click="switchAvailableCardsFilter('predefined','ranged')" ng-class="{highlightedFilterButton: availableCardsFilterName === 'ranged'}"></div></div>
+            <div class="col-xs-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-catapult" ng-click="switchAvailableCardsFilter('predefined','siege')" ng-class="{highlightedFilterButton: availableCardsFilterName === 'siege'}"></div></div>
+            <div class="col-xs-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-helmet" ng-click="switchAvailableCardsFilter('predefined','hero')" ng-class="{highlightedFilterButton: availableCardsFilterName === 'hero'}"></div></div>
+            <div class="col-xs-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-sun" ng-click="switchAvailableCardsFilter('predefined','weather')" ng-class="{highlightedFilterButton: availableCardsFilterName === 'weather'}"></div></div>
+            <div class="col-xs-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-spike" ng-click="switchAvailableCardsFilter('predefined','special')" ng-class="{highlightedFilterButton: availableCardsFilterName === 'special'}"></div></div>
         </div>
         <div class="row">
-            <div infinite-scroll='loadMoreAvailableCards()' infinite-scroll-distance='0' class="col-sm-12 cardContainer"> 
-                <div ng-repeat="card in availableCardsInfiniteScrolling" class="col-lg-4">
-                    <img ng-src="{{card.cardArtImageName}}" class="cardImage col-lg-12" style="float:left" ng-click="putCardInDeck(card,1)"></img>
+            <div infinite-scroll='loadMoreAvailableCards()' infinite-scroll-distance='0' infinite-scroll-immediate-check="false" class="col-xs-12 cardContainer"> 
+                <div ng-repeat="card in availableCardsInfiniteScrolling" class="col-xs-4 cardImage">
+                    <img ng-src="{{card.cardArtImageName}}" class="col-xs-12" style="float:left" ng-click="putCardInDeck(card,1)"></img>
                 </div>
                 <div style='clear: both;'></div>
             </div>
         </div>
     </div>
-    <div id="currentDeckContainer" class="col-sm-6">
+    <div id="currentDeckContainer" class="col-xs-6">
         <div class="row" id="cardCollection">
-            <div class="col-lg-5 col-lg-offset-4">
+            <div class="col-xs-5 col-md-6 col-xs-offset-4">
                 <h1>Cards in Deck</h1>
             </div>
         </div>
         <div class="row" id="cardCollectionCurrentFilter">
-            <div class="col-lg-5 col-lg-offset-5">
+            <div class="col-xs-5 col-xs-offset-5">
                 <h2>{{currentDeckFilterDisplayName}}</h2>
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-1 col-lg-offset-2"><div class="jordanGlyphicon btn btn-primary  glyphicon-cardHand" ng-click="switchCurrentCardsFilter('predefined','all')" ng-class="{highlightedFilterButton: currentDeckFilterName === 'all'}"></div></div>
-            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-sword" ng-click="switchCurrentCardsFilter('predefined','melee')" ng-class="{highlightedFilterButton: currentDeckFilterName === 'melee'}"></div></div>
-            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-bowAndArrow" ng-click="switchCurrentCardsFilter('predefined','ranged')" ng-class="{highlightedFilterButton: currentDeckFilterName === 'ranged'}"></div></div>
-            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-catapult" ng-click="switchCurrentCardsFilter('predefined','siege')" ng-class="{highlightedFilterButton: currentDeckFilterName === 'siege'}"></div></div>
-            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-helmet" ng-click="switchCurrentCardsFilter('predefined','hero')" ng-class="{highlightedFilterButton: currentDeckFilterName === 'hero'}"></div></div>
-            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-sun" ng-click="switchCurrentCardsFilter('predefined','weather')" ng-class="{highlightedFilterButton: currentDeckFilterName === 'weather'}"></div></div>
-            <div class="col-sm-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-spike" ng-click="switchCurrentCardsFilter('predefined','special')" ng-class="{highlightedFilterButton: currentDeckFilterName === 'special'}"></div></div>
+            <div class="col-xs-1 col-xs-offset-2"><div class="jordanGlyphicon btn btn-primary  glyphicon-cardHand" ng-click="switchCurrentCardsFilter('predefined','all')" ng-class="{highlightedFilterButton: currentDeckFilterName === 'all'}"></div></div>
+            <div class="col-xs-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-sword" ng-click="switchCurrentCardsFilter('predefined','melee')" ng-class="{highlightedFilterButton: currentDeckFilterName === 'melee'}"></div></div>
+            <div class="col-xs-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-bowAndArrow" ng-click="switchCurrentCardsFilter('predefined','ranged')" ng-class="{highlightedFilterButton: currentDeckFilterName === 'ranged'}"></div></div>
+            <div class="col-xs-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-catapult" ng-click="switchCurrentCardsFilter('predefined','siege')" ng-class="{highlightedFilterButton: currentDeckFilterName === 'siege'}"></div></div>
+            <div class="col-xs-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-helmet" ng-click="switchCurrentCardsFilter('predefined','hero')" ng-class="{highlightedFilterButton: currentDeckFilterName === 'hero'}"></div></div>
+            <div class="col-xs-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-sun" ng-click="switchCurrentCardsFilter('predefined','weather')" ng-class="{highlightedFilterButton: currentDeckFilterName === 'weather'}"></div></div>
+            <div class="col-xs-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-spike" ng-click="switchCurrentCardsFilter('predefined','special')" ng-class="{highlightedFilterButton: currentDeckFilterName === 'special'}"></div></div>
         </div>
         <div class="row">
-            <div class="col-sm-12 cardContainer">
-                <div ng-repeat="card in currentDeckFilter" class="col-lg-4">
-                    <img ng-src="{{card.card.cardArtImageName}}" class="cardImage col-lg-12" style="float:left" ng-click="removeCardFromDeck(card.card)"></img>
+            <div class="col-xs-12 cardContainer"  id="currentDeck">
+                <div ng-repeat="card in currentDeckFilter" class="col-xs-4">
+                    <img ng-src="{{card.card.cardArtImageName}}" class="cardImage col-xs-12" style="float:left" ng-click="removeCardFromDeck(card.card)"></img>
                     <div class="cardCount">
                         <div class="jordanGlyphicon glyphicon-cardHand" style="float:left;"></div> x {{card.count}}
                     </div>
