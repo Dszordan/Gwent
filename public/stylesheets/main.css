@@ -77,8 +77,38 @@ body{
         font-size:12px;
     }
 }
-.ng-pristine{
-    color:#ccc;
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {   
+  border-color: rgba(126, 239, 104, 0.8);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(126, 239, 104, 0.6);
+  outline: 0 none;
+  color:#101010;
+}
+.form-control::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #ccc;
+}
+.form-control:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #ccc;
+}
+.form-control::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #ccc;
+}
+.form-control:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    #ccc;
 }
 .btn-primary{
     color:#0C1A1D;
@@ -203,7 +233,7 @@ body{
 
 .cardCount{
     margin-left:10px;
-    color:#0C1A1D;
+    color:#ccc;
 }
 
 .highlightCardError{

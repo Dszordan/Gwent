@@ -1,4 +1,4 @@
-var app = angular.module('gwentjs',['ui.router','infinite-scroll']);
+var app = angular.module('gwentjs',['ui.router','infinite-scroll','gwentjs.configuration','gwentjs.services']);
 
 app.controller('AuthCtrl', ['$scope', '$state', 'auth', function($scope, $state, auth){
     $scope.user = {};
@@ -128,8 +128,7 @@ app.controller('deckBuilderCtrl',
                     cardSubset.push($scope.availableCardsSuperset[i]);
                 };
             };
-            cardSubset.sort(sort_by('range', false, function(a){return a}));
-            cardSubset.sort(sort_by('faction', false, function(a){return a.toUpperCase()}));
+            cardSubset.sort(cardSort);
             $scope.availableCards = cardSubset;
             $scope.availableCardsFilter = cardSubset;
             $scope.availableCardsInfiniteScrolling = [];
@@ -198,6 +197,10 @@ app.controller('deckBuilderCtrl',
             for (var i = 0; i < $scope.currentDeck.length; i++) {
                 var cardInDeck = $scope.currentDeck[i];
                 if (cardInDeck.card === card) {
+                    if (card.shiny) {
+                        cardFoundInDeck = true;
+                        break; // can't add two hero cards
+                    };
                     cardInDeck.count+=count;
                     cardFoundInDeck = true;
                     break;
@@ -259,7 +262,7 @@ app.controller('deckBuilderCtrl',
                 }
             };
 
-            $scope.availableCardsFilter.sort(sort_by('faction', false, function(a){return a.toUpperCase()}));
+            $scope.availableCardsFilter.sort(cardSort);
             $scope.availableCardsInfiniteScrolling = [];            
             $scope.availableCardsInfiniteScrolling = $scope.availableCardsFilter.slice(0,12);
             $scope.loadMoreAvailableCards();
@@ -357,199 +360,9 @@ app.controller('deckBuilderCtrl',
         $scope.calculateTotals();
     }]);
 
-app.factory('cards',['$http', function($http){
-    var o = {
-        availableCards : [],
-        availableLeaderCards: []
-    };
-
-    o.getCard = function(id){
-      return $http.get('/cards/' + id).then(function(res){
-          return res.data;
-      })
-    };
-    o.getLeaderCard = function (id) {
-        return $http.get('/leaderCards/' + id).then(function(res){
-          return res.data;
-      })
-    };
-    o.getAvailableCards = function(){
-        return $http.get('/cards').success(function(data){
-            angular.copy(data, o.availableCards);
-        });
-    };
-    o.updateCard = function(card){
-        return $http.put('/cards/' + card._id + '/modify', card)
-            .success(function(data){
-               console.log('updated card ' + data); 
-            })
-            .error(function(errormessage){
-                console.log('screwed up' + errormessage);
-            });
-    };
-    o.updateLeaderCard = function(card){
-        return $http.put('/leaderCards/' + card._id + '/modify', card)
-            .success(function(data){
-               console.log('updated card ' + data); 
-            })
-            .error(function(errormessage){
-                console.log('screwed up' + errormessage);
-            });
-    };
-    o.getAvailableLeaderCards = function () {
-        return $http.get('/leaderCards').success(function(data){
-            angular.copy(data, o.availableLeaderCards);
-        });
-    }
-    return o;
-}]);
-
-app.factory('decks',['$http', function($http){
-    var o = {
-        deck : []
-    };
-    o.getDeck = function(id){
-        return $http.get('/decks/' + id).then(function(res){
-            return res.data;
-        });
-    }
-    o.saveDeck = function(deck){
-        return $http.post('/decks', deck).success(function(data){
-
-        });
-    }
-    return o;
-}]);
-
-app.factory('auth', ['$http', '$window', function($http, $window){
-    var auth = {};
-    auth.getToken = function(){
-        return $window.localStorage['flapper-news-token']; 
-    };
-    auth.saveToken = function(token){
-        $window.localStorage['flapper-news-token'] = token;
-    };
-    auth.isLoggedIn = function(){
-        var token = auth.getToken();
-
-        if (token) {
-            var payload = JSON.parse($window.atob(token.split('.')[1]));
-
-            return payload.exp > Date.now() / 1000;
-        } else {
-            return false;
-        }
-    };
-    auth.currentUser = function(){
-        if (auth.isLoggedIn()) {
-            var token = auth.getToken();
-            var payload = JSON.parse($window.atob(token.split('.')[1]));
-
-            return payload.username;
-        };
-    };
-    auth.register = function(user){
-        return $http.post('/register', user).success(function(data){
-            auth.saveToken(data.token);
-        });
-    };
-    auth.logIn = function(user){
-        return $http.post('/login', user).success(function(data){
-            auth.saveToken(data.token);
-        });
-    };
-    auth.logOut = function(){
-        $window.localStorage.removeItem('flapper-news-token');
-    };
-    return auth;
-}]);
-
-app.config([
-    '$stateProvider',
-    '$urlRouterProvider',
-    function($stateProvider, $urlRouterProvider){
-          $stateProvider
-            .state('home', {
-              url: '/home',
-              templateUrl: '/templates/deckBuilder.html',
-              controller: 'deckBuilderCtrl',
-              resolve:{
-                deck: ['$stateParams', 'decks', function($stateParams, decks){
-                          return '';
-                      }]
-              }
-            })
-            .state('loadDeck',{
-                  url:'/decks/{id}',
-                  templateUrl: '/templates/deckBuilder.html',
-                  controller: 'deckBuilderCtrl',
-                  resolve: {
-                      deck: ['$stateParams', 'decks', function($stateParams, decks){
-                          return decks.getDeck($stateParams.id);
-                      }]
-                  }
-              })
-            .state('modifyCard',{
-                  url:'/cards/{id}',
-                  templateUrl: '/templates/modifyCard.html',
-                  controller: 'cardModifyCtrl',
-                  resolve: {
-                      card: ['$stateParams', 'cards', function($stateParams, cards){
-                          return cards.getCard($stateParams.id);
-                      }]
-                  }
-              })
-            .state('modifyLeaderCard',{
-                  url:'/leaderCards/{id}',
-                  templateUrl: '/templates/modifyLeaderCard.html',
-                  controller: 'leaderCardModifyCtrl',
-                  resolve: {
-                      card: ['$stateParams', 'cards', function($stateParams, cards){
-                          return cards.getLeaderCard($stateParams.id);
-                      }]
-                  }
-              })
-            .state('viewLeaderCards',{
-                  url:'/leaderCards',
-                  templateUrl: '/templates/allLeaderCards.html',
-                  controller: 'leaderCardsCtrl'
-              })
-            .state('viewCards',{
-                  url:'/cards',
-                  templateUrl: '/templates/allCards.html',
-                  controller: 'cardsCtrl'
-              })
-            .state('login', {
-                url: '/login',
-                templateUrl: '/templates/login.html',
-                controller: 'AuthCtrl',
-                onEnter: [ '$state', 'auth', function($state, auth){
-                    if (auth.isLoggedIn()) {
-                        $state.go('home');
-                    };
-                }]
-            })
-            .state('register', {
-                url: '/register',
-                templateUrl: '/templates/register.html',
-                controller: 'AuthCtrl',
-                onEnter: [ '$state', 'auth', function($state, auth){
-                    if (auth.isLoggedIn()) {
-                        $state.go('home');
-                    };
-                }]
-            }).state('credits',{
-                url:'/credits',
-                templateUrl:'/templates/credits.html',
-                controller:'creditsCtrl'
-            });
-
-        $urlRouterProvider.otherwise('home');
-    }]);
-
 var sort_by = function(field, reverse, primer){
 
-   var key = primer ? 
+    var key = primer ? 
        function(x) {return primer(x[field])} : 
        function(x) {return x[field]};
 
@@ -558,4 +371,18 @@ var sort_by = function(field, reverse, primer){
    return function (a, b) {
        return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
      } 
+}
+
+var cardSort = function (a, b) {
+    var aFaction = a.faction.toUpperCase();
+    var bFaction = b.faction.toUpperCase();
+
+    var aRange = a.range.length === 0 ? "A" : a.range[0].toUpperCase();
+    var bRange = b.range.length === 0 ? "A" : b.range[0].toUpperCase();
+
+    if (aFaction < bFaction) return -1;
+    if (aFaction > bFaction) return 1;
+    if (aRange < bRange) return -1;
+    if (aRange > bRange) return 1;
+    return 0;
 }

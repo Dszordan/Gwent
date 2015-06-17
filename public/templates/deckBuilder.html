@@ -81,8 +81,8 @@
         </div>
         <div class="row">
             <div infinite-scroll='loadMoreAvailableCards()' infinite-scroll-distance='0' infinite-scroll-immediate-check="false" class="col-xs-12 cardContainer"> 
-                <div ng-repeat="card in availableCardsInfiniteScrolling" class="col-xs-4 cardImage">
-                    <img ng-src="{{card.cardArtImageName}}" class="col-xs-12" style="float:left" ng-click="putCardInDeck(card,1)"></img>
+                <div ng-repeat="card in availableCardsInfiniteScrolling" class="col-xs-4 cardImage" ng-click="putCardInDeck(card,1)">
+                    <img ng-src="{{card.cardArtImageName}}" class="col-xs-12" style="float:left"></img>
                 </div>
                 <div style='clear: both;'></div>
             </div>
