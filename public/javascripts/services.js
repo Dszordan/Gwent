@@ -51,9 +51,10 @@ app.factory('decks',['$http', function($http){
         deck : []
     };
     o.getDeck = function(id){
-        return $http.get('/decks/' + id).then(function(res){
-            return res.data;
-        });
+        return $http.get('/decks/' + id)
+            .then(function(res){
+                return res.data;
+            });
     }
     o.saveDeck = function(deck){
         return $http.post('/decks', deck).success(function(data){
@@ -61,6 +62,33 @@ app.factory('decks',['$http', function($http){
         });
     }
     return o;
+}]);
+
+app.factory('currentDeckFactory', ['decks', function(decks){
+    var deck = {
+        deckName:'',
+        cards:[],
+        faction:'',
+        leaderCard:{},
+        _id:''
+    };
+    deck.setCards = function(cards){
+        deck.cards = cards;
+    }
+    deck.setName = function(deckName){
+        deck.deckName = deckName;
+    }
+    deck.setFaction = function(faction){
+        deck.faction = faction;
+    }
+    deck.setLeaderCard = function(leaderCard){
+        deck.leaderCard = leaderCard;
+    }
+    deck.setId = function(id){
+        deck._id = id;
+    }
+
+    return deck;
 }]);
 
 app.factory('auth', ['$http', '$window', function($http, $window){

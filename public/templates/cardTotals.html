@@ -1,0 +1,31 @@
+<div id="currentDeckStats" class="row">
+    <div class="col-xs-12 jordanGlyphiconBackground">
+        <div class="col-xs-2 col-xs-offset-1">
+            <div class="jordanGlyphicon glyphicon-cardDeck" style="float:left;"></div>
+            <div style="float:left;">Total cards in Deck</br>
+            {{totalCards}}</div>
+        </div>
+        <div class="col-xs-2 ">
+            <div class="jordanGlyphicon glyphicon-cardHand " style="float:left;"></div>
+            <div style="float:left;" ng-class="{highlightCardError: totalUnitCards < 22}">
+            # of Unit Cards</br>
+            {{totalUnitCards}}/22</div>
+        </div>
+        <div class="col-xs-2">
+            <div class="jordanGlyphicon glyphicon-cardHand" style="float:left;"></div>
+            <div style="float:left;" ng-class="{highlightCardError: totalSpecialCards > 10}">
+            Special Cards</br>
+            {{totalSpecialCards}}/10</div>
+        </div>
+        <div class="col-xs-2">
+            <div class="jordanGlyphicon glyphicon-fist" style="float:left;"></div>
+            <div style="float:left;">Total Unit Strength</br>
+            {{totalUnitStrength}}</div>
+        </div>
+        <div class="col-xs-2">
+        <div class="jordanGlyphicon glyphicon-helmet" style="float:left;"></div>
+            <div style="float:left;">Hero Cards</br>
+            {{totalHeroCards}}</div>
+        </div>
+    </div>
+</div>

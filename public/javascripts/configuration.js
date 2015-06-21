@@ -1,33 +1,74 @@
 var app = angular.module('gwentjs.configuration',[]);
-
 app.config([
     '$stateProvider',
     '$urlRouterProvider',
     function($stateProvider, $urlRouterProvider){
         $stateProvider
-            .state('home', {
+            .state('deckBuilder', {
               url: '/home',
-              views:{
-                'deckBuilder':{
-                    templateUrl: '/templates/deckBuilder.html',
-                    controller: 'deckBuilderCtrl',
-                    resolve:{
-                    deck: ['$stateParams', 'decks', function($stateParams, decks){
-                                  return '';
-                        }]
+              resolve: {'existingDeck':function(){return ''}},
+                views:{
+                    'deckBuilder':{
+                        templateUrl: '/templates/deckBuilder.html',
+                        controller: 'deckBuilderCtrl'
+                    },
+                    'leaderSelection':{
+                        templateUrl: '/templates/leaderCardSelection.html',
+                        controller: 'leaderSelectionCtrl'
+                    },
+                    'cardTotals':{
+                        templateUrl: '/templates/cardTotals.html',
+                        controller: 'cardTotalsCtrl'
+                    },
+                    'availableCardSelection@deckBuilder':{
+                        templateUrl: '/templates/availableCardsSelection.html',
+                        controller: 'availableCardsCtrl'
+                    },
+                    'deckCardSelection@deckBuilder':{
+                        templateUrl: '/templates/deckCardsSelection.html',
+                        controller: 'currentHandCtrl'
                     }
-                }
-              }
+                }   
             })
             .state('loadDeck',{
-                  url:'/decks/{id}',
-                  templateUrl: '/templates/deckBuilder.html',
-                  controller: 'deckBuilderCtrl',
-                  resolve: {
-                      deck: ['$stateParams', 'decks', function($stateParams, decks){
-                          return decks.getDeck($stateParams.id);
-                      }]
-                  }
+                url:'/decks/{id}',
+                resolve: {
+                  'existingDeck' : 
+                    ['$stateParams', 'decks', 'currentDeckFactory', function($stateParams, decks, currentDeckFactory){
+                        return decks.getDeck($stateParams.id);
+                            // .success(function(existingDeck){
+                            //     if (existingDeck) {
+                            //         currentDeckFactory.setFaction(existingDeck.faction);
+                            //         currentDeckFactory.setName(existingDeck.deckName);
+                            //         currentDeckFactory.setLeaderCard(existingDeck.leaderCard);
+                            //         currentDeckFactory.setCards(existingDeck.cards);
+                            //         currentDeckFactory.setId(existingDeck._id);
+                            //     };
+                            // });
+                    }]
+                },
+                views:{
+                    'deckBuilder':{
+                        templateUrl: '/templates/deckBuilder.html',
+                        controller: 'deckBuilderCtrl'
+                    },
+                    'leaderSelection':{
+                        templateUrl: '/templates/leaderCardSelection.html',
+                        controller: 'leaderSelectionCtrl'
+                    },
+                    'cardTotals':{
+                        templateUrl: '/templates/cardTotals.html',
+                        controller: 'cardTotalsCtrl'
+                    },
+                    'availableCardSelection@loadDeck':{
+                        templateUrl: '/templates/availableCardsSelection.html',
+                        controller: 'availableCardsCtrl'
+                    },
+                    'deckCardSelection@loadDeck':{
+                        templateUrl: '/templates/deckCardsSelection.html',
+                        controller: 'currentHandCtrl'
+                    }
+                }                  
               })
             .state('modifyCard',{
                   url:'/cards/{id}',

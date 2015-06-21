@@ -1,0 +1,29 @@
+<div id="allCardsContainer" class="col-xs-6">
+    <div class="row" id="cardCollection">
+        <div class="col-xs-5 col-xs-offset-4">
+            <h1>Card Collection</h1>
+        </div>
+    </div>
+    <div class="row" id="cardCollectionCurrentFilter">
+        <div class="col-xs-5 col-xs-offset-5">
+            <h2>{{availableCardsFilterDisplayName}}</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-1 col-xs-offset-2"><div class="jordanGlyphicon btn btn-primary glyphicon-cardHand"  ng-click="switchAvailableCardsFilter('predefined','all')" ng-class="{highlightedFilterButton: availableCardsFilterName === 'all'}"></div></div>
+        <div class="col-xs-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-sword" ng-click="switchAvailableCardsFilter('predefined','melee')" ng-class="{highlightedFilterButton: availableCardsFilterName === 'melee'}"></div></div>
+        <div class="col-xs-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-bowAndArrow" ng-click="switchAvailableCardsFilter('predefined','ranged')" ng-class="{highlightedFilterButton: availableCardsFilterName === 'ranged'}"></div></div>
+        <div class="col-xs-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-catapult" ng-click="switchAvailableCardsFilter('predefined','siege')" ng-class="{highlightedFilterButton: availableCardsFilterName === 'siege'}"></div></div>
+        <div class="col-xs-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-helmet" ng-click="switchAvailableCardsFilter('predefined','hero')" ng-class="{highlightedFilterButton: availableCardsFilterName === 'hero'}"></div></div>
+        <div class="col-xs-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-sun" ng-click="switchAvailableCardsFilter('predefined','weather')" ng-class="{highlightedFilterButton: availableCardsFilterName === 'weather'}"></div></div>
+        <div class="col-xs-1"><div class="jordanGlyphicon btn btn-primary  glyphicon-spike" ng-click="switchAvailableCardsFilter('predefined','special')" ng-class="{highlightedFilterButton: availableCardsFilterName === 'special'}"></div></div>
+    </div>
+    <div class="row">
+        <div infinite-scroll='loadMoreAvailableCards()' infinite-scroll-distance='0' infinite-scroll-immediate-check="false" class="col-xs-12 cardContainer"> 
+            <div ng-repeat="card in availableCardsInfiniteScrolling" class="col-xs-4 cardImage" ng-click="cardClicked(card)">
+                <img ng-src="{{card.cardArtImageName}}" class="col-xs-12" style="float:left"></img>
+            </div>
+            <div style='clear: both;'></div>
+        </div>
+    </div>
+</div>

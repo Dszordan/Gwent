@@ -34,6 +34,9 @@ body{
     body{
         font-size:11px;
     }
+    #leaderSelection{
+        height:100%;
+    }
 }
 @media(min-width:768px){
     h1{
@@ -47,6 +50,10 @@ body{
     }
     body{
         font-size:11px;
+    }
+
+    #leaderSelection{
+        height:100%;
     }
 }
 @media(min-width:992px){
@@ -62,6 +69,9 @@ body{
     body{
         font-size:12px;
     }
+    #leaderSelection{
+        height:100%;
+    }
 }
 @media(min-width:1200px){
     h1{
@@ -75,6 +85,9 @@ body{
     }
     body{
         font-size:12px;
+    }
+    #leaderSelection{
+        height:533px;
     }
 }
 textarea:focus,
@@ -201,6 +214,11 @@ input[type="color"]:focus,
 }
 
 #deckBuilderHeader{
+    text-align:center;
+    padding-top:14px;
+}
+
+#leaderSelection{
     text-align:center;
     padding-top:14px;
 }
