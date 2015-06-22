@@ -1,11 +1,13 @@
 <div id="deckBuilderContainer" class="row">
-<div id="deckBuilderHeader" class="col-xs-8 col-xs-offset-2">
-    <input type="text" class="form-control" placeholder="Choose a Deck Name" ng-model="deckName"></input><div class="btn btn-primary" ng-click="saveDeck()">Save Deck</div>
-    <div  ng-show="savedURL !== ''">
-        {{saveResultMessage}}<br/>
-        <a id="deckURL" href="{{savedURL}}">Deck URL : {{savedURL}}</a>
-    </div>
-</div>
-<div ui-view="availableCardSelection"></div>
-<div ui-view="deckCardSelection"></div>
+	<div id="deckBuilderHeader" class="col-xs-8 col-xs-offset-2">
+	    <input type="text" class="form-control" placeholder="Choose a Deck Name" ng-model="deckName"></input><div class="btn btn-primary" ng-click="saveDeck()">Save Deck</div>
+	    <div  ng-show="savedURL !== ''">
+	        {{saveResultMessage}}<br/>
+	        <a id="deckURL" href="{{savedURL}}">Deck URL : {{savedURL}}</a>
+	    </div>
+	</div>
+	<div class="row">
+		<div ui-view="availableCardSelection" class="col-xs-6"></div>
+		<div ui-view="deckCardSelection" class="col-xs-6"></div>
+	</div>
 </div>

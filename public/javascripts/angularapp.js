@@ -236,6 +236,7 @@ app.controller('availableCardsCtrl',
         $scope.availableCardsSuperset = [];
         $scope.availableCardsInfiniteScrolling = [];
         $scope.availableCardsFilter = [];
+        $scope.availableCardsFilterName = "all";
         $scope.availableCardsFilterDisplayName = "All Cards";
 
         cards.getAvailableCards()

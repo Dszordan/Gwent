@@ -1,16 +1,27 @@
 <div id="leaderSelection" class="col-xs-8 col-xs-offset-2">
-    <div id="chosenFactionHeader"><h2>Chosen Faction</h2></div>
+    <div id="chosenFactionHeader">
+<!--         <h2>Chosen Faction</h2></div>
         <div id="chosenFaction" class="col-xs-12">
-            <div style="float:left;" class="col-xs-1  col-xs-offset-3"><img ng-src="{{factionImage}}"></img></div>
+            <div style="float:left;" class="col-xs-1  col-xs-offset-3">
+                <img ng-src="{{factionImage}}"></img>
+            </div>
             <div style="float:left;" class="col-xs-4">
                 <h1>{{factionDisplayName}}</h1> 
             </div>
-        </div>
+        </div> -->
         <div id="factionButtons" class="col-xs-12">
-            <div class="btn btn-primary" ng-click="changeFaction('northernrealms')" ng-class="{highlightSelectedFactionButton: selectedFaction === 'northernrealms'}">Northern Realms</div>
-            <div class="btn btn-primary" ng-click="changeFaction('nilfgaardian')" ng-class="{highlightSelectedFactionButton: selectedFaction === 'nilfgaardian'}">Nilfgaardian Empire</div>
-            <div class="btn btn-primary" ng-click="changeFaction('monster')" ng-class="{highlightSelectedFactionButton: selectedFaction === 'monster'}">Monster</div>
-            <div class="btn btn-primary" ng-click="changeFaction('scoiatael')"  ng-class="{highlightSelectedFactionButton: selectedFaction === 'scoiatael'}">Scoia'tael</div>
+            <div class="btn btn-primary factionButton" ng-click="changeFaction('northernrealms')" ng-class="{highlightSelectedFactionButton: selectedFaction === 'northernrealms'}">
+                <img src="/images/northernrealms.png"></img>
+            </div>
+            <div class="btn btn-primary factionButton" ng-click="changeFaction('nilfgaardian')" ng-class="{highlightSelectedFactionButton: selectedFaction === 'nilfgaardian'}">
+                <img src="/images/nilfgaard.png"></img>
+            </div>
+            <div class="btn btn-primary factionButton" ng-click="changeFaction('monster')" ng-class="{highlightSelectedFactionButton: selectedFaction === 'monster'}">
+                <img src="/images/monster.png"></img>
+            </div>
+            <div class="btn btn-primary factionButton" ng-click="changeFaction('scoiatael')"  ng-class="{highlightSelectedFactionButton: selectedFaction === 'scoiatael'}">
+                <img src="/images/scoiatael.png"></img>
+            </div>
             <div id="chosenFactionPerk">PASSIVE PERK: {{factionPassive}}</div>
         </div>
         <div id="leaderCards" class="col-xs-12">
