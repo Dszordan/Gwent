@@ -47,6 +47,10 @@ body{
     #leaderSelection{
         height:100%;
     }
+    /*.paddingcard{
+        height:150px;
+        width:;
+    }*/
 }
 @media(min-width:768px){
     h1{
@@ -65,6 +69,13 @@ body{
     #leaderSelection{
         height:100%;
     }
+    .app-modal-window .modal-dialog {
+      width: 700px;
+    }
+    .paddingcard > div{
+        height:180px;
+        width:125px;
+    }
 }
 @media(min-width:992px){
     h1{
@@ -82,6 +93,13 @@ body{
     #leaderSelection{
         height:100%;
     }
+    .app-modal-window .modal-dialog {
+      width: 700px;
+    }
+    .paddingcard > div{
+        height:170px;
+        width:120px;
+    }
 }
 @media(min-width:1200px){
     h1{
@@ -97,8 +115,17 @@ body{
         font-size:12px;
     }
     #leaderSelection{
-        height:533px;
+        height:100%;
     }
+    .app-modal-window .modal-dialog {
+      width: 800px;
+    }
+    .paddingcard > div{
+        height:233px;
+        width:154px;
+    }
+}
+
   .cardFilters .col-xs-1,  
   .cardFilters .col-md-1,
   .cardFilters .col-sm-1,
@@ -106,7 +133,6 @@ body{
         width: 14.285714285714285714285714285714%;
         *width: 14.285714285714285714285714285714%;
   }
-}
 textarea:focus,
 input[type="text"]:focus,
 input[type="password"]:focus,
@@ -200,6 +226,11 @@ input[type="color"]:focus,
 
 }
 
+.paddingcard{
+    padding-top:5px;
+    padding-bottom: 5px;
+}
+
 .cardContainer{
     background-color:#102131; 
     padding-top:5px;
@@ -208,6 +239,10 @@ input[type="color"]:focus,
     border-top-right-radius:10px;
     border-bottom-left-radius:10px;
     border-bottom-right-radius:10px;
+}
+
+.cardContainerCards .carousel-inner{
+    padding-top:30px;
 }
 
 .cardFilters{
@@ -219,13 +254,18 @@ input[type="color"]:focus,
     border-top-right-radius:3px;
     border-bottom-left-radius:3px;
     border-bottom-right-radius:3px;
+
+    background: -webkit-linear-gradient(#ECF3FB, #BEC2C5);
+    background: -o-linear-gradient(#ECF3FB, #BEC2C5); 
+    background: -moz-linear-gradient(#ECF3FB, #BEC2C5); 
+    background: linear-gradient(#ECF3FB, #BEC2C5); 
 }
 
 .cardFilters > div{
     background-color: #d7d7d7;
+    background: rgba(54, 25, 25, 0);
     border:none;
-    border-right:1px solid #ccc;
-    border-left:1px solid #DDDDDD;
+    border-right:1px solid #E8E8E8;
     margin-top:1px;
     margin-bottom:1px;
 
@@ -233,10 +273,12 @@ input[type="color"]:focus,
     border-top-right-radius:0px;
     border-bottom-left-radius:0px;
     border-bottom-right-radius:0px;
+
 }
 
 .cardFilters > div:hover{
-    background-color: #ccc;
+    /*background-color: #ccc;*/
+    background: rgba(170, 170, 170, 0.6);
     border:none;
     border-right:1px solid #ccc;
     border-left:1px solid #ccc;
@@ -249,25 +291,41 @@ input[type="color"]:focus,
 
 
 .highlightedFilterButton{
-    background-color:#aaa !important; 
+    background: rgba(170, 170, 170, 0.6) !important; 
     border-left:1px solid #aaa !important;
 }
 
 #currentDeck{
-    min-height: 600px;
 }
 
-.cardImage img{
+.cardImage{
     padding-top:5px;
     padding-bottom: 5px
 }
 
 .cardImage:hover{
-    background-color: #aaa;
+    background-color: #DD820F, #F2B51C;
     border-top-left-radius:4px;
     border-top-right-radius:4px;
     border-bottom-left-radius:4px;
     border-bottom-right-radius:4px;
+
+    -webkit-transform:scale(1.25); /* Safari and Chrome */
+    -moz-transform:scale(1.25); /* Firefox */
+    -ms-transform:scale(1.25); /* IE 9 */
+    -o-transform:scale(1.25); /* Opera */
+     transform:scale(1.25);
+     z-index: 1000;
+
+    /*background: -webkit-linear-gradient(#F2B51C, #DD820F); */
+    /*background: -o-radial-gradient(#F2B51C 50%, #DD820F 90%); */
+    /*background: -moz-radial-gradient(#F2B51C 50%, #DD820F 90%); */
+    /*background: radial-gradient(#F2B51C 50%, #DD820F 90%); */
+
+    background: -webkit-linear-gradient(#E58922, #F2B51C, #E58922);
+    background: -o-linear-gradient(#E58922, #F2B51C, #E58922); 
+    background: -moz-linear-gradient(#E58922, #F2B51C, #E58922); 
+    background: linear-gradient(#E58922, #F2B51C, #E58922); 
 }
 
 #deckBuilderHeader{
@@ -291,7 +349,16 @@ input[type="color"]:focus,
 
 #currentDeckStats{
     margin-top:10px;
-    color:#0C1A1D;
+    background-color:#102131;
+    padding:4px;
+    border-top-left-radius:4px;
+    border-top-right-radius:4px;
+    border-bottom-left-radius:4px;
+    border-bottom-right-radius:4px;
+}
+
+#currentDeckStats div{
+    padding-top:3px;
 }
 
 #cardCollection{

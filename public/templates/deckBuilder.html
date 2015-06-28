@@ -1,7 +1,12 @@
 <div id="deckBuilderContainer" class="row">
+	<div class="row">
+        <div ui-view="leaderSelection" class="col-xs-6"></div>
+        <div ui-view="cardTotals" class="col-xs-6"></div>
+    </div>
 	<div id="deckBuilderHeader" class="col-xs-8 col-xs-offset-2">
-	    <input type="text" class="form-control" placeholder="Choose a Deck Name" ng-model="deckName"></input><div class="btn btn-primary" ng-click="saveDeck()">Save Deck</div>
-	    <div  ng-show="savedURL !== ''">
+	    <div class="col-xs-10"><input type="text" class="form-control" placeholder="Choose a Deck Name" ng-model="deckName"></input></div>
+	    <div class="btn btn-primary" ng-click="saveDeck()">Save Deck</div>
+	    <div ng-show="savedURL !== ''">
 	        {{saveResultMessage}}<br/>
 	        <a id="deckURL" href="{{savedURL}}">Deck URL : {{savedURL}}</a>
 	    </div>

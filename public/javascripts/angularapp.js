@@ -1,4 +1,4 @@
-var app = angular.module('gwentjs',['ui.router','infinite-scroll','gwentjs.configuration','gwentjs.services']);
+var app = angular.module('gwentjs',['ui.router','gwentjs.configuration','gwentjs.services','ui.bootstrap']);
 /* 
     Controller for dealing with authentication the user
 */
@@ -104,12 +104,17 @@ app.controller('leaderSelectionCtrl',
     '$rootScope',
     'cards',
     'currentDeckFactory',
+    '$modal',
     'existingDeck',
-    function($scope,$rootScope, cards, currentDeckFactory, existingDeck){
+    function($scope,$rootScope, cards, currentDeckFactory, $modal, existingDeck){
         $scope.availableLeaderCardsSuperset = {};
         $scope.currentLeaderCard = {};
         $scope.leaderCardsFilter = [];
         $scope.selectedFaction = "";
+        $scope.showAllLeaderCards = false;
+
+        var modalWindow = undefined;
+
         cards.getAvailableLeaderCards()
             .success(function(data){
                 $scope.availableLeaderCardsSuperset = data;
@@ -122,6 +127,14 @@ app.controller('leaderSelectionCtrl',
                     $scope.changeFaction("northernrealms");
                 }
         });
+        $scope.openAllCardsDialog = function(){
+            $rootScope.theme = 'ngdialog-theme-default';
+            showAllLeaderCards = true;
+            modalWindow = $modal.open({ 
+                templateUrl: 'allCardsDialog',
+                scope:$scope,
+                windowClass: 'app-modal-window'});
+        };
         $scope.changeFaction = function (faction) {
             var oldAndNewFaction = {oldFaction: $scope.selectedFaction, newFaction:faction};
             $scope.leaderCardsFilter = [];
@@ -141,7 +154,10 @@ app.controller('leaderSelectionCtrl',
                     break;
                 };
             };
+            if (modalWindow)
+                modalWindow.close();
             currentDeckFactory.setLeaderCard(leaderCard);
+            $rootScope.$broadcast('leaderCardChanged', leaderCard);
         }
         $scope.setFactionDisplay = function(faction){
             $scope.selectedFaction = faction;
@@ -177,17 +193,32 @@ app.controller('leaderSelectionCtrl',
 */
 app.controller('cardTotalsCtrl',
     ['$scope',
+    'currentDeckFactory',
     '$rootScope',
-    function($scope, $rootScope){
+    'existingDeck',
+    function($scope, currentDeckFactory, $rootScope, existingDeck){
         $scope.totalCards = 0;
         $scope.totalUnitCards = 0;
         $scope.totalSpecialCards = 0;
         $scope.totalUnitStrength = 0;
         $scope.totalHeroCards = 0;
+        $scope.leaderAbility = 'Pick an Impenetrable Fog card from your deck and play it instantly.';
+        $scope.factionPassive = currentDeckFactory.getFactionPassive('northernrealms');
+        
+        if (existingDeck) {
+            $scope.leaderAbility = existingDeck.leaderCard.ability;
+            $scope.factionPassive = currentDeckFactory.getFactionPassive(existingDeck.leaderCard.faction);
+        };
 
         var deckChangedListener = $rootScope.$on('currentDeckChanged', function(event,data){
             $scope.calculateTotals(data);
         });
+        var leaderChangedListener = $rootScope.$on('leaderCardChanged', function(event,data){
+            $scope.leaderAbility = currentDeckFactory.leaderCard.ability;
+            $scope.factionPassive = currentDeckFactory.getFactionPassive(currentDeckFactory.leaderCard.faction);
+        });
+        $scope.$on('$destroy', leaderChangedListener);
+        $scope.$on('$destroy', deckChangedListener);
         $scope.calculateTotals = function(currentDeck){
             var totalHeroCards = 0;
             var totalCards = 0;
@@ -224,7 +255,6 @@ app.controller('cardTotalsCtrl',
     Filter cards based on faction
     Notify via $broadcast when a card has been clicked
     Filter currently presented cards based on the 7 fixed filters (melee, ranged, siege, etc)
-    Loads additional cards on the page using Infinite Scroll
 */
 app.controller('availableCardsCtrl',
     ['$scope',
@@ -234,10 +264,13 @@ app.controller('availableCardsCtrl',
     'existingDeck',
     function($scope, $rootScope, cards, currentDeckFactory, existingDeck){
         $scope.availableCardsSuperset = [];
-        $scope.availableCardsInfiniteScrolling = [];
         $scope.availableCardsFilter = [];
         $scope.availableCardsFilterName = "all";
         $scope.availableCardsFilterDisplayName = "All Cards";
+
+        //Pagination / slides
+        $scope.slides = [];
+        var cardsPerSlide = 9;
 
         cards.getAvailableCards()
             .success(function(data){
@@ -286,9 +319,7 @@ app.controller('availableCardsCtrl',
             cardSubset.sort(cardSort);
             $scope.availableCards = cardSubset;
             $scope.availableCardsFilter = cardSubset;
-            $scope.availableCardsInfiniteScrolling = [];
-            $scope.availableCardsInfiniteScrolling = $scope.availableCardsFilter.slice(0,12);
-            $scope.loadMoreAvailableCards();
+            $scope.loadSlides();
         };
         $scope.switchAvailableCardsFilter = function(newType, newFilter){
             $scope.availableCardsFilterName = newFilter;
@@ -324,21 +355,34 @@ app.controller('availableCardsCtrl',
             };
 
             $scope.availableCardsFilter.sort(cardSort);
-            $scope.availableCardsInfiniteScrolling = [];            
-            $scope.availableCardsInfiniteScrolling = $scope.availableCardsFilter.slice(0,12);
-            $scope.loadMoreAvailableCards();
+            $scope.loadSlides();
         };
-        $scope.loadMoreAvailableCards = function () {
-            if ($scope.availableCardsFilter.length == 0) {return;};
-            if ($scope.availableCardsInfiniteScrolling.length == $scope.availableCardsFilter.length) {return;};
-            var numberOfVisibleCards = $scope.availableCardsInfiniteScrolling.length-1;
-            var newNumberOfVisibleCards = numberOfVisibleCards + 3;
-            if (numberOfVisibleCards + newNumberOfVisibleCards >  $scope.availableCardsFilter.length) {
-                newNumberOfVisibleCards =  $scope.availableCardsFilter.length;
+        $scope.loadSlides = function(){
+            $scope.slides = [];
+            var numberOfFullSlides = Math.floor($scope.availableCardsFilter.length / cardsPerSlide);
+            for (var i = 0; i < numberOfFullSlides; i++) {
+                var startRange = cardsPerSlide * i;
+                var endRange = cardsPerSlide * (i + 1);
+
+                $scope.addSlide($scope.availableCardsFilter.slice(startRange,endRange),[]);
             };
-            for (var i = numberOfVisibleCards; i < newNumberOfVisibleCards; i++) {
-                $scope.availableCardsInfiniteScrolling.push($scope.availableCardsFilter[i+1]);
+            var leftoverCards = $scope.availableCardsFilter.length % cardsPerSlide;
+            if (leftoverCards != 0) {
+                var startRange = cardsPerSlide * numberOfFullSlides;
+                var endRange = cardsPerSlide * numberOfFullSlides + leftoverCards;
+
+                var padding = [];
+                for (var i = 0; i < (cardsPerSlide - leftoverCards); i++) {
+                    padding.push({});
+                };
+                $scope.addSlide($scope.availableCardsFilter.slice(startRange,endRange),padding);
             };
+        };
+        $scope.addSlide = function(cardSubset, blankCards){
+            $scope.slides.push({
+                cards:cardSubset,
+                padding:blankCards
+            });
         };
     }]);
 
@@ -360,6 +404,11 @@ app.controller('currentHandCtrl',
         $scope.currentDeckFilter = [];
         $scope.currentDeckFilterName = "all";
         $scope.currentDeckFilterDisplayName = "All Cards";
+
+        //Pagination / slides
+        $scope.slides = [];
+        var cardsPerSlide = 9;
+
         var availableCardSelectedListener = $rootScope.$on('availableCardSelected', function(event, data){
             $scope.putCardInDeck(data.card, data.count);
         });
@@ -374,6 +423,7 @@ app.controller('currentHandCtrl',
             $scope.currentDeck = [];
             $scope.currentDeckFilter = [];
             $rootScope.$broadcast('currentDeckChanged',$scope.currentDeck);
+            $scope.loadSlides();
             var xyz = $scope.currentDeck;
             currentDeckFactory.setCards(xyz);
         };
@@ -407,9 +457,7 @@ app.controller('currentHandCtrl',
                     cardInDeck.count--;
                     if (cardInDeck.count == 0) {
                         $scope.currentDeck.splice(i, 1);
-                        for (var j = 0; j < $scope.currentDeckFilter.length; j++) {
-                            if ($scope.currentDeckFilter[j].card === card) {$scope.currentDeckFilter.splice(j, 1);};
-                        };
+                        $scope.loadSlides();
                     };
                     break;
                 };
@@ -454,7 +502,56 @@ app.controller('currentHandCtrl',
                             $scope.currentDeckFilter.push($scope.currentDeck[i]);
                     };
                 }
+                $scope.loadSlides();
         }
+        $scope.loadSlides = function(){
+            var currentSlideIndex = 0;
+            if ($scope.slides != undefined && $scope.slides.length > 0) {
+                var currentSlide = $scope.slides.filter(function (s) { return s.active; })[0];
+                currentSlideIndex = $scope.slides.indexOf(currentSlide);
+            };
+            $scope.slides = [];
+            var numberOfFullSlides = Math.floor($scope.currentDeckFilter.length / cardsPerSlide);
+            for (var i = 0; i < numberOfFullSlides; i++) {
+                var startRange = cardsPerSlide * i;
+                var endRange = cardsPerSlide * (i + 1);
+
+                $scope.addSlide($scope.currentDeckFilter.slice(startRange,endRange),[]);
+            };
+
+            var leftoverCards = $scope.currentDeckFilter.length % cardsPerSlide;
+            if (leftoverCards != 0) {
+                var startRange = cardsPerSlide * numberOfFullSlides;
+                var endRange = cardsPerSlide * numberOfFullSlides + leftoverCards;
+
+                var padding = [];
+                for (var i = 0; i < (cardsPerSlide - leftoverCards); i++) {
+                    padding.push({});
+                };
+                $scope.addSlide($scope.currentDeckFilter.slice(startRange,endRange),padding);
+            };
+            if ($scope.currentDeckFilter.length == 0) {
+                 var padding = [];
+                for (var i = 0; i < (cardsPerSlide - leftoverCards); i++) {
+                    padding.push({});
+                };
+                $scope.addSlide({},padding);  
+            };
+            if ($scope.slides.length != 0) {
+                if ($scope.slides.length < currentSlideIndex + 1) {
+                    $scope.slides[currentSlideIndex - 1].active = true;
+                } else {
+                    $scope.slides[currentSlideIndex].active = true;
+                };
+            };
+        };
+        $scope.addSlide = function(cardSubset, blankCards){
+            $scope.slides.push({
+                active:false,
+                cards:cardSubset,
+                padding:blankCards
+            });
+        };
 
         $scope.refreshCurrentDeckFilter();
     }]);

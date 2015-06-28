@@ -1,4 +1,5 @@
-var app = angular.module('gwentjs.configuration',[]);
+var app = angular.module('gwentjs.configuration',['ngDialog']);
+
 app.config([
     '$stateProvider',
     '$urlRouterProvider',
@@ -12,11 +13,11 @@ app.config([
                         templateUrl: '/templates/deckBuilder.html',
                         controller: 'deckBuilderCtrl'
                     },
-                    'leaderSelection':{
+                    'leaderSelection@deckBuilder':{
                         templateUrl: '/templates/leaderCardSelection.html',
                         controller: 'leaderSelectionCtrl'
                     },
-                    'cardTotals':{
+                    'cardTotals@deckBuilder':{
                         templateUrl: '/templates/cardTotals.html',
                         controller: 'cardTotalsCtrl'
                     },
@@ -36,15 +37,6 @@ app.config([
                   'existingDeck' : 
                     ['$stateParams', 'decks', 'currentDeckFactory', function($stateParams, decks, currentDeckFactory){
                         return decks.getDeck($stateParams.id);
-                            // .success(function(existingDeck){
-                            //     if (existingDeck) {
-                            //         currentDeckFactory.setFaction(existingDeck.faction);
-                            //         currentDeckFactory.setName(existingDeck.deckName);
-                            //         currentDeckFactory.setLeaderCard(existingDeck.leaderCard);
-                            //         currentDeckFactory.setCards(existingDeck.cards);
-                            //         currentDeckFactory.setId(existingDeck._id);
-                            //     };
-                            // });
                     }]
                 },
                 views:{
@@ -52,11 +44,11 @@ app.config([
                         templateUrl: '/templates/deckBuilder.html',
                         controller: 'deckBuilderCtrl'
                     },
-                    'leaderSelection':{
+                    'leaderSelection@loadDeck':{
                         templateUrl: '/templates/leaderCardSelection.html',
                         controller: 'leaderSelectionCtrl'
                     },
-                    'cardTotals':{
+                    'cardTotals@loadDeck':{
                         templateUrl: '/templates/cardTotals.html',
                         controller: 'cardTotalsCtrl'
                     },
@@ -127,3 +119,14 @@ app.config([
 
         $urlRouterProvider.otherwise('home');
     }]);
+
+app.config(['ngDialogProvider', function (ngDialogProvider) {
+            ngDialogProvider.setDefaults({
+                className: 'ngdialog-theme-default',
+                plain: false,
+                showClose: true,
+                closeByDocument: true,
+                closeByEscape: true,
+                appendTo: true
+            });
+        }]);

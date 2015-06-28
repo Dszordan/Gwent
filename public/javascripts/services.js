@@ -87,6 +87,23 @@ app.factory('currentDeckFactory', ['decks', function(decks){
     deck.setId = function(id){
         deck._id = id;
     }
+    deck.getFactionPassive = function(faction){
+        if (faction === 'northernrealms') {
+                return 'Draw a card from your deck when you win a round.'
+            } 
+            else if (faction === 'monster'){
+                return 'One randomly-chosen Monsters Unit Card stays on the battlefield after each round.'  
+            }
+            else if (faction === 'scoiatael'){
+                return 'You decide who goes first at the start of a battle.'  
+            }
+            else if (faction === 'nilfgaardian'){
+                return 'Win whenever there is a draw.'  
+            }
+            else {
+                return 'This should be populated...';
+            }
+    }
 
     return deck;
 }]);

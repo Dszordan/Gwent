@@ -35,13 +35,27 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-12" id="currentDeck">
+        <div class="col-xs-12 cardContainerCards" id="currentDeck">
+            <carousel interval="0">
+                <slide ng-repeat="slide in slides" active="slide.active">
+                    <div style="margin-left:40px;margin-right:40px">
+                            <img ng-repeat="cardAndCount in slide.cards" class="col-xs-6 col-md-4 col-lg-4 cardImage" ng-click="removeCardFromDeck(cardAndCount.card)" ng-src="{{cardAndCount.card.cardArtImageName}}" style="float:left"></img>
+                        <div ng-repeat="card in slide.padding" class="col-xs-4 paddingcard">
+                            <div class="col-xs-12" style="float:left;"></div>
+                        </div>
+                    </div>
+                    <div style='clear: both;'></div>
+                    <div style="height:50px"></div>
+                </slide>
+            </carousel>
+        </div>
+<!--         <div class="col-xs-12" id="currentDeck">
             <div ng-repeat="card in currentDeckFilter" class="col-xs-4 cardImage">
                 <img ng-src="{{card.card.cardArtImageName}}" class=" col-xs-12" style="float:left" ng-click="removeCardFromDeck(card.card)"></img>
                 <div class="cardCount">
                     <div class="jordanGlyphicon glyphicon-cardHand" style="float:left;"></div> x {{card.count}}
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>

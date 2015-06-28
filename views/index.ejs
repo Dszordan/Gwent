@@ -4,13 +4,14 @@
         <title>Gwent Deck Builder</title>
         <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
         <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/stylesheets/main.css" rel="stylesheet">
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
-        <script type="text/javascript" src="/javascripts/ng-infinite-scroll.min.js"></script>
         <script type="text/javascript" src="/javascripts/configuration.js"></script>
         <script type="text/javascript" src="/javascripts/services.js"></script>
         <script type="text/javascript" src="/javascripts/angularapp.js"></script>
-        <link href="/stylesheets/main.css" rel="stylesheet">
+        <script type="text/javascript" src="/javascripts/ngDialog.min.js"></script>
+        <script type="text/javascript" src="/javascripts/ui-bootstrap-tpls-0.13.0.min.js"></script>
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -20,17 +21,17 @@
           ga('create', 'UA-64032067-1', 'auto');
           ga('send', 'pageview');
         </script>
-    </head>
-
+    </head
+>
 
     <body ng-app="gwentjs">
         <nav class="navbar navbar-default pull-right" ng-controller="NavCtrl">
             <ul class="nav navbar-nav">
                 <li><a href="/#/home">Home</a></li>
-<!--                 <li class="hidden-lg hidden-sm hidden-md"><a>XS</a></li>
+                <li class="hidden-lg hidden-sm hidden-md"><a>XS</a></li>
                 <li class="hidden-xs hidden-lg hidden-md"><a>Small</a></li>
                 <li class="hidden-xs hidden-sm hidden-lg"><a>Medium</a></li>    
-                <li class="hidden-xs hidden-sm hidden-md"><a>Large</a></li> -->
+                <li class="hidden-xs hidden-sm hidden-md"><a>Large</a></li>
                 <li> <a href="/#/credits">Credits</a></li>
             </ul>
         </nav>
@@ -46,8 +47,6 @@
             <div class="row">
                 <div  class="col-lg-12">
                     <ui-view></ui-view>
-                    <div ui-view="leaderSelection"></div>
-                    <div ui-view="cardTotals"></div>
                     <div ui-view="deckBuilder"></div>
                 </div>
             </div>

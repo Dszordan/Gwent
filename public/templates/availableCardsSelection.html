@@ -35,11 +35,19 @@
                 </div>
             </div>
         </div>
-        <div infinite-scroll='loadMoreAvailableCards()' infinite-scroll-distance='0' infinite-scroll-immediate-check="false" class="col-xs-12 "> 
-            <div ng-repeat="card in availableCardsInfiniteScrolling" class="col-xs-4 cardImage" ng-click="cardClicked(card)">
-                <img ng-src="{{card.cardArtImageName}}" class="col-xs-12" style="float:left"></img>
-            </div>
-            <div style='clear: both;'></div>
+        <div class="col-xs-12 cardContainerCards">
+            <carousel interval="0">
+                <slide ng-repeat="slide in slides" active="slide.active">
+                    <div style="margin-left:40px;margin-right:40px">
+                            <img ng-repeat="card in slide.cards" class="col-xs-6 col-md-4 col-lg-4 cardImage" ng-click="cardClicked(card)" ng-src="{{card.cardArtImageName}}" style="float:left"></img>
+                        <div ng-repeat="card in slide.padding" class="col-xs-4">
+                            <div class="col-xs-12 paddingcard" style="float:left;"></div>
+                        </div>
+                    </div>
+                    <div style='clear: both;'></div>
+                    <div style="height:50px"></div>
+                </slide>
+            </carousel>
         </div>
     </div>
 </div>
