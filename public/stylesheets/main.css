@@ -235,10 +235,15 @@ input[type="color"]:focus,
     background-color:#102131; 
     padding-top:5px;
 
+
     border-top-left-radius:10px;
     border-top-right-radius:10px;
     border-bottom-left-radius:10px;
     border-bottom-right-radius:10px;
+}
+
+.cardContainerCards{
+    padding-bottom:15px;
 }
 
 .cardContainerCards .carousel-inner{
@@ -326,6 +331,67 @@ input[type="color"]:focus,
     background: -o-linear-gradient(#E58922, #F2B51C, #E58922); 
     background: -moz-linear-gradient(#E58922, #F2B51C, #E58922); 
     background: linear-gradient(#E58922, #F2B51C, #E58922); 
+}
+
+.cardAndCount:hover .cardImage{
+    background-color: #DD820F, #F2B51C;
+    border-top-left-radius:4px;
+    border-top-right-radius:4px;
+    border-bottom-left-radius:4px;
+    border-bottom-right-radius:4px;
+
+    -webkit-transform:scale(1.25); /* Safari and Chrome */
+    -moz-transform:scale(1.25); /* Firefox */
+    -ms-transform:scale(1.25); /* IE 9 */
+    -o-transform:scale(1.25); /* Opera */
+     transform:scale(1.25);
+     z-index: 1000;
+
+    /*background: -webkit-linear-gradient(#F2B51C, #DD820F); */
+    /*background: -o-radial-gradient(#F2B51C 50%, #DD820F 90%); */
+    /*background: -moz-radial-gradient(#F2B51C 50%, #DD820F 90%); */
+    /*background: radial-gradient(#F2B51C 50%, #DD820F 90%); */
+
+    background: -webkit-linear-gradient(#E58922, #F2B51C, #E58922);
+    background: -o-linear-gradient(#E58922, #F2B51C, #E58922); 
+    background: -moz-linear-gradient(#E58922, #F2B51C, #E58922); 
+    background: linear-gradient(#E58922, #F2B51C, #E58922); 
+}
+
+.cardAndCount:hover .cardCount > span{
+    font-size:90px;
+}
+
+.cardAndCount{
+    padding:0px;
+}
+
+.cardAndCount.image{
+
+}
+
+.cardCount{
+    position: relative;
+    width: 0px;
+    height: 0px;
+}
+
+.cardCount > span {
+    position: absolute;
+    left:35px;
+    top:20px;
+    z-index: 1500;
+    font-size:80px;
+    opacity: 0.8;
+    color:#F2B51C !important;
+    cursor: default;
+    -webkit-user-select: none; /* Chrome/Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+
+    /* Rules below not implemented in browsers yet */
+    -o-user-select: none;
+    user-select: none;
 }
 
 #deckBuilderHeader{

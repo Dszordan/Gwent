@@ -39,7 +39,12 @@
             <carousel interval="0">
                 <slide ng-repeat="slide in slides" active="slide.active">
                     <div style="margin-left:40px;margin-right:40px">
-                            <img ng-repeat="cardAndCount in slide.cards" class="col-xs-6 col-md-4 col-lg-4 cardImage" ng-click="removeCardFromDeck(cardAndCount.card)" ng-src="{{cardAndCount.card.cardArtImageName}}" style="float:left"></img>
+                        <div ng-repeat="cardAndCount in slide.cards" class="col-xs-6 col-md-4 col-lg-4 cardAndCount" ng-click="removeCardFromDeck(cardAndCount.card)" >
+                            <img class="col-xs-12 col-md-12 col-lg-12 cardImage" ng-src="{{cardAndCount.card.cardArtImageName}}" style="float:left"></img>
+                            <div class="cardCount">
+                                <span>{{cardAndCount.count}}</span>
+                            </div>
+                        </div>
                         <div ng-repeat="card in slide.padding" class="col-xs-4 paddingcard">
                             <div class="col-xs-12" style="float:left;"></div>
                         </div>

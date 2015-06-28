@@ -17,7 +17,7 @@ app.config([
                         templateUrl: '/templates/leaderCardSelection.html',
                         controller: 'leaderSelectionCtrl'
                     },
-                    'cardTotals@deckBuilder':{
+                    'cardTotals':{
                         templateUrl: '/templates/cardTotals.html',
                         controller: 'cardTotalsCtrl'
                     },
@@ -48,7 +48,7 @@ app.config([
                         templateUrl: '/templates/leaderCardSelection.html',
                         controller: 'leaderSelectionCtrl'
                     },
-                    'cardTotals@loadDeck':{
+                    'cardTotals':{
                         templateUrl: '/templates/cardTotals.html',
                         controller: 'cardTotalsCtrl'
                     },
