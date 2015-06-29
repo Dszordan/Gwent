@@ -204,6 +204,7 @@ app.controller('cardTotalsCtrl',
         $scope.totalHeroCards = 0;
         $scope.leaderAbility = 'Pick an Impenetrable Fog card from your deck and play it instantly.';
         $scope.factionPassive = currentDeckFactory.getFactionPassive('northernrealms');
+        $scope.showTotals = false;
         
         if (existingDeck) {
             $scope.leaderAbility = existingDeck.leaderCard.ability;
@@ -213,12 +214,20 @@ app.controller('cardTotalsCtrl',
         var deckChangedListener = $rootScope.$on('currentDeckChanged', function(event,data){
             $scope.calculateTotals(data);
         });
+        var showTotalsListener = $rootScope.$on('windowAboveDeckBuilder', function(data){
+            $scope.showTotals = false;
+        });
+        var hideTotalsListener = $rootScope.$on('windowBelowDeckBuilder', function(data){
+            $scope.showTotals = true;
+        });
         var leaderChangedListener = $rootScope.$on('leaderCardChanged', function(event,data){
             $scope.leaderAbility = currentDeckFactory.leaderCard.ability;
             $scope.factionPassive = currentDeckFactory.getFactionPassive(currentDeckFactory.leaderCard.faction);
         });
         $scope.$on('$destroy', leaderChangedListener);
         $scope.$on('$destroy', deckChangedListener);
+        $scope.$on('$destroy', showTotalsListener);
+        $scope.$on('$destroy', hideTotalsListener);
         $scope.calculateTotals = function(currentDeck){
             var totalHeroCards = 0;
             var totalCards = 0;
@@ -571,10 +580,22 @@ app.controller('deckBuilderCtrl',
         $scope.deckName = '';
         $scope.savedURL = '';
         $scope.saveResultMessage = '';
+        $scope.windowBelowElement = false;
         if (existingDeck) {
             $scope.deckName = existingDeck.deckName;
         };
 
+        var scrollBelowElementListener = $scope.$on('scrolledBelowElement', function(event, data){
+            $scope.windowBelowElement = true;
+            $rootScope.$broadcast('windowBelowDeckBuilder','');
+        });
+         var scrollAboveElementListener = $scope.$on('scrolledAboveElement', function(event, data){
+            $scope.windowBelowElement = false;
+            $rootScope.$broadcast('windowAboveDeckBuilder','');
+        });
+
+        $scope.$on('$destroy', scrollBelowElementListener);
+        $scope.$on('$destroy', scrollAboveElementListener);
         $scope.saveDeck = function(){
             var x = currentDeckFactory.deck;
             var deckToSave ={
@@ -590,6 +611,28 @@ app.controller('deckBuilderCtrl',
         };
 
     }]);
+
+app.directive("scroll", function ($window) {
+    return {
+        link: function(scope, element, attrs) {
+            angular.element($window).bind("scroll", function() {
+                 if (this.pageYOffset >= element[0].offsetTop - 150) { 
+                    if (!scope.windowBelowElement) {
+                        scope.$broadcast('scrolledBelowElement','');
+                        console.log('below ');
+                    };
+                 } else {
+                    if (scope.windowBelowElement) {
+                        scope.$broadcast('scrolledAboveElement','');
+                        console.log('above');
+                    };
+                 }
+
+                scope.$apply();
+            });
+        }
+    }
+});
 
 //Custom sorting for cards based first on faction, then range.
 var cardSort = function (a, b) {

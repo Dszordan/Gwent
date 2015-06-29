@@ -45,17 +45,14 @@
         </div>
         <div class="container">
             <div class="row">
-                <div  class="col-lg-12">
+                <div class="col-lg-12">
                     <ui-view></ui-view>
                     <div ui-view="deckBuilder"></div>
                 </div>
             </div>
         </div>
-        <div class="container">
-            <div class="row">
-                    <div ui-view="cardTotals" class="col-xs-6"></div>
-            </div>
-        </div>
+        <div ui-view="cardTotals" ng-show="showTotals"></div>
+        <div style="clear:both;"></div>
         <div class="container" id="footer">
             <div class="row">
                 <div class="col-xs-6 col-xs-offset-1">

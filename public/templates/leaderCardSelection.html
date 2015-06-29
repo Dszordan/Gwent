@@ -1,6 +1,6 @@
 <div id="leaderSelection" >
     <div id="chosenFactionHeader">
-        <div id="factionButtons" class="col-xs-2 col-xs-offset-5 col-sm-offset-4">
+        <div id="factionButtons" class="row">
             <div class="btn btn-primary factionButton" ng-click="changeFaction('northernrealms')" ng-class="{highlightSelectedFactionButton: selectedFaction === 'northernrealms'}">
                 <img src="/images/northernrealms.png"></img>
             </div>
@@ -14,27 +14,31 @@
                 <img src="/images/scoiatael.png"></img>
             </div>
         </div>
-        <div class="col-xs-4 col-sm-6 col-md-5" ng-show="!showAllLeaderCards" ng-click="openAllCardsDialog()">
-            <img ng-src="{{currentLeaderCard.cardArtImageName}}" class="cardImage col-xs-12" style="float:left"></img>
+        <div class="row col-xs-3 col-xs-offset-3" ng-show="!showAllLeaderCards" ng-click="openAllCardsDialog()">
+            <img ng-src="{{currentLeaderCard.cardArtImageName}}" class="cardImage col-xs-10" style="float:left"></img>
             <div class="btn btn-primary" >Change Leader</div>
         </div>
+        <div class="col-xs-4">
+            <h2>Faction Passive </h2> {{factionPassive}}<br/><br/>
+            <h2>Leader Ability </h2> {{currentLeaderCard.ability}}
+        </div>
         <script type="text/ng-template" id="allCardsDialog">
-        <div>
-            <div class="modal-header">
-                <h3>Choose a Leader Card</h3>
-            </div>
-            <div class="modal-body">
-                <div class="container col-xs-12">
-                    <div class="row">
-                       <div ng-repeat="leaderCard in leaderCardsFilter" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 leaderCard"  ng-click="changeLeaderCard(leaderCard)">
-                            <img ng-src="{{leaderCard.cardArtImageName}}" class="cardImage col-xs-12 " style="float:left" ng-class="{highlightSelectedLeaderCard: currentLeaderCard === leaderCard}"></img>
-                            <div id=""><b>Ability</b>: {{leaderCard.ability}}</div>
+            <div>
+                <div class="modal-header">
+                    <h3>Choose a Leader Card</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="container col-xs-12">
+                        <div class="row">
+                           <div ng-repeat="leaderCard in leaderCardsFilter" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 leaderCard"  ng-click="changeLeaderCard(leaderCard)">
+                                <img ng-src="{{leaderCard.cardArtImageName}}" class="cardImage col-xs-12 " style="float:left" ng-class="{highlightSelectedLeaderCard: currentLeaderCard === leaderCard}"></img>
+                                <div id=""><b>Ability</b>: {{leaderCard.ability}}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div style="clear:left"></div>
             </div>
-            <div style="clear:left"></div>
-        </div>
         </script>
     </div>    
 </div>

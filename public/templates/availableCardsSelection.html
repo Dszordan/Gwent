@@ -40,7 +40,7 @@
                 <slide ng-repeat="slide in slides" active="slide.active">
                     <div style="margin-left:40px;margin-right:40px">
                             <img ng-repeat="card in slide.cards" class="col-xs-6 col-md-4 col-lg-4 cardImage" ng-click="cardClicked(card)" ng-src="{{card.cardArtImageName}}" style="float:left"></img>
-                        <div ng-repeat="card in slide.padding" class="col-xs-4">
+                        <div ng-repeat="card in slide.padding" class="col-xs-4 paddingcard">
                             <div class="col-xs-12 paddingcard" style="float:left;"></div>
                         </div>
                     </div>

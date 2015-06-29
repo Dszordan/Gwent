@@ -1,8 +1,6 @@
 <div id="deckBuilderContainer" class="row">
-	<div class="row">
-        <div ui-view="leaderSelection" class="col-xs-6"></div>
-    </div>
-	<div id="deckBuilderHeader" class="col-xs-8 col-xs-offset-2">
+	<div class="hidden-sm hidden-md hidden-lg">Sorry, not yet optimized for mobile</div>
+	<div id="deckBuilderHeader" class="row col-xs-10 col-xs-offset-2">
 	    <div class="col-xs-10"><input type="text" class="form-control" placeholder="Choose a Deck Name" ng-model="deckName"></input></div>
 	    <div class="btn btn-primary" ng-click="saveDeck()">Save Deck</div>
 	    <div ng-show="savedURL !== ''">
@@ -11,6 +9,10 @@
 	    </div>
 	</div>
 	<div class="row">
+        <div ui-view="leaderSelection" ></div>
+    </div>
+	
+	<div class="row" scroll>
 		<div ui-view="availableCardSelection" class="col-xs-6"></div>
 		<div ui-view="deckCardSelection" class="col-xs-6"></div>
 	</div>
