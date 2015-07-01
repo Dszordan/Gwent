@@ -1,4 +1,4 @@
-<div id="leaderSelection" >
+<div id="leaderSelection" class="col-xs-10 col-xs-offset-1">
     <div id="chosenFactionHeader">
         <div id="factionButtons" class="row">
             <div class="btn btn-primary factionButton" ng-click="changeFaction('northernrealms')" ng-class="{highlightSelectedFactionButton: selectedFaction === 'northernrealms'}">
@@ -14,13 +14,15 @@
                 <img src="/images/scoiatael.png"></img>
             </div>
         </div>
-        <div class="row col-xs-3 col-xs-offset-3" ng-show="!showAllLeaderCards" ng-click="openAllCardsDialog()">
-            <img ng-src="{{currentLeaderCard.cardArtImageName}}" class="cardImage col-xs-10" style="float:left"></img>
-            <div class="btn btn-primary" >Change Leader</div>
-        </div>
-        <div class="col-xs-4">
-            <h2>Faction Passive </h2> {{factionPassive}}<br/><br/>
-            <h2>Leader Ability </h2> {{currentLeaderCard.ability}}
+        <div class="row">
+            <div class="col-xs-3 col-xs-offset-3" ng-show="!showAllLeaderCards" ng-click="openAllCardsDialog()">
+                <img ng-src="{{currentLeaderCard.cardArtImageName}}" class="cardImage col-xs-10" style="float:left"></img>
+                <div style="float:left;" class="col-xs-8 col-xs-offset-1">Change Leader <span class="glyphicon glyphicon-arrow-up"></span></div>
+            </div>
+            <div class="col-xs-4">
+                <h2>Faction Passive </h2> {{factionPassive}}<br/><br/>
+                <h2>Leader Ability </h2> {{currentLeaderCard.ability}}
+            </div>
         </div>
         <script type="text/ng-template" id="allCardsDialog">
             <div>

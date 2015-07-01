@@ -21,6 +21,10 @@ app.config([
                         templateUrl: '/templates/cardTotals.html',
                         controller: 'cardTotalsCtrl'
                     },
+                    'notifications':{
+                      templateUrl: '/templates/notification.html',
+                      controller: 'notificationsCtrl'
+                    },
                     'availableCardSelection@deckBuilder':{
                         templateUrl: '/templates/availableCardsSelection.html',
                         controller: 'availableCardsCtrl'
@@ -47,6 +51,10 @@ app.config([
                     'leaderSelection@loadDeck':{
                         templateUrl: '/templates/leaderCardSelection.html',
                         controller: 'leaderSelectionCtrl'
+                    },
+                    'notifications':{
+                      templateUrl: '/templates/notification.html',
+                      controller: 'notificationsCtrl'
                     },
                     'cardTotals':{
                         templateUrl: '/templates/cardTotals.html',

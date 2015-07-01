@@ -51,10 +51,10 @@ body{
     #leaderSelection{
         height:100%;
     }
-    /*.paddingcard{
-        height:150px;
-        width:;
-    }*/
+    .notificationImage{
+        height:50px;
+        width:30px;
+    }
 }
 @media(min-width:768px){
     h1{
@@ -80,6 +80,10 @@ body{
         height:180px;
         width:125px;
     }
+    .notificationImage{
+        height:50px;
+        width:30px;
+    }
 }
 @media(min-width:992px){
     h1{
@@ -104,6 +108,10 @@ body{
         height:170px;
         width:120px;
     }
+    .notificationImage{
+        height:50px;
+        width:30px;
+    }
 }
 @media(min-width:1200px){
     h1{
@@ -127,6 +135,10 @@ body{
     .paddingcard > div{
         height:233px;
         width:154px;
+    }
+    .notificationImage{
+        height:50px;
+        width:30px;
     }
 }
 
@@ -171,15 +183,21 @@ input[type="color"]:focus,
     color:    #ccc;
 }
 .btn-primary{
-    color:#0C1A1D;
-    background-color:#ccc; 
-    border-color:#424C4F;
+    color:#102131;
+    background-color:#F2B51C; 
+    border-color:#193950;
+    /*
+gold1:#F2B51C 
+gold2:#E58922;
+
+*/
+
 }
 
 .btn-primary:hover{
-    color:#0C1A1D;
-    background-color:#aaa; 
-    border-color:#424C4F;
+    color:#102131;
+    background-color:#E58922; 
+    border-color:#193950;
 }
 
 /* Header */ 
@@ -231,8 +249,7 @@ input[type="color"]:focus,
 }
 
 #factionButtons{
-    margin-top:15px;
-    padding:30px;
+    padding:6px;
 }
 
 .paddingcard{
@@ -432,12 +449,27 @@ input[type="color"]:focus,
 
 #deckBuilderHeader{
     text-align:center;
-    padding-top:14px;
+    padding:6px;
+    margin-bottom:6px;
+}
+
+#deckBuilderHeader > div {
+
+    background:#102131;
+    border-top-left-radius:10px;
+    border-top-right-radius:10px;
+    border-bottom-left-radius:10px;
+    border-bottom-right-radius:10px;
+    padding:6px;
 }
 
 #leaderSelection{
     text-align:center;
-    padding-top:14px;
+    background:#102131;
+    border-top-left-radius:10px;
+    border-top-right-radius:10px;
+    border-bottom-left-radius:10px;
+    border-bottom-right-radius:10px;
 }
 
 #chosenFaction{
@@ -496,11 +528,13 @@ input[type="color"]:focus,
 /* Leader Cards */
 .factionButton{
     padding:0px;
-    background-color:#d7d7d7;
+    background-color:#193950;
+    border:1px solid #E58922;
 }
 .factionButton:hover{
     padding:0px;
-    background-color:#aaa !important;
+    background-color:#F2B51C !important;
+    border:1px solid #F2B51C;
 }
 
 #leaderCards{
@@ -516,7 +550,7 @@ input[type="color"]:focus,
 }
 
 .highlightSelectedFactionButton{
-    background-color:#aaa;
+    background-color:#E58922;
 }
 
 .leaderCard img{
@@ -533,6 +567,19 @@ input[type="color"]:focus,
     border-top:3px solid #314F6B;
 }
 
+#alertPanel{
+    position: fixed;
+    bottom:0px;
+    right:0px;
+    z-index: 2001;
+}
+
+.notificationImage{
+    padding:5px;
+}
+.notificationText{
+    padding-top:5px;
+}
 /* Custom Glyphs*/
 .jordanGlyphicon{
     width:24px;
@@ -554,6 +601,8 @@ input[type="color"]:focus,
 .jordanGlyphicon.btn{
     background-color:#ccc;
     border-color:#ccc;
+    /*gold1:#F2B51C 
+gold2:#E58922;*/
 }
 
 .jordanGlyphicon.btn:hover{

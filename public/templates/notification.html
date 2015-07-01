@@ -1,0 +1,18 @@
+<div id="alertPanel">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-3 col-xs-offset-9">
+				<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="	closeAlert($index)">
+					<div>
+						<div ng-show="alert.type == 'success'" style="float:left;padding:15px 10px 0 0"><span class="glyphicon glyphicon-plus"></span></div>
+						<div ng-show="alert.type == 'danger'" style="float:left;padding:15px 10px 0 0"><span class="glyphicon glyphicon-minus"></span></div>
+						<div ng-show="alert.type == 'warning'" style="float:left;padding:15px 10px 0 0"><span class="glyphicon glyphicon-ban-circle"></span></div>
+						<img ng-src="{{alert.img}}" class="notificationImage" style="float:left;"></img>
+						<div class="notificationText">{{alert.msg}}</div>
+						<div style="clear:left;"></div>
+					</div>
+				</alert>
+			</div>
+		</div>
+	</div>
+</div>

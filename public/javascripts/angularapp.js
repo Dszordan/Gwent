@@ -143,7 +143,7 @@ app.controller('leaderSelectionCtrl',
                 if($scope.availableLeaderCardsSuperset[i].faction === faction)
                     $scope.leaderCardsFilter.push($scope.availableLeaderCardsSuperset[i]);
             };
-            $scope.currentLeaderCard = $scope.leaderCardsFilter[0];
+            $scope.changeLeaderCard($scope.leaderCardsFilter[0]);
             $rootScope.$broadcast('factionChanged', oldAndNewFaction);
             currentDeckFactory.setFaction(faction);
         }
@@ -443,15 +443,18 @@ app.controller('currentHandCtrl',
                 if (cardInDeck.card === card) {
                     if (card.shiny) {
                         cardFoundInDeck = true;
+                        $rootScope.$broadcast('invalidAction',{msg:'Can\'t add two of the same hero cards.',img:card.cardArtImageName});
                         break; // can't add two hero cards
                     };
                     cardInDeck.count+=count;
                     cardFoundInDeck = true;
+                    $rootScope.$broadcast('singleCardAdded',card);
                     break;
                 };
             };
             if ($scope.currentDeck.length == 0 || !cardFoundInDeck) {
                 $scope.currentDeck.push({'card':card, 'count': count});
+                $rootScope.$broadcast('singleCardAdded',card);
             };
             $scope.refreshCurrentDeckFilter();
             $rootScope.$broadcast('currentDeckChanged',$scope.currentDeck);
@@ -472,6 +475,7 @@ app.controller('currentHandCtrl',
                 };
             };
             $rootScope.$broadcast('currentDeckChanged',$scope.currentDeck);
+            $rootScope.$broadcast('singleCardRemoved',card);
             var xyz = $scope.currentDeck;
             currentDeckFactory.setCards(xyz);
         };
@@ -609,8 +613,55 @@ app.controller('deckBuilderCtrl',
                 $scope.saveResultMessage = "Deck Saved";
             });
         };
-
     }]);
+
+
+app.controller('notificationsCtrl', ['$scope','$rootScope','$timeout', function ($scope,$rootScope,$timeout) {
+  $scope.alerts = [];
+
+    var cardAddedListener = $rootScope.$on('singleCardAdded', function(event, data){
+        var cardname = data.cardName;
+        var newAlert = {
+            img:data.cardArtImageName,
+            msg:"Card added",
+            type:"success"
+        }
+        $scope.addAlert(newAlert);
+    });
+
+    var cardRemovedListener = $rootScope.$on('singleCardRemoved', function(event, data){
+        var cardname = data.cardName;
+        var newAlert = {
+            img:data.cardArtImageName,
+            msg:"Card removed ",
+            type:"danger"
+        }
+        $scope.addAlert(newAlert);
+    });
+
+    var invalidActionListener =  $rootScope.$on('invalidAction', function(event, data){
+        var newAlert = {
+            img:data.img,
+            msg:data.msg,
+            type:"warning"
+        }
+        $scope.addAlert(newAlert);
+    });
+
+    $scope.$on('$destroy', cardRemovedListener);
+    $scope.$on('$destroy', cardAddedListener);
+    $scope.addAlert = function(newAlert) {
+        $scope.alerts.push(newAlert);
+        $timeout(function(){
+            var indexOfItem = $scope.alerts.indexOf(newAlert);
+            $scope.alerts.splice(indexOfItem,1);
+          }, 1250);
+    };
+
+    $scope.closeAlert = function(index) {
+        $scope.alerts.splice(index, 1);
+    };
+}]);
 
 app.directive("scroll", function ($window) {
     return {
@@ -638,7 +689,9 @@ app.directive("scroll", function ($window) {
 var cardSort = function (a, b) {
     var aFaction = a.faction.toUpperCase();
     var bFaction = b.faction.toUpperCase();
-
+    if (aFaction == 'neutral') {aFaction = 'A'};
+    if (bFaction == 'neutral') {bFaction = 'A'};
+    
     var aRange = a.range.length === 0 ? "A" : a.range[0].toUpperCase();
     var bRange = b.range.length === 0 ? "A" : b.range[0].toUpperCase();
 

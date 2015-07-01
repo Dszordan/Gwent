@@ -21,17 +21,16 @@
           ga('create', 'UA-64032067-1', 'auto');
           ga('send', 'pageview');
         </script>
-    </head
->
+    </head>
 
     <body ng-app="gwentjs">
         <nav class="navbar navbar-default pull-right" ng-controller="NavCtrl">
             <ul class="nav navbar-nav">
                 <li><a href="/#/home">Home</a></li>
-                <li class="hidden-lg hidden-sm hidden-md"><a>XS</a></li>
+<!--                 <li class="hidden-lg hidden-sm hidden-md"><a>XS</a></li>
                 <li class="hidden-xs hidden-lg hidden-md"><a>Small</a></li>
                 <li class="hidden-xs hidden-sm hidden-lg"><a>Medium</a></li>    
-                <li class="hidden-xs hidden-sm hidden-md"><a>Large</a></li>
+                <li class="hidden-xs hidden-sm hidden-md"><a>Large</a></li> -->
                 <li> <a href="/#/credits">Credits</a></li>
             </ul>
         </nav>
@@ -51,6 +50,7 @@
                 </div>
             </div>
         </div>
+        <div ui-view="notifications"></div>
         <div ui-view="cardTotals" ng-show="showTotals"></div>
         <div style="clear:both;"></div>
         <div class="container" id="footer">
@@ -58,6 +58,7 @@
                 <div class="col-xs-6 col-xs-offset-1">
                     Created by Jordan Burnett <br/>
                     <a href="https://github.com/Dszordan">@Dszordan</a>
+                    <br/><br/>
                 </div>
             </div>
         </div>
