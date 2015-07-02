@@ -831,8 +831,8 @@ app.directive("scroll", function ($window) {
 var cardSort = function (a, b) {
     var aFaction = a.faction.toUpperCase();
     var bFaction = b.faction.toUpperCase();
-    if (aFaction == 'neutral') {aFaction = 'A'};
-    if (bFaction == 'neutral') {bFaction = 'A'};
+    if (aFaction.toUpperCase() == 'neutral'.toUpperCase()) {aFaction = 'A'};
+    if (bFaction.toUpperCase() == 'neutral'.toUpperCase()) {bFaction = 'A'};
     
     var aRange = a.range.length === 0 ? "A" : a.range[0].toUpperCase();
     var bRange = b.range.length === 0 ? "A" : b.range[0].toUpperCase();
