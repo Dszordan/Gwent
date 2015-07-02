@@ -302,6 +302,7 @@ app.controller('availableCardsCtrl',
         };
         $scope.loadExistingDeck = function(existingDeck){
             var deck = existingDeck.cards;
+            $rootScope.$broadcast('deactivateNotifications',{});
             for (var i = 0; i < deck.length; i++) {
                 var deck_id = deck[i].card._id;
                 for (var j = 0; j < $scope.availableCards.length; j++) {
@@ -312,6 +313,7 @@ app.controller('availableCardsCtrl',
                     };
                 };
             };
+            $rootScope.$broadcast('activateNotifications',{});
         }
         $scope.filterAvailableCardsByFaction = function(faction){
             if ($scope.availableCardsSuperset.length == 0 ) {return;};
@@ -584,6 +586,7 @@ app.controller('deckBuilderCtrl',
         $scope.deckName = '';
         $scope.savedURL = '';
         $scope.saveResultMessage = '';
+        $scope.validationMessage = '';
         $scope.windowBelowElement = false;
         if (existingDeck) {
             $scope.deckName = existingDeck.deckName;
@@ -601,12 +604,15 @@ app.controller('deckBuilderCtrl',
         $scope.$on('$destroy', scrollBelowElementListener);
         $scope.$on('$destroy', scrollAboveElementListener);
         $scope.saveDeck = function(){
-            var x = currentDeckFactory.deck;
             var deckToSave ={
                 deckName:$scope.deckName,
                 cards: currentDeckFactory.cards,
                 faction: currentDeckFactory.faction,
                 leaderCard : currentDeckFactory.leaderCard
+            };
+            if (deckToSave.cards.length == 0) {
+                $scope.validationMessage = "Need to add at least one card.";
+                return;
             };
             decks.saveDeck(deckToSave).success(function(data){
                 $scope.savedURL = "http://localhost:20933/#/decks/" + data._id;
@@ -617,7 +623,8 @@ app.controller('deckBuilderCtrl',
 
 
 app.controller('notificationsCtrl', ['$scope','$rootScope','$timeout', function ($scope,$rootScope,$timeout) {
-  $scope.alerts = [];
+    $scope.alerts = [];
+    $scope.active = true;
 
     var cardAddedListener = $rootScope.$on('singleCardAdded', function(event, data){
         var cardname = data.cardName;
@@ -648,9 +655,17 @@ app.controller('notificationsCtrl', ['$scope','$rootScope','$timeout', function 
         $scope.addAlert(newAlert);
     });
 
+    var deactivateNotificationsListener = $rootScope.$on('deactivateNotifications', function(event, data){
+         $scope.active = false;
+    });
+    var activateNotificationsListener = $rootScope.$on('activateNotifications', function(event, data){
+        $scope.active = true;
+    });
+
     $scope.$on('$destroy', cardRemovedListener);
     $scope.$on('$destroy', cardAddedListener);
     $scope.addAlert = function(newAlert) {
+        if (!$scope.active) {return;};
         $scope.alerts.push(newAlert);
         $timeout(function(){
             var indexOfItem = $scope.alerts.indexOf(newAlert);
@@ -662,6 +677,133 @@ app.controller('notificationsCtrl', ['$scope','$rootScope','$timeout', function 
         $scope.alerts.splice(index, 1);
     };
 }]);
+
+app.controller('viewDeckCtrl',['$scope',
+    '$rootScope',
+    'cards',
+    '$state',
+    'existingDeck',
+    function($scope,$rootScope,cards,$state,existingDeck){     
+        $scope.currentDeck = [];
+        $scope.currentDeckFilter = [];
+        $scope.availableCardsSuperset = []
+        $scope.currentDeckFilterName = "all";
+        $scope.currentDeckFilterDisplayName = "All Cards";
+        $scope.deckName = '';
+
+        //Pagination / slides
+        $scope.slides = [];
+        var cardsPerSlide = 1000;
+
+        cards.getAvailableCards()
+            .success(function(data){
+            $scope.availableCardsSuperset = data;
+            if (existingDeck) {
+                $scope.loadExistingDeck(existingDeck);
+                $rootScope.$broadcast('windowBelowDeckBuilder',$scope.currentDeck);
+                $scope.deckName = existingDeck.deckName == '' ? 'Anonymous Deck' : existingDeck.deckName;
+            }
+        });
+
+        $scope.cloneDeck = function () {
+            $state.go('loadDeck',{id:existingDeck._id});
+        };
+        $scope.clearDeck = function(){
+            $scope.currentDeck = [];
+            $scope.currentDeckFilter = [];
+            $scope.loadSlides();
+        };
+        $scope.switchCurrentCardsFilter = function(newType, newFilter){
+            $scope.currentDeckFilterName = newFilter;
+            if (newType == "predefined") {
+                $scope.refreshCurrentDeckFilter();
+            };
+        };
+        $scope.loadExistingDeck = function(existingDeck){
+            var deck = existingDeck.cards;
+            for (var i = 0; i < deck.length; i++) {
+                var deck_id = deck[i].card._id;
+                for (var j = 0; j < $scope.availableCardsSuperset.length; j++) {
+                    if ($scope.availableCardsSuperset[j]._id == deck_id) {
+                        var numberOfCards = deck[i].count;
+                        var cardAndCount = {card:$scope.availableCardsSuperset[j], count:numberOfCards};
+                        $scope.putCardInDeck(cardAndCount.card, numberOfCards)
+                    };
+                };
+            };            
+            $rootScope.$broadcast('currentDeckChanged',$scope.currentDeck);
+        }
+        $scope.putCardInDeck = function(card,count){
+            var cardFoundInDeck = false;
+            for (var i = 0; i < $scope.currentDeck.length; i++) {
+                var cardInDeck = $scope.currentDeck[i];
+                if (cardInDeck.card === card) {
+                    if (card.shiny) {
+                        cardFoundInDeck = true;
+                        break; // can't add two hero cards
+                    };
+                    cardInDeck.count+=count;
+                    cardFoundInDeck = true;
+                    break;
+                };
+            };
+            if ($scope.currentDeck.length == 0 || !cardFoundInDeck) {
+                $scope.currentDeck.push({'card':card, 'count': count});
+            };
+            $scope.refreshCurrentDeckFilter();
+        };
+        $scope.refreshCurrentDeckFilter = function(){
+            var newFilter = $scope.currentDeckFilterName;
+            $scope.currentDeckFilterDisplayName = newFilter[0].toUpperCase() + newFilter.substring(1, newFilter.length) + " Cards";
+                if (newFilter=="all") {
+                    $scope.currentDeckFilter = $scope.currentDeck;
+                } else if (newFilter == "melee" || newFilter == "ranged" || newFilter=="siege"){
+                    $scope.currentDeckFilter = [];
+                    for (var i = 0; i < $scope.currentDeck.length; i++) {
+                        if($scope.currentDeck[i].card.range.indexOf(newFilter) != -1)
+                            $scope.currentDeckFilter.push($scope.currentDeck[i]);
+                    };
+                } else if (newFilter == "hero"){
+                    $scope.currentDeckFilter = [];
+                    for (var i = 0; i < $scope.currentDeck.length; i++) {
+                        if($scope.currentDeck[i].card.shiny)
+                            $scope.currentDeckFilter.push($scope.currentDeck[i]);
+                    };
+                } else if (newFilter == "weather"){
+                    $scope.currentDeckFilter = [];
+                    for (var i = 0; i < $scope.currentDeck.length; i++) {
+                        if($scope.currentDeck[i].card.weather)
+                            $scope.currentDeckFilter.push($scope.currentDeck[i]);
+                    };
+                } else if (newFilter == "special"){
+                    $scope.currentDeckFilter = [];
+                    for (var i = 0; i < $scope.currentDeck.length; i++) {
+                        if($scope.currentDeck[i].card.special)
+                            $scope.currentDeckFilter.push($scope.currentDeck[i]);
+                    };
+                }
+                $scope.loadSlides();
+        }
+        $scope.loadSlides = function(){
+            var currentSlideIndex = 0;
+            if ($scope.slides != undefined && $scope.slides.length > 0) {
+                var currentSlide = $scope.slides.filter(function (s) { return s.active; })[0];
+                currentSlideIndex = $scope.slides.indexOf(currentSlide);
+            };
+            $scope.slides = [];
+            $scope.addSlide($scope.currentDeckFilter,[]);
+           
+        };
+        $scope.addSlide = function(cardSubset, blankCards){
+            $scope.slides.push({
+                active:false,
+                cards:cardSubset,
+                padding:blankCards
+            });
+        };
+
+        $scope.refreshCurrentDeckFilter();
+    }]);
 
 app.directive("scroll", function ($window) {
     return {

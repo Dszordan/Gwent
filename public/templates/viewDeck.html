@@ -1,0 +1,56 @@
+<div id="currentDeckContainer" class="col-xs-12">
+	<div style="padding:10px;">
+		<h1>Deck Name: {{deckName}}</h1>
+		<div class="btn btn-primary" ng-click="cloneDeck()">Clone Deck</div>
+	</div>
+    <div>
+    	<div ui-view="deckLeader" class="col-xs-8"></div>
+        <div ui-view="cardTotalsVertical" class="col-xs-2"></div>
+    </div>
+    <div class="row cardContainer">
+        <div class="col-xs-12">
+            <div class="cardFilters col-xs-12">
+                <div class="col-xs-1 btn btn-primary" ng-click="switchCurrentCardsFilter('predefined','all')" ng-class="{highlightedFilterButton: currentDeckFilterName === 'all'}">
+                    <div class="jordanGlyphicon glyphicon-cardHand"></div>
+                </div>
+                <div class="col-xs-1 btn btn-primary" ng-click="switchCurrentCardsFilter('predefined','melee')" ng-class="{highlightedFilterButton: currentDeckFilterName === 'melee'}">
+                    <div class="jordanGlyphicon glyphicon-sword"></div>
+                </div>
+                <div class="col-xs-1 btn btn-primary" ng-click="switchCurrentCardsFilter('predefined','ranged')" ng-class="{highlightedFilterButton: currentDeckFilterName === 'ranged'}">
+                    <div class="jordanGlyphicon glyphicon-bowAndArrow"></div>
+                </div>
+                <div class="col-xs-1 btn btn-primary" ng-click="switchCurrentCardsFilter('predefined','siege')" ng-class="{highlightedFilterButton: currentDeckFilterName === 'siege'}">
+                    <div class="jordanGlyphicon glyphicon-catapult"></div>
+                </div>
+                <div class="col-xs-1 btn btn-primary" ng-click="switchCurrentCardsFilter('predefined','hero')" ng-class="{highlightedFilterButton: currentDeckFilterName === 'hero'}">
+                    <div class="jordanGlyphicon glyphicon-helmet"></div>
+                </div>
+                <div class="col-xs-1 btn btn-primary" ng-click="switchCurrentCardsFilter('predefined','weather')" ng-class="{highlightedFilterButton: currentDeckFilterName === 'weather'}">
+                    <div class="jordanGlyphicon glyphicon-sun"></div>
+                </div>
+                <div class="col-xs-1 btn btn-primary" ng-click="switchCurrentCardsFilter('predefined','special')" ng-class="{highlightedFilterButton: currentDeckFilterName === 'special'}">
+                    <div class="jordanGlyphicon glyphicon-spike"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 cardContainerCards" id="currentDeck">
+            <carousel interval="0">
+                <slide ng-repeat="slide in slides" active="slide.active">
+                    <div style="margin-left:40px;margin-right:40px">
+                        <div ng-repeat="cardAndCount in slide.cards" class="col-xs-3 col-md-2 col-lg-2 cardAndCount" ng-click="removeCardFromDeck(cardAndCount.card)" >
+                            <img class="col-xs-12 col-md-12 col-lg-12 cardImage" ng-src="{{cardAndCount.card.cardArtImageName}}" style="float:left"></img>
+                            <div class="cardCount">
+                                <span>{{cardAndCount.count}}</span>
+                            </div>
+                        </div>
+                        <div ng-repeat="card in slide.padding" class="col-xs-4 paddingcard">
+                            <div class="col-xs-12" style="float:left;"></div>
+                        </div>
+                    </div>
+                    <div style='clear: both;'></div>
+                    <div style="height:50px"></div>
+                </slide>
+            </carousel>
+        </div>
+    </div>    
+</div>

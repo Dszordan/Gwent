@@ -9,7 +9,7 @@ app.config([
               url: '/home',
               resolve: {'existingDeck':function(){return ''}},
                 views:{
-                    'deckBuilder':{
+                    'mainContent':{
                         templateUrl: '/templates/deckBuilder.html',
                         controller: 'deckBuilderCtrl'
                     },
@@ -44,7 +44,7 @@ app.config([
                     }]
                 },
                 views:{
-                    'deckBuilder':{
+                    'mainContent':{
                         templateUrl: '/templates/deckBuilder.html',
                         controller: 'deckBuilderCtrl'
                     },
@@ -69,6 +69,29 @@ app.config([
                         controller: 'currentHandCtrl'
                     }
                 }                  
+              })
+            .state('viewDeck',{
+                url:'/viewDeck/{id}',
+                resolve: {
+                  'existingDeck' : 
+                    ['$stateParams', 'decks', 'currentDeckFactory', function($stateParams, decks, currentDeckFactory){
+                        return decks.getDeck($stateParams.id);
+                    }]
+                },
+                views:{
+                    'mainContent':{
+                        templateUrl: '/templates/viewDeck.html',
+                        controller: 'viewDeckCtrl'
+                    },
+                    'deckLeader@viewDeck':{
+                        templateUrl: '/templates/deckLeader.html',
+                        controller: 'leaderSelectionCtrl'
+                    },
+                    'cardTotalsVertical@viewDeck':{
+                        templateUrl: '/templates/cardTotalsVertical.html',
+                        controller: 'cardTotalsCtrl'
+                    }
+                }           
               })
             .state('modifyCard',{
                   url:'/cards/{id}',

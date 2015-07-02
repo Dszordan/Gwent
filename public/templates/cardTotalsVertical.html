@@ -1,0 +1,27 @@
+<div id="currentDeckStats" ng-show="showTotals">
+    <div class="row">
+        <div class="col-xs-12">
+            <div style="float:left;"># of Cards</br>
+            {{totalCards}}</div>
+        </div>
+        <div class="col-xs-12">
+            <div style="float:left;" ng-class="{highlightCardError: totalUnitCards < 22}">
+            # of Unit Cards</br>
+            {{totalUnitCards}}/22</div>
+        </div>
+        <div class="col-xs-12">
+            <div style="float:left;" ng-class="{highlightCardError: totalSpecialCards > 10}">
+            Special Cards</br>
+            {{totalSpecialCards}}/10</div>
+        </div>
+        <div class="col-xs-12">
+            <div style="float:left;">Unit Strength</br>
+            {{totalUnitStrength}}</div>
+        </div>
+        <div class="col-xs-12">
+            <div style="float:left;">Hero Cards</br>
+            {{totalHeroCards}}</div>
+        </div>
+        <div style="clear:left"></div>
+    </div>
+</div>
